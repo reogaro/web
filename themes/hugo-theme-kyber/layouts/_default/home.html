@@ -1,0 +1,104 @@
+{{ define "main" }}
+{{ .Content }}
+
+<div class="herobackground">
+  <div class="herocontainer">
+    <div class="herocontent">
+      <h3 class="tagline">Build cool shit. Put it on the net.</h3>
+      <h1 class="logotext">KYBERWERK</h1>
+      <h2 class="phonetic">(Kai-Ba-Work)</h2> <br />
+      <a href="https://www.youtube.com/" class="splashlink" target="_blank">YouTube</a>
+      <a href="/" class="splashlink">Blog</a>
+      <a href="/" class="splashlink">Projects</a>
+    </div>
+  </div>
+</div>
+
+<div class="contentpreview">
+  <h2>Build cool shit...</h2>
+  <p>Making stuff has never been easier. The <a href="https://en.wikipedia.org/wiki/Maker_culture">Maker movement</a>,
+    <a href="https://en.wikipedia.org/wiki/Free_and_open-source_software">FOSS</a> and
+    <a href="https://en.wikipedia.org/wiki/Hacker_culture">hacker culture</a> have created freely availabe
+    ressources that allow individuals today to build things that would have taken teams of people just ten years ago.
+  </p>
+  <p>This page documents my projects, you can learn from my mistakes and get inspired by my successes.
+    Armed with a screwdriver, soldering iron and vintage ThinkPad running arch linux, you too could
+    build things such as:</p>
+
+  <div class="previewcontainer">
+    <div class="projectpreview" style="background-image: url('img/p1.png')">
+      <div class="previewtext">
+        <b>Retina Remover 9000</b>
+        <p>Diode laser engraver with CoreXY kinematics</p>
+      </div>
+    </div>
+    <div class="projectpreview" style="background-image: url('img/p2.png')">
+      <div class="previewtext">
+        <b>ExE3</b>
+        <p>It's less a 3D printer, more a tinkering subject</p>
+      </div>
+    </div>
+    <div class="projectpreview" style="background-image: url('img/p3.png')">
+      <div class="previewtext">
+        <b>Help Save the Web</b>
+        <p>No JS, No BS: Build Better Websites using HUGO!</p>
+      </div>
+    </div>
+    <div class="projectpreview" style="background-image: url('img/p4.png')">
+      <div class="previewtext">
+        <b>More</b>
+        <p>Visit the projects page for more projects</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="youtubepreview contentpreview">
+  <div class="videotext">
+    <h2>Video Content</h2>
+    <p>I also sometimes film videos and post them on YouTube. I don't enjoy editing as much, so they're pretty rare so
+      far.</p>
+    <br />
+    <br />
+    <a href="https://www.youtube.com/" class="splashlink" target="_blank">YouTube</a>
+    <br />
+  </div>
+  <div class="youtubecontainer">
+    <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/Ngi_fyumi4A;modestbranding=1"
+      title="YouTube video player" frameborder="0" allow="encrypted-media; picture-in-picture; web-share"
+      allowfullscreen></iframe>
+  </div>
+</div>
+
+<div class="contentpreview">
+  <h2>...put it on the net.</h2>
+  <p>And if you want to read more, for example how current projects are coming along, or lessons I learned while
+    building, or about failed projects and why they failed - take a look at the blog. It has all that and more. </p>
+
+  <div class="previewcontainerblog">
+
+    {{ range first 4 site.RegularPages }}
+    <a href="{{ .RelPermalink }}">
+      <div class="blogpostpreview">
+        <p class="blogposttitle">{{ .LinkTitle }}</p>
+        <p class="blogpostdate">{{ .Date.Format "02.01.2006" }}</p>
+      </div>
+    </a>
+    {{ end }}
+    <a href="{{ .Site.BaseURL }}blog">
+      <div class="blogpostpreview">
+        <p class="blogposttitle">More Articles</p>
+      </div>
+    </a>
+  </div>
+</div>
+
+<div class="contentpreview contactsection">
+  <h2>Contact</h2>
+  <p>If you'd like to contact me for some reason - Maybe you're a nigerian prince in need of help,
+    or want someone to gift your old <i>Gabelstapler</i> to - use the E-Mail address below.
+    Please be patient with your inquiries - Life can get in the way.</p>
+
+  <a href="mailto:kyberwerk@protonmail.de" class="contactme">Contact ⇒ </a>
+</div>
+{{ end }}
