@@ -1,9 +1,10 @@
 :root {
     --color-accent: #008080;
     --color-text: #F5F5F5;
-    --color-neutral: #404040;
+    --color-neutral: #242424;
     --color-background-body: #0A0A0A;
-    --color-background-content: #101010;
+    --color-background-content: #161616;
+
     --font-family-logo: "Orbitron", monospace;
     --font-family-title: "Hack", monospace;
     --font-family-content: "Roboto Slab", "Roboto", sans-serif;
@@ -256,7 +257,7 @@ p {
     top: 0;
     bottom: 0;
     left: 0;
-    right; 0;
+    right: 0;
     width: 100%;
     height: 100%;
 }
