@@ -9,11 +9,11 @@
     <lastBuildDate>Wed, 15 Mar 2023 11:00:00 -0700</lastBuildDate>
     <atom:link href="http://localhost:1313/tags/blue/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Blog using Hugo</title>
-      <link>http://localhost:1313/project/hugo-web-blog/</link>
+      <title>DC Motorman</title>
+      <link>http://localhost:1313/project/dc-motorman/</link>
       <pubDate>Wed, 15 Mar 2023 11:00:00 -0700</pubDate>
-      <guid>http://localhost:1313/project/hugo-web-blog/</guid>
-      <description>Why Hugo is Awesome: A Static Site Generator Superstar Introduction Hugo is a static site generator that has rapidly gained popularity among developers and content creators alike. Its lightning-fast build speeds, extensive features, and flexibility make it a top choice for building websites of all sizes. Let&amp;rsquo;s dive into the reasons why Hugo stands out from the crowd.&#xA;Blazing Fast Performance One of Hugo&amp;rsquo;s most impressive qualities is its speed. It can generate hundreds or even thousands of pages in mere seconds.</description>
+      <guid>http://localhost:1313/project/dc-motorman/</guid>
+      <description>Tiny DC Servo Driver</description>
     </item>
     <item>
       <title>Post 3</title>
@@ -21,6 +21,13 @@
       <pubDate>Wed, 15 Mar 2023 11:00:00 -0700</pubDate>
       <guid>http://localhost:1313/blog/post-3/</guid>
       <description>Occaecat aliqua consequat laborum ut ex aute aliqua culpa quis irure esse magna dolore quis. Proident fugiat labore eu laboris officia Lorem enim. Ipsum occaecat cillum ut tempor id sint aliqua incididunt nisi incididunt reprehenderit. Voluptate ad minim sint est aute aliquip esse occaecat tempor officia qui sunt. Aute ex ipsum id ut in est velit est laborum incididunt. Aliqua qui id do esse sunt eiusmod id deserunt eu nostrud aute sit ipsum.</description>
+    </item>
+    <item>
+      <title>Set up your own Website</title>
+      <link>http://localhost:1313/project/hugo-web-blog/</link>
+      <pubDate>Wed, 15 Mar 2023 11:00:00 -0700</pubDate>
+      <guid>http://localhost:1313/project/hugo-web-blog/</guid>
+      <description>The Web is dead, long live the Web!</description>
     </item>
   </channel>
 </rss>

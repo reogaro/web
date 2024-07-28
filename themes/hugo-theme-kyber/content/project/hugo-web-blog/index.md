@@ -1,11 +1,12 @@
 +++
-title = 'Blog using Hugo'
+title = 'Set up your own Website'
 date = 2023-03-15T11:00:00-07:00
 draft = false
 tags = ['red','green','blue']
+summary = 'The Web is dead, long live the Web!'
 +++
 
-## Why Hugo is Awesome: A Static Site Generator Superstar
+## Hugo is Awesome
 
 ![](hugo.png)
 

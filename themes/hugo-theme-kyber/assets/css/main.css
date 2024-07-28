@@ -272,6 +272,7 @@ p {
 .previewtext {
     background-color: rgba(0, 0, 0, 0.7);
 
+    width: 100%;
     padding: 0.5em;
 }
 

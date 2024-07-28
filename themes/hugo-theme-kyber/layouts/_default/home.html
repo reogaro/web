@@ -26,30 +26,24 @@
     build things such as:</p>
 
   <div class="previewcontainer">
-    <div class="projectpreview" style="background-image: url('img/p1.png')">
-      <div class="previewtext">
-        <b>Retina Remover 9000</b>
-        <p>Diode laser engraver with CoreXY kinematics</p>
+  {{ range first 3 (where .Site.RegularPages "Section" "project") }}
+    <a href="{{ .RelPermalink }}">
+      <div class="projectpreview" style="background-image: url('img/p1.png')">
+        <div class="previewtext">
+          <b>{{ .LinkTitle }}</b>
+          <p>{{ .Summary }}</p>
+        </div>
       </div>
-    </div>
-    <div class="projectpreview" style="background-image: url('img/p2.png')">
-      <div class="previewtext">
-        <b>ExE3</b>
-        <p>It's less a 3D printer, more a tinkering subject</p>
+    </a>
+  {{ end }}
+    <a href="{{ .Site.BaseURL }}project">
+      <div class="projectpreview" style="background-image: url('img/p1.png')">
+        <div class="previewtext">
+          <b>More Projects</b>
+          <p>Even more creations!</p>
+        </div>
       </div>
-    </div>
-    <div class="projectpreview" style="background-image: url('img/p3.png')">
-      <div class="previewtext">
-        <b>Help Save the Web</b>
-        <p>No JS, No BS: Build Better Websites using HUGO!</p>
-      </div>
-    </div>
-    <div class="projectpreview" style="background-image: url('img/p4.png')">
-      <div class="previewtext">
-        <b>More</b>
-        <p>Visit the projects page for more projects</p>
-      </div>
-    </div>
+    </a>
   </div>
 </div>
 
@@ -76,8 +70,7 @@
     building, or about failed projects and why they failed - take a look at the blog. It has all that and more. </p>
 
   <div class="previewcontainerblog">
-
-    {{ range first 4 site.RegularPages }}
+    {{ range first 4 (where .Site.RegularPages "Section" "blog") }}
     <a href="{{ .RelPermalink }}">
       <div class="blogpostpreview">
         <p class="blogposttitle">{{ .LinkTitle }}</p>
