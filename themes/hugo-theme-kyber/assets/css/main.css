@@ -335,6 +335,21 @@ p {
     color: var(--color-background-body);
 }
 
+/* Post List styling */
+
+.postlisting {
+    margin: 1em 0;
+    padding: 2em;
+
+    border-radius: 2px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+    background-color: var(--color-background-body);
+}
+
+.postlisting h2 {
+    margin: 0 0 0.5em 0;
+}
+
 /* Footer */
 
 .footer {
