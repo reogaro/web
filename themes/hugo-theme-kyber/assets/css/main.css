@@ -35,7 +35,7 @@ body {
 
 *::-webkit-scrollbar-track {
     background-color: var(--color-background-body);
-  }
+}
 
 a {
     color: var(--color-text);
@@ -233,7 +233,7 @@ p {
 
 /* Blog */
 
-.previewcontainerblog { 
+.previewcontainerblog {
     background-color: var(--color-background-body);
     margin-top: 1em;
     padding: 1em;
@@ -246,7 +246,7 @@ p {
     gap: 0.5em;
 }
 
-.previewcontainerblog a { 
+.previewcontainerblog a {
     text-decoration: none;
 }
 
@@ -287,7 +287,8 @@ p {
     flex: 1;
     overflow: hidden;
     position: relative;
-    padding-bottom: 30%; /* Aspect Ratio */
+    padding-bottom: 30%;
+    /* Aspect Ratio */
     height: 0;
 }
 
@@ -364,3 +365,73 @@ p {
     margin: 0 0.2em;
 }
 
+
+/* 404 error page */
+
+.errorno {
+    padding: 2em;
+    text-align: center;
+}
+
+.errorno p {
+    font-size: 2em;
+}
+
+.animcontainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 512px;
+}
+
+.cube {
+    position: relative;
+    transform-style: preserve-3d;
+
+    width: 256px;
+    height: 256px;
+
+    transform: rotateX(-30deg) rotateY(30deg);
+    animation: rotate 5s infinite linear;
+}
+
+.face {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 256px;
+    height: 256px;
+    font-size: 4em;
+
+    color: var(--color-accent);
+    border: 2px solid var(--color-text);
+}
+
+.north {
+    transform: translateZ(128px);
+}
+
+.south {
+    transform: rotateY(180deg) translateZ(128px);
+}
+
+.west {
+    transform: rotateY(-90deg) translateZ(128px);
+}
+
+.east {
+    transform: rotateY(90deg) translateZ(128px);
+}
+
+@keyframes rotate {
+    from {
+        transform: rotateX(-20deg) rotateY(0);
+    }
+
+    to {
+        transform: rotateX(-20deg) rotateY(360deg);
+    }
+}
