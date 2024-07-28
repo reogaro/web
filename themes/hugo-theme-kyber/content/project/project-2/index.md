@@ -6,7 +6,7 @@ tags = ['red','green','blue']
 summary = 'Project 2 summary'
 +++
 
-# is Awesome
+# Hugo is Awesome
 
 ![](hugo.png)
 
