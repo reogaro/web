@@ -4,6 +4,8 @@ date = 2023-03-15T11:00:00-07:00
 draft = false
 tags = ['red','green','blue']
 summary = 'Project 2 summary'
+categories = ['project']
+image = 'img.jpg'
 +++
 
 # Hugo is Awesome
