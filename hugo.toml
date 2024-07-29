@@ -1,11 +1,8 @@
 baseURL = 'https://example.org/'
-languageCode = 'en-us'
+languageCode = 'en-US'
 title = 'KYBERWERK'
-theme = 'hugo-theme-kyber'
 
-[params]
-tagline = "Build cool shit. Put it on the net."
-phonetic = "(kai-ba-work)"
-youtube = "https://www.youtube.com/channel/UCtDCHoi4QGNj2gG4obC8fVg"
-instagram = "https://www.instagram.com/hexencoder/"
-mail = "info@telekom.de"
+[module]
+  [module.hugoVersion]
+    extended = false
+    min = "0.116.0"
