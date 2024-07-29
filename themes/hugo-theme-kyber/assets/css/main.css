@@ -75,7 +75,6 @@ p {
 
     float: left;
     line-height: 45px;
-    margin-left: 0.5em;
 }
 
 .navbar {
@@ -129,7 +128,7 @@ p {
 
 .herobackground {
     background-color: teal;
-    background: rgba(0, 0, 0, 0.5) url("/img/background_v1.png");
+    background: rgba(0, 0, 0, 0.5) url("/img/background.png");
     background-blend-mode: darken;
     background-repeat: no-repeat;
     background-size: cover;
@@ -188,6 +187,8 @@ p {
 
     border-radius: 2px;
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+
+    text-align: justify;
 }
 
 .contentpreview h2 {
@@ -351,6 +352,10 @@ p {
     margin: 0 0 0.5em 0;
 }
 
+.postlisting p {
+    text-align: justify;
+}
+
 /* Post Styling */
 
 .blogpost {
@@ -367,15 +372,16 @@ p {
 
 .blogheader {
     background: var(--color-neutral);
+    background-size: cover;
 
     padding: 8em 0 4em;
     text-align: center;
+    text-shadow: 0 0 4px rgba(0, 0, 0, 1);
 }
 
 .blogheader h1 {
     font-size: 3em;
     margin: 0.3em;
-    text-shadow: 0 0 4px rgba(0, 0, 0, 1);
 }
 
 .taxonomyLink {
@@ -404,9 +410,15 @@ p {
     width: 100%;
 }
 
-.postcontent h1,
+.postcontent h1 {
+    text-align: center;
+}
+
 .postcontent img {
-    margin: 0 auto;
+    display: block;
+    margin: 1.0rem auto;
+    max-width: 100%;
+    height: auto;
 }
 
 /* Footer */

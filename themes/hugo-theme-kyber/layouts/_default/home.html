@@ -7,9 +7,9 @@
       <h3 class="tagline">{{ .Site.Params.tagline}}</h3>
       <h1 class="logotext">{{ .Site.Title }}</h1>
       <h2 class="phonetic">{{ .Site.Params.phonetic }}</h2> <br />
+      <a href="{{ .Site.BaseURL }}blog/" class="splashlink">Blog</a>
+      <a href="{{ .Site.BaseURL }}project/" class="splashlink">Projects</a>
       <a href="{{ .Site.Params.youtube }}" class="splashlink" target="_blank" rel="noopener noreferrer">YouTube</a>
-      <a href="/" class="splashlink">Blog</a>
-      <a href="/" class="splashlink">Projects</a>
     </div>
   </div>
 </div>
@@ -28,7 +28,7 @@
   <div class="previewcontainer">
   {{ range first 3 (where .Site.RegularPages "Section" "project") }}
     <a href="{{ .RelPermalink }}">
-      <div class="projectpreview" style="background-image: url('img/p1.png')">
+      <div class="projectpreview" style="background-image: url('{{ .Permalink }}{{ .Params.image }}')">
         <div class="previewtext">
           <b>{{ .LinkTitle }}</b>
           <p>{{ .Summary }}</p>
@@ -36,8 +36,8 @@
       </div>
     </a>
   {{ end }}
-    <a href="{{ .Site.BaseURL }}project">
-      <div class="projectpreview" style="background-image: url('img/p1.png')">
+    <a href="{{ .Site.BaseURL }}project/">
+      <div class="projectpreview" style="background-image: url('img/projects.png')">
         <div class="previewtext">
           <b>More Projects</b>
           <p>Even more creations!</p>
@@ -78,7 +78,7 @@
       </div>
     </a>
     {{ end }}
-    <a href="{{ .Site.BaseURL }}blog">
+    <a href="{{ .Site.BaseURL }}blog/">
       <div class="blogpostpreview">
         <p class="blogposttitle">More Articles</p>
       </div>
