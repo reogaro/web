@@ -1,4 +1,0 @@
-[submodule "themes/kyber"]
-	path = themes/kyber
-	url = git@github.com:reogaro/web.git
-	branch = theme
