@@ -1,0 +1,40 @@
+/* Importing Fonts */
+
+/* 
+ * Use WOFF2 or WOFF instead of TTF, as they save bandwidth 
+ *
+ * https://github.com/google/woff2 (woff2-tools on fedora) to convert TTF to WOFF2
+ */
+
+@font-face {
+  font-family: 'Orbitron';
+  src: 
+    local('Orbitron'),
+    url('/fonts/orbitron-variable.woff2') format('woff2'),
+    url('/fonts/orbitron-variable.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roboto Slab';
+  src:
+    local('Roboto Slab'),
+    url('/fonts/roboto-slab-variable.woff2') format('woff2'),
+    url('/fonts/roboto-slab-variable.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Hack';
+  src: 
+    local('Hack'),
+    url('/fonts/hack-regular.woff2?sha=3114f1256') format('woff2'),
+    url('/fonts/hack-regular.woff?sha=3114f1256') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}

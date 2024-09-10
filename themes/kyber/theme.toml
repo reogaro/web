@@ -1,0 +1,15 @@
+name = 'KYBER'
+license = 'MIT'
+licenselink = 'https://github.com/reogaro/web/tree/kyber/LICENSE'
+description = 'Flat and dark theme.'
+
+homepage = 'https://github.com/reogaro/web/tree/kyber'
+
+# Taxonomy terms
+tags = ['blog', 'projects', 'dark', 'portfolio', 'minimal']
+features = ['minimal', 'no-js', 'no-tracking']
+
+# If the theme has a single author
+[author]
+  name = 'Leo'
+  homepage = 'https://github.com/reogaro/'
