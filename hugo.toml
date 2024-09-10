@@ -1,7 +1,7 @@
 baseURL = 'https://example.org/'
 languageCode = 'en-us'
 title = 'KYBERWERK'
-theme = 'hugo-theme-kyber'
+theme = 'kyber'
 
 [params]
 tagline = "Build cool shit. Put it on the net."
