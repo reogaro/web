@@ -351,19 +351,10 @@ p {
     border: none;
     height: auto;
     cursor: pointer;
-    -webkit-transition: 0.4s all;
-    -moz-transition: 0.4s all;
-    transition: 0.4s all;
 }
-
-.youtube-player img:hover {
-    filter: brightness(75%);
-    -webkit-filter: brightness(75%);
-}
-
-
 
 .youtube-player .play {
+    cursor: pointer;
     position: absolute;
     height: 48px;
     width: 68px;
@@ -397,8 +388,8 @@ p {
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
     border-left: 15px solid #FFFFFF;
-    top: 30%;
-    right: 33%;
+    top: 28%;
+    right: 34%;
 }
 
 /* Contact Section */
