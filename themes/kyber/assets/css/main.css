@@ -451,6 +451,7 @@ p {
 .blogheader {
     background: var(--color-neutral);
     background-size: cover;
+    background-position: 50% 33%;
 
     padding: 8em 0 4em;
     text-align: center;
@@ -494,9 +495,33 @@ p {
 
 .postcontent img {
     display: block;
-    margin: 1.0rem auto;
+    margin: 1.5em auto;
     max-width: 100%;
     height: auto;
+    max-height: 18em;
+}
+
+.postcontent ul {
+  margin: 1em 1.5em;
+}
+
+/* Code */
+.postcontent .highlight {
+  margin: 0.5em;
+}
+
+.postcontent table, th, td {
+  margin: 1em auto;
+  border: 1px solid;
+  border-collapse: collapse;
+}
+
+.postcontent th {
+  background-color: #FFFFFF20;
+}
+
+.postcontent th, td {
+  padding: 0.2em 0.4em;
 }
 
 /* Footer */
