@@ -5,7 +5,7 @@ draft = false
 tags = ['music', 'guitar']
 summary = 'Fixing up a scrpyard find'
 categories = ['project']
-image = 'repair.jpg'
+image = 'score.jpg'
 +++
 
 
@@ -19,8 +19,6 @@ Or: How I acquired a free Marshall G50R CD combo amplifier from the scrapyard an
 
 I found the amp sitting in a container as I was dropping off some e-waste at our local scrapyard.
 After asking, the worker there was nice enough to give it to me for free. What a legend, though he warned me it likely was broken. No problem, It'll be an easy fix! Right?
-
-![](score.jpg)
 
 ## Cleaning
 

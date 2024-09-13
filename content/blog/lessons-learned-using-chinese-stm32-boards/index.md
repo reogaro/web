@@ -55,7 +55,7 @@ target extended-remote localhost:3333
 
 The probably cheapest way to flash STM32 chips are Chinese ST-LINK/V2 clones. They offer a SWD interface, no JTAG. This debugger has a 10-pin IDC connector. The pinout of this connector can be found below.
 
-> [!warning] Fedora ```arm-none-eabi-gdb``` was [dropped](https://src.fedoraproject.org/rpms/arm-none-eabi-gdb). Plain ```gdb``` supposedly works [just as well](https://github.com/rust-embedded/book/pull/335).
+**!warning for fedora users!** Fedora ```arm-none-eabi-gdb``` was [dropped](https://src.fedoraproject.org/rpms/arm-none-eabi-gdb). Plain ```gdb``` supposedly works [just as well](https://github.com/rust-embedded/book/pull/335).
 
 The blue ST-Links (blue pcb) I own contain a LQFP48 **Geehy** ```APM32F103CBT6```.
 
@@ -68,11 +68,12 @@ Blue Pinout (tested):
 | RST      | PB6    |
 | SWIM     | PA9    |
 
-*Pinout Infos:* [Black Magic](https://github.com/blackmagic-debug/blackmagic/tree/main/src/platforms/stlink#reverting-to-original-st-firmware-with-running-bmp-firmware), [Phil Pemberton](https://philpem.me.uk/elec/stlink-blackmagic)
+*Further Pinout Infos:* [Black Magic](https://github.com/blackmagic-debug/blackmagic/tree/main/src/platforms/stlink#reverting-to-original-st-firmware-with-running-bmp-firmware), [Phil Pemberton](https://philpem.me.uk/elec/stlink-blackmagic)
 
 The red one (green pcb) uses a *differently labeled* **Geehy** ```APM32F103CBT6```
 
 # Reflashing a clone ST-Link to Black Magic Debug Probe
+
 [Michał Ciesielski](https://ciesie.com/post/black_magic_probe_stlink/) has an excellent blog post tutorial on this topic that was only slightly out-of-date. The following addendum must be considered:
 [newer stlink-tool for linux](https://github.com/GabyPCgeeK/stlink-tool)
 As of right now, the blackmagic firmware doesn't build on some systems. Nix can fix this problem:
