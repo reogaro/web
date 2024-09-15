@@ -2,7 +2,7 @@
 title = 'Marshall G50R CD Amplifier Repair'
 date = 2023-03-15T11:00:00-07:00
 draft = false
-tags = ['music', 'guitar']
+tags = ['music', 'guitar', 'electronics']
 summary = 'Fixing up a scrpyard find'
 categories = ['project']
 image = 'score.jpg'
@@ -11,7 +11,7 @@ image = 'score.jpg'
 
 # Marshall G50R CD Repair
 
-Or: How I acquired a free Marshall G50R CD combo amplifier from the scrapyard and got it working again.
+Or: How I got a free Marshall G50R CD combo amplifier from the scrapyard and fixed it up.
 
 ![](stock-photo-removebg-preview.png)
 
@@ -22,7 +22,7 @@ After asking, the worker there was nice enough to give it to me for free. What a
 
 ## Cleaning
 
-The thing was filthy, so it got some good disassembly and cleaning action.
+The thing was filthy, so it got some thorough disassembly and cleaning action.
 
 ![](clean.jpg)
 
@@ -30,18 +30,16 @@ The thing was filthy, so it got some good disassembly and cleaning action.
 
 ![](electronics.jpg)
 
-Cleaning brought some electrical problems to light. A output cable had broken off and four of the Potentiometers had damage. The cable was an easy fix, and the Potentiometers only slightly more involved.
-I asked Marshall Support for help, and they provided incomplete schematics for reference, but sadly also forbid me from sharing them.
+Cleaning brought some electrical problems to light. A output cable from the amplifier to the speaker cone had broken off and four of the Potentiometers had damage. The cable was an easy fix, and the Potentiometers only slightly more involved.
+I tried asking Marshall Support for help, and they unhelpfully provided incomplete schematics for reference, and sadly also forbid me from sharing them. They're available elsewhere on the internet though, if you know where to look.
 
-So I was on my own to find replacements. Luckily the pots are labeled with their values, so after extracting the circuit board I could note down their values and replace the problematic ones:
+So I had to desolder the potentiometers. They are labeled with their values, and so after extracting the circuit board I could note down their values and replace the problematic ones with the closest values I could find:
 
 |             | NGain | NLow | NMid | NHigh | BGain | BCont | BBass | BTreble | BVol  | Reverb |
 | ----------- | ----- | ---- | ---- | ----- | ----- | ----- | ----- | ------- | ----- | ------ |
 | Annotation  | VR1   | VR3  | VR4  | VR2   | VR6   | VR9   | VR8   | VR7     | VR10  | VR5    |
 | Value       | B200K | A1M  | B20K | B200K | A500K | B20K  | A1M   | B200K   | B100K | B20K   |
 | Replacement | B220K |      | B22K |       |       |       |       |         | B100K | B22K   |
-
-*Note: Values differ slightly for ease of sourcing.*
 
 ![](repair.jpg)
 
@@ -51,13 +49,13 @@ And with that, the electronics where working again. It was time to take care of 
 
 ### Corners
 
-One of the corner protectors was cracked. The [Marshall corners](https://www.marshall.com/de/de/product/front-corners) shipping is hilariously overpriced, so I ordered some [AliExpress](https://de.aliexpress.com/item/1005002467000614.html) replacement - big mistake. They don't fit right with the original 3/4" corner ID. Oh well, reinstalled the cracked one.
+One of the corner protectors was cracked. The [Marshall corners](https://www.marshall.com/de/de/product/front-corners) shipping is hilariously overpriced, so I tried ordering [AliExpress](https://de.aliexpress.com/item/1005002467000614.html) replacements. They where of terrible quality and didn't fit. So instead of searching around for cosmetic parts for a multi-decade old piece of equipment, I just reinstalled the old one again.
 
 ![](corners.jpg)
 
 ### Screws
 
-Here's a table of all the screws used. Pretty sure they're imperial. No idea what exactly though, so I've approximated them in metric and guessed the imperial sizing. They're all Phillips Head. I decided to replace the very rusty ones with their metric approximations.
+Many of the Screws where rusty and not black anymore. I wanted to take a crack at replacing them, but finding black screws in the right sizes proved to be impossible. Maybe this table of screws will help someone, they're almost certainly all imperial, but I noted down the closest metric screw size. The imperial measurements are pretty much guesses.
 
 | Pcs | Screw     | Metric Approx. | Head Type   | Used for attaching  |
 | --- | --------- | -------------- | ----------- | ------------------- |
@@ -69,5 +67,5 @@ Here's a table of all the screws used. Pretty sure they're imperial. No idea wha
 
 ## Conclusion
 
-**Success!** It really was an easy fix. Just some manual labor and basic electronics knowledge.
+And thus, the amplifier was whole again. At least as whole as I'd make it. A happy day for me, a very sad day for my next-door neighbours.
 
