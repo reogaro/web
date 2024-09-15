@@ -200,6 +200,10 @@ p {
     margin-bottom: 0.5em;
 }
 
+.contentpreview a {
+    text-decoration: none;
+}
+
 .previewcontainer {
     background-color: var(--color-background-body);
 
@@ -213,6 +217,15 @@ p {
     display: flex;
     gap: 1em;
     overflow-x: auto;
+}
+
+.previewcontainer a {
+    text-decoration: none;
+    transition: transform 0.3s ease-in-out;
+}
+
+.previewcontainer a:hover {
+    transform: scale(1.02);
 }
 
 .projectpreview {
@@ -419,19 +432,35 @@ p {
 
 .postlisting {
     margin: 1em 0;
-    padding: 2em;
+    padding: 1.5em;
+
+    display: flex;
+    align-content: space-between;
+    gap: 1.5em;
 
     border-radius: 2px;
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+
     background-color: var(--color-background-body);
 }
 
 .postlisting h2 {
     margin: 0 0 0.5em 0;
+
+    text-align: start;
 }
 
 .postlisting p {
     text-align: justify;
+}
+
+.pageimg {
+    padding: 5em;
+    border-radius: 2px;
+
+    background: var(--color-neutral);
+    background-size: cover;
+    background-position: 50% 33%;
 }
 
 /* Post Styling */
@@ -453,7 +482,7 @@ p {
     background-size: cover;
     background-position: 50% 33%;
 
-    padding: 8em 0 4em;
+    padding: 8em 6em 4em;
     text-align: center;
     text-shadow: 0 0 4px rgba(0, 0, 0, 1);
 }
@@ -506,6 +535,7 @@ p {
 }
 
 /* Code */
+
 .postcontent .highlight {
   margin: 0.5em;
 }
