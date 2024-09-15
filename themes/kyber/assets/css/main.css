@@ -189,6 +189,7 @@ p {
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
 
     text-align: justify;
+    text-decoration: none;
 }
 
 .contentpreview h2 {
@@ -360,7 +361,7 @@ p {
     width: 68px;
     left: 50%;
     top: 50%;
-    
+
     margin: 100px auto;
     margin-left: -34px;
     margin-top: -24px;
@@ -380,7 +381,7 @@ p {
     border-radius: 5% / 50%;
 }
 
-.youtube-player .play::after{
+.youtube-player .play::after {
     content: "";
     position: absolute;
     height: 2px;
@@ -424,6 +425,7 @@ p {
     border-radius: 2px;
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
     background-color: var(--color-background-body);
+    text-decoration: none;
 }
 
 .postlisting h2 {
@@ -502,26 +504,29 @@ p {
 }
 
 .postcontent ul {
-  margin: 1em 1.5em;
+    margin: 1em 1.5em;
 }
 
 /* Code */
 .postcontent .highlight {
-  margin: 0.5em;
+    margin: 0.5em;
 }
 
-.postcontent table, th, td {
-  margin: 1em auto;
-  border: 1px solid;
-  border-collapse: collapse;
+.postcontent table,
+th,
+td {
+    margin: 1em auto;
+    border: 1px solid;
+    border-collapse: collapse;
 }
 
 .postcontent th {
-  background-color: #FFFFFF20;
+    background-color: #FFFFFF20;
 }
 
-.postcontent th, td {
-  padding: 0.2em 0.4em;
+.postcontent th,
+td {
+    padding: 0.2em 0.4em;
 }
 
 /* Footer */
