@@ -26,7 +26,6 @@ theme = 'hugo-theme-kyber'
 tagline = "Build cool shit. Put it on the net."
 phonetic = "(kai-ba-work)"
 youtube = "https://www.youtube.com/channel/UCtDCHoi4QGNj2gG4obC8fVg"
-instagram = "https://www.instagram.com/hexencoder/"
 mail = "info@telekom.de"
 ```
 
