@@ -1,0 +1,65 @@
++++
+title = 'The original spirit of the web is dead'
+date = 2024-09-15T00:00:00-07:00
+draft = false
+tags = ['web', 'unix', 'privacy']
+categories = ['blog']
+image = "image.jpg"
++++
+
+
+
+# FREE AND OPEN
+
+*The original spirit of the web is dead.*
+
+![](hugo.png)
+
+In march of 1989, Tim Berners-Lee, the inventor of the world wide web, envisioned a democratic space for freely sharing knowledge, information and research. The resulting protocols and standards evolved into the "World Wide Web" we know today.
+
+During the early years of the web this spirit thrived: Users built their own websites, openly sharing passions, information, and more. And even throughout the 90s and 00s, this spirit persisted. From hand-rolled HTML pages to vibrant WordPress blogs, a user's web presence was their personal website.
+
+# BORN OF LOGIC, RAISED BY SCIENCE
+
+*The web was designed for scientists and academics.*
+
+HTML and CSS, while not complex, require some technical understanding. Setting up a Web server a daunting task to the layperson. Networking might as well be black magic to most.
+
+And so as the web grew and attracted more non-technical people, services evolved to simplify these tasks. Web hosting services like GeoCities and Angelfire made networking and hosting more accessible. Later, WordPress and other content management systems hid much of the code. Finally, platforms emerged. Their simple "You post, we host" model grew them a massive userbase.
+
+# DID YOU SEEM MY POST ON PLATFORM X
+
+*Death by Megacorperation*
+
+Thanks to the convenience of having someone else host, serve, and discover content, platforms have become the primary method for engaging with the Web. However, this dominance has come at a cost:
+
+- *User retention*: In order to retain your attention for the longest possible time and serve more ads, their algorithms serve addictive content. Quality, truthfulness or usefulness are not considered.
+- *Data Collection*: Collecting any and all user data to serve you ever more hyper-specific adverts results in invasion of your privacy and spying.
+- *Censorship*: They delete, suppress and ban content that could harm their advertising revenue, stifling diverse voices.
+
+It has gotten to a point that most users frequent 4 sites at most, if they even leave their apps. Thus, you are dependent on the megacorps if you want your ideas to be seen.
+
+If you're not paying for the product, you are the product. 
+
+# OWN YOUR WEB PRESENCE
+
+*Fuck it, I'll just have to do it myself*
+
+Here's what we could gain from taking more lessons from the original spirit of the internet:
+
+- Freedom from censorship: No longer be at the mercy of platform algorithms and policies that can suppress your content.
+- Data privacy: Keep your personal information private and control who has access to it.
+- Content ownership: Own your content outright, without fear of it being removed or altered by a third party.
+- Technical and creative control: Have full control over the design and functionality of your website, without relying on templates or restrictions.
+- A more resilient internet: Contribute to a decentralized and diverse internet ecosystem, reducing reliance on a few dominant platforms.
+
+call to action!!
+
+# THE DO IT YOURSELF ETHOS
+
+*Dream of a democratic web*
+
+- https://indieweb.org/
+- https://gohugo.io/
+- https://landchad.net/
+

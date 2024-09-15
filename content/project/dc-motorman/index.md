@@ -2,7 +2,7 @@
 title = 'DC Motorman'
 date = 2023-03-15T11:00:00-07:00
 draft = false
-tags = ['machine','pcb','pico']
+tags = ['machine','electronics','pico']
 summary = '20W 2-channel DC Servo Driver'
 categories = ['project']
 image = 'dc-motorman-terrible-photo.jpg'
@@ -10,14 +10,14 @@ image = 'dc-motorman-terrible-photo.jpg'
 
 # DC Motorman
 
-The Pico DC Servo Controller is a circuit board designed to control two DC motors with quadrature encoders via UART communication. It utilizes a Raspberry Pi Pico for control 
+The "DC Servoman" is my nickname for a Pico DC Servo Controller circuit board, designed to control two DC motors with quadrature encoders via UART communication.
 
 ## Specifications
 
 - Microcontroller: Raspberry Pi Pico
 - Motor Driver ICs: TB67H451FNG motor drivers
 - Power Regulation: 7805 voltage regulator
-- DC Motors: Controlled via quadrature encoders
+- DC Motors: Feedback via quadrature encoders
 - Power Input: A 5V DC input via a DC jack (DC1)
 - Communication: UART over Raspberry Pi Pico's GPIO pins or USB
 
@@ -45,4 +45,5 @@ The software running on the Raspberry Pi Pico is responsible for motor control, 
 
 ## Conclusion
 
-The Pico DC Servo Controller is a schway circuit board for controlling two DC motors with feedback from quadrature encoders. This setup allows precise motor control, making it suitable for various automation and robotics applications.
+The Pico DC Servo Controller is a great learning experience for designing a circuit board. It successfully controls two DC motors with feedback from quadrature encoders. With further software improvements, this will be used in future software projects.
+
