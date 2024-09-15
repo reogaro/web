@@ -7,8 +7,11 @@
     {{ range .Pages }}
       <a href="{{ .RelPermalink }}">
         <div class="postlisting">
-          <h2>{{ .LinkTitle }}</h2>
-          <p>{{ .Summary }}</p>
+          <div class="pageimg" style="background-image: url('{{ .Permalink }}{{ .Params.image }}')"></div>
+          <div>
+            <h2>{{ .LinkTitle }}</h2>
+            <p>{{ .Summary }}</p>
+          </div>
         </div>
       </a>
     {{ end }}
