@@ -1,11 +1,12 @@
 +++
-title = 'Marshall G50R CD Amplifier Repair'
+title = 'Marshall G50RCD Repair'
 date = 2023-03-15T11:00:00-07:00
 draft = false
 tags = ['music', 'guitar', 'electronics']
 summary = 'Fixing up a scrpyard find'
 categories = ['project']
 image = 'score.jpg'
+transparentimg  = 'stock-photo-removebg-preview.png'
 +++
 
 
