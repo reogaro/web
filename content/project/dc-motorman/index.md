@@ -5,7 +5,7 @@ draft = false
 tags = ['machine','electronics','pico']
 summary = '20W 2-channel DC Servo Driver'
 categories = ['project']
-image = 'dc-motorman-terrible-photo.jpg'
+image = 'pcb-only.jpg'
 transparentimg  = 'motor.png'
 +++
 
@@ -45,6 +45,8 @@ The software running on the Raspberry Pi Pico is responsible for motor control, 
 **Motor Control via PWM:** Pulse-width modulation (PWM) is used to control the speed of the motors.
 
 ## Conclusion
+
+![](with-stuff.jpg)
 
 The Pico DC Servo Controller is a great learning experience for designing a circuit board. It successfully controls two DC motors with feedback from quadrature encoders. With further software improvements, this will be used in future software projects.
 

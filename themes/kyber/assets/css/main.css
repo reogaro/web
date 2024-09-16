@@ -102,8 +102,13 @@ p {
     font-weight: bold;
 }
 
-@media (max-width: 650px) {
+@media (max-width: 900px) {
+    .bloglisticon {
+      display: none !important;
+    }
+}
 
+@media (max-width: 650px) {
     .navlogo {
         display: none;
     }
@@ -111,6 +116,15 @@ p {
     .navbar {
         float: none;
         text-align: center;
+    }
+
+    .tagelement {
+      display: none !important;
+    }
+
+    .bloglisttitle {
+      font-size: 0.8em;
+      color: red;
     }
 }
 
@@ -120,9 +134,17 @@ p {
     }
 
     .navbar a {
-        font-size: 0.8em;
+        font-size: 0.85em;
         font-weight: bold;
         margin: 0 0.3em;
+    }
+
+    .logotext {
+      font-size: 2.5em !important;
+    }
+
+    .blogpostdate {
+      display: none;
     }
 }
 
@@ -144,6 +166,7 @@ p {
 .herocontainer {
     max-width: var(--content-width);
     margin: 0 auto;
+    overflow-x: hidden;
     height: 100%;
     display: flex;
     align-items: center;
@@ -662,6 +685,8 @@ p {
     background-repeat: no-repeat;
     background-size: contain;
 
+    filter: brightness(75%);
+
     z-index: 0;
     pointer-events: none;
 
@@ -683,8 +708,6 @@ p {
 
     margin: 1em auto;
     padding: 1em;
-
-    text-shadow: 0px 0px 3px black;
 }
 
 .projectgrid {
@@ -701,12 +724,12 @@ p {
 
     flex-grow: 1;
     flex-shrink: 1;
-    flex-basis: 20em;
+    flex-basis: 10em;
 }
 
 .projectlistlink {
     text-decoration: none;
-    color: var(--color-accent);
+    color: #00BBBB;
 }
 
 .projectlistimg {
@@ -719,10 +742,14 @@ p {
 
 .projectlistimgel {
     width: 100%;
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 1 / 1;
+
     object-fit: cover;
     object-position: 0% 25%;
+
     border-radius: 2px;
+
+    filter: brightness(60%);
 }
 
 .projectlisttext {
@@ -739,6 +766,8 @@ p {
     justify-content: center;
 
     font-family: var(--font-family-logo);
+    font-size: 2em;
+    font-weight: 900;
 }
 
 /* Footer */
