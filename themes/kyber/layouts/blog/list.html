@@ -7,24 +7,28 @@
   <br>
   <br>
   {{ range .Pages }}
-  <a href="{{ .RelPermalink }}">
     <div class="bloglistlisting">
       <div class="bloglistimg">
-        <img src="{{ .Permalink }}{{ .Params.image }}">
+        <a href="{{ .RelPermalink }}" class="bloglistlink">
+          <img class="bloglistimgel" src="{{ .Permalink }}{{ .Params.image }}">
+        </a>
       </div>
       <div class="bloglisttitle">
-        <h2>{{ .LinkTitle }}</h2>
+        <a href="{{ .RelPermalink }}" class="bloglistlink">
+          <h2>{{ .LinkTitle }}</h2>
+        </a>
       </div>
       <div class="bloglisttext">
         {{ range .Params.tags }}
-        <p class="tagelement">{{ . }}</p>
+        <a href="{{ $.Site.BaseURL }}tags/{{ . | urlize }}" class="tagelement">{{ . }}</a>
         {{ end }}
         <br>
-        <b>{{ .Summary }}</b>
+        <a href="{{ .RelPermalink }}" class="bloglistlink">
+          <b>{{ .Summary }}</b>
+        </a>
       </div>
       <div id="bloglisticon"></div>
     </div>
-  </a>
   {{ end }}
 </div>
 <div class="gradientbg"></div>
