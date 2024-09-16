@@ -5,6 +5,7 @@ draft = false
 tags = ['web', 'linux', 'privacy']
 categories = ['blog']
 image = "image.jpg"
+summary = "What went wrong with the world wide web? A deeper look at systemic problems and a search for solutions."
 +++
 
 

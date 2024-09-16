@@ -5,6 +5,8 @@ draft = false
 tags = ['embedded', 'linux']
 categories = ['blog']
 image = 'st-link-clone.jpg'
+summary = "Lessons learned from failing over and over and over and over. On STM32, clones, flashing and debugging."
+
 +++
 
 # The allure of AliExpress
