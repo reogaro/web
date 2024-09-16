@@ -6,6 +6,7 @@ tags = ['machine','laser']
 summary = 'A 2W diode laser engraver'
 categories = ['project']
 image = 'retina-remover-9000-terrible-photo.jpg'
+transparentimg  = 'laser-symbol.svg'
 +++
 
 # Retina Remover 9000

@@ -6,6 +6,7 @@ tags = ['machine','electronics','pico']
 summary = '20W 2-channel DC Servo Driver'
 categories = ['project']
 image = 'dc-motorman-terrible-photo.jpg'
+transparentimg  = 'motor.png'
 +++
 
 # DC Motorman

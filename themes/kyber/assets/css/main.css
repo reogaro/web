@@ -74,11 +74,13 @@ p {
     text-decoration: none;
 
     float: left;
+    margin-left: 0.3em;
     line-height: 45px;
 }
 
 .navbar {
     float: right;
+    margin-right: 0.5em;
     height: 45px;
     line-height: 45px;
 }
@@ -118,9 +120,9 @@ p {
     }
 
     .navbar a {
-        font-size: 15px;
+        font-size: 0.8em;
         font-weight: bold;
-        margin: 0 2px;
+        margin: 0 0.3em;
     }
 }
 
@@ -293,6 +295,7 @@ p {
 
 .blogpostdate {
     color: var(--color-accent);
+    padding-left: inherit;
 }
 
 .previewtext {
@@ -569,6 +572,7 @@ p {
 /* Blog Post List Page */
 
 .bloglistcontainer {
+    overflow: visible;
     max-width: var(--content-width);
 
     margin: 1em auto;
@@ -579,20 +583,21 @@ p {
 
 .bloglistlink {
     text-decoration: none;
-    color: var(--color-text);
+    color: var(--color-accent);
 }
 
 .bloglistlisting {
     display: grid; 
     grid-template-columns: 40% 60%;
-    /* grid-template-rows: 14em 6em; */
     grid-auto-rows: minmax(min-content, max-content);
-    gap: 1em 3em;
     margin-bottom: 1em;
+
+    position: relative;
 
     grid-template-areas: 
         "bloglistimg bloglistimg"
-        "bloglisttitle bloglisttext"; 
+        "bloglisttitle bloglisttext" 
+        "bloglistextra bloglistextra"; 
 }
 
 .bloglisttitle {
@@ -601,18 +606,24 @@ p {
 
     text-align: right;
 
-    padding-left: 15%;
+    padding: 0 0.5em;
+
+    z-index: 1;
 }
 
 .bloglisttext {
     grid-area: bloglisttext;
+
+    padding: 0 0.5em;
+
+    z-index: 1;
 }
 
 .tagelement {
     display: inline;
 
     color: var(--color-background-body);
-    background-color: var(--color-text);
+    background-color: var(--color-accent);
 
     text-decoration: none;
     text-shadow: none;
@@ -626,8 +637,14 @@ p {
     margin-top: 0.5em;
 }
 
+.tagelement:hover {
+    color: var(--color-text);
+}
+
 .bloglistimg {
     grid-area: bloglistimg;
+
+    margin: 1em 0;
 
     text-align: center;
 }
@@ -638,6 +655,90 @@ p {
     object-fit: cover;
     object-position: 0% 25%;
     border-radius: 2px;
+}
+
+.bloglisticon {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+
+    z-index: 0;
+    pointer-events: none;
+
+    display: inline-block;
+
+    position: absolute;
+    bottom: 0%;
+    left: -20%;
+
+    width: 60%;
+    height: 80%;
+}
+
+/* Project List Page */
+
+.projectlistcontainer {
+    overflow: visible;
+    max-width: var(--content-width);
+
+    margin: 1em auto;
+    padding: 1em;
+
+    text-shadow: 0px 0px 3px black;
+}
+
+.projectgrid {
+    display: flex;
+    gap: 3em;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    justify-content: space-around;
+}
+
+.projectcard {
+    position: relative;
+    max-width: 20em;
+
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 20em;
+}
+
+.projectlistlink {
+    text-decoration: none;
+    color: var(--color-accent);
+}
+
+.projectlistimg {
+    grid-area: bloglistimg;
+
+    margin: 1em 0;
+
+    text-align: center;
+}
+
+.projectlistimgel {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    object-position: 0% 25%;
+    border-radius: 2px;
+}
+
+.projectlisttext {
+    position: absolute;
+    display: flex;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+
+    font-family: var(--font-family-logo);
 }
 
 /* Footer */

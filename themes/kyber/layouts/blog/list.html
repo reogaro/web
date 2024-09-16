@@ -5,7 +5,6 @@
   {{ .Content }}
   <br>
   <br>
-  <br>
   {{ range .Pages }}
     <div class="bloglistlisting">
       <div class="bloglistimg">
@@ -27,7 +26,7 @@
           <b>{{ .Summary }}</b>
         </a>
       </div>
-      <div id="bloglisticon"></div>
+      <div class="bloglisticon" style="background-image: url('{{ .Permalink }}{{ .Params.transparentimg }}');"></div>
     </div>
   {{ end }}
 </div>

@@ -4,5 +4,4 @@ date = 2023-01-01T08:30:00-07:00
 draft = false
 +++
 
-An index of Projects I deemed worthy of sharing with the world
-
+A collection of projects I have documented. Get inspired, steal my schematics, see how things go wrong if they aren't done properly.
