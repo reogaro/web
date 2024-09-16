@@ -10,7 +10,9 @@ image = 'retina-remover-9000-terrible-photo.jpg'
 
 # Retina Remover 9000
 
-The Retina Remover 9000 project was a school project in which I built a laser engraver from scratch with a friend.
+![](laser-symbol.svg)
+
+The Retina Remover 9000 was a school project for which a friend and I designed and built a laser engraver from scratch. It uses a 2W china 450nm diode laser source with FluidNC Firmware and a CoreXY motion system to burn decorative patterns into wood, cardboard, plastic and more.
 
 ![](retina-remover-9000-terrible-photo.jpg)
 

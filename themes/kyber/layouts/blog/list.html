@@ -1,0 +1,35 @@
+{{ define "main" }}
+<div class="bloglistcontainer">
+  <h1>{{ .Title }}</h1>
+  <br>
+  {{ .Content }}
+  <br>
+  <br>
+  <br>
+  {{ range .Pages }}
+    <div class="bloglistlisting">
+      <div class="bloglistimg">
+        <a href="{{ .RelPermalink }}" class="bloglistlink">
+          <img class="bloglistimgel" src="{{ .Permalink }}{{ .Params.image }}">
+        </a>
+      </div>
+      <div class="bloglisttitle">
+        <a href="{{ .RelPermalink }}" class="bloglistlink">
+          <h2>{{ .LinkTitle }}</h2>
+        </a>
+      </div>
+      <div class="bloglisttext">
+        {{ range .Params.tags }}
+        <a href="{{ $.Site.BaseURL }}tags/{{ . | urlize }}" class="tagelement">{{ . }}</a>
+        {{ end }}
+        <br>
+        <a href="{{ .RelPermalink }}" class="bloglistlink">
+          <b>{{ .Summary }}</b>
+        </a>
+      </div>
+      <div id="bloglisticon"></div>
+    </div>
+  {{ end }}
+</div>
+<div class="gradientbg"></div>
+{{ end }}
