@@ -1,34 +1,31 @@
 {{ define "main" }}
-  <div class="bloglistcontainer">
-    <h1>{{ .Title }}</h1>
-    <br>
-    {{ .Content }}
-    <br>
-    <br>
-    <br>
-    <br>
-    {{ range .Pages }}
-      <a href="{{ .RelPermalink }}">
-        <div class="bloglistlisting">
-          <div class="bloglistimg">
-            <img src="{{ .Permalink }}{{ .Params.image }}">
-          </div>
-          <div class="bloglisttitle">
-            <h2>{{ .LinkTitle }}</h2>
-          </div>
-          <div class="bloglisttext">
-            {{ range .Params.tags }}
-                <p>{{ . }}</p>
-            {{ end }}
-            <br>
-            <b>{{ .Summary }}</b>
-          </div>
-          <div id="bloglisticon"></div>
-        </div>
-      </a>
-    <br>
-    <br>
-    {{ end }}
-  </div>
-  <div class="gradientbg"></div>
+<div class="bloglistcontainer">
+  <h1>{{ .Title }}</h1>
+  <br>
+  {{ .Content }}
+  <br>
+  <br>
+  <br>
+  {{ range .Pages }}
+  <a href="{{ .RelPermalink }}">
+    <div class="bloglistlisting">
+      <div class="bloglistimg">
+        <img src="{{ .Permalink }}{{ .Params.image }}">
+      </div>
+      <div class="bloglisttitle">
+        <h2>{{ .LinkTitle }}</h2>
+      </div>
+      <div class="bloglisttext">
+        {{ range .Params.tags }}
+        <p class="tagelement">{{ . }}</p>
+        {{ end }}
+        <br>
+        <b>{{ .Summary }}</b>
+      </div>
+      <div id="bloglisticon"></div>
+    </div>
+  </a>
+  {{ end }}
+</div>
+<div class="gradientbg"></div>
 {{ end }}

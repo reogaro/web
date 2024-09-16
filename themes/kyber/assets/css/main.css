@@ -213,7 +213,7 @@ p {
 
     z-index: -1;
 
-    background: linear-gradient(-22.5deg, #00808016 0%, transparent 100%);
+    background: linear-gradient(-22.5deg, #00808040 0%, transparent 100%);
 }
 
 .previewcontainer {
@@ -584,7 +584,7 @@ p {
 .bloglistlisting {
     display: grid; 
     grid-template-columns: 40% 60%;
-    grid-template-rows: 24em 6em;
+    grid-template-rows: 18em 6em;
     gap: 2em;
 
     color: var(--color-accent);
@@ -595,12 +595,11 @@ p {
 }
 
 .bloglisttitle {
-    font-family: Orbitron;
+    font-family: var(--font-family-logo);
     grid-area: bloglisttitle;
 
     text-align: right;
 
-    margin-top: -0.5em;
     padding-left: 15%;
 }
 
@@ -608,16 +607,23 @@ p {
     grid-area: bloglisttext;
 }
 
-.bloglisttext p {
+.tagelement {
     display: inline;
-
 
     color: var(--color-background-body);
     background-color: var(--color-accent);
+
     text-shadow: none;
     box-shadow: 0px 0px 3px black;
-    padding: 1px 5px;
+
+    padding: 2px 6px;
     border-radius: 2px;
+
+    line-height: 2em;
+}
+
+.bloglisttext b {
+    margin-top: 0.5em;
 }
 
 .bloglistimg {
@@ -628,7 +634,7 @@ p {
 
 .bloglistimg img {
     height: 100%;
-    aspect-ratio: 2.4 / 1;
+    aspect-ratio: 3 / 1;
     object-fit: cover;
     object-position: 0% 25%;
     border-radius: 2px;
