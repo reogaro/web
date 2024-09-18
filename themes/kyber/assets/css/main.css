@@ -216,10 +216,20 @@ p {
     text-align: justify;
 }
 
+.contentpreviewtr {
+    max-width: var(--content-width);
+
+    margin: 1em auto;
+    padding: 2em;
+
+    text-align: justify;
+}
+
 .contentpreview h2 {
-    font-family: var(--font-family-title);
+    font-family: var(--font-family-logo);
     font-size: 2em;
     font-weight: bold;
+    text-align: center;
 
     margin-left: 0.2em;
     margin-bottom: 0.5em;
@@ -238,7 +248,8 @@ p {
 
     z-index: -1;
 
-    background: linear-gradient(-22.5deg, #00808050 0%, transparent 100%);
+    /* background: linear-gradient(-22.5deg, #00808040 0%, transparent 100%); */
+    background: radial-gradient(circle at 100% 80%, #00808040 0%, transparent 100%);
 }
 
 .previewcontainer {
@@ -563,9 +574,12 @@ p {
 .postcontent img {
     display: block;
     margin: 1.5em auto;
-    max-width: 100%;
+
     height: auto;
+    max-width: 100%;
     max-height: 18em;
+
+    border-radius: 2px;
 }
 
 .postcontent ul {
@@ -624,22 +638,23 @@ p {
 }
 
 .bloglisttitle {
-    font-family: var(--font-family-logo);
     grid-area: bloglisttitle;
+    z-index: 1;
 
     text-align: right;
-
     padding: 0 0.5em;
-
-    z-index: 1;
+    
+    font-family: var(--font-family-logo);
+    text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
 }
 
 .bloglisttext {
     grid-area: bloglisttext;
+    z-index: 1;
 
     padding: 0 0.5em;
 
-    z-index: 1;
+    text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
 }
 
 .tagelement {
@@ -675,9 +690,9 @@ p {
 .bloglistimgel {
     width: 100%;
     aspect-ratio: 3 / 1;
+
     object-fit: cover;
     object-position: 0% 25%;
-    border-radius: 2px;
 }
 
 .bloglisticon {
@@ -685,7 +700,9 @@ p {
     background-repeat: no-repeat;
     background-size: contain;
 
-    filter: brightness(75%);
+    filter: brightness(80%);
+
+    filter: drop-shadow(0 0 2px rgba(0, 0, 0, 1));
 
     z-index: 0;
     pointer-events: none;
@@ -775,7 +792,7 @@ p {
 .footer {
     text-align: center;
     height: 1.6em;
-    margin-bottom: 0.6em;
+    margin: 0.8em 0;
 }
 
 .footer * {
