@@ -4,7 +4,7 @@
 <div class="herobackground">
   <div class="herocontainer">
     <div class="herocontent">
-      <h3 class="tagline" style="background-color: red; max-width: 100%;">WARNING: THIS SITE IS WORK IN PROGRESS AND STILL FILLED WITH AI GENERATED PLACEHOLDER SLOP IN PLACES</h3>
+      <h3 class="tagline" style="background-color: red; max-width: 100%;">WARNING: THIS SITE IS WORK IN PROGRESS AND STILL CONTAINS: AI GENERATED SLOP, UNFINISHED CSS, BROKEN LINKS AND PLACEHOLDERS.</h3>
       <br>
       <h3 class="tagline">{{ .Site.Params.tagline}}</h3>
       <h1 class="logotext">{{ .Site.Title }}</h1>
@@ -49,9 +49,10 @@
   </div>
 </div>
 
-<div class="youtubepreview contentpreview">
+<div class="youtubepreview contentpreviewtr">
   <div class="videotext">
     <h2>Video Content</h2>
+    <br>
     <p>I also sometimes film videos and post them on YouTube. I don't enjoy editing as much, so they're pretty rare so
       far.</p>
     <br />
@@ -86,12 +87,15 @@
   </div>
 </div>
 
-<div class="contentpreview contactsection">
-  <h2>Contact</h2>
-  <p>If you'd like to contact me for some reason - Maybe you're a nigerian prince in need of help,
+<div class="contentpreviewtr">
+  <h2 style="text-align:center;">Send me an e-mail</h2>
+  <!-- <p>If you'd like to contact me for some reason - Maybe you're a nigerian prince in need of help,
     or want someone to gift your old <i>Gabelstapler</i> to - use the E-Mail address below.
-    Please be patient with your inquiries - Life can get in the way.</p>
+    Please be patient with your inquiries - Life can get in the way.</p> -->
 
-  <a href="{{ .Site.Params.mail }}" class="contactme">Contact ⇒ </a>
+  <a href="mailto:{{ .Site.Params.mail }}" class="contactme">Contact ⇒ </a>
 </div>
+
+
+<div class="gradientbg"></div>
 {{ end }}
