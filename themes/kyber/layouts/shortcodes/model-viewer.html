@@ -1,0 +1,10 @@
+{{/*
+Parameters: https://modelviewer.dev/docs/ (add ="true" to bare arguments)
+Posters: Generate using https://modelviewer.dev/editor/
+*/}}
+
+<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js" async></script>
+
+<model-viewer style="display: block; margin: 1em auto; width: auto; max-width: 100%; height: 20em; border-radius: 2px;" {{ range $key, $value := .Params }}
+{{ $key | safeHTMLAttr }}="{{ $value | safeURL }}"{{ end }}>
+</model-viewer>

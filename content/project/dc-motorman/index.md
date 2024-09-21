@@ -13,6 +13,8 @@ transparentimg  = 'motor.png'
 
 The "DC Servoman" is my nickname for a Pico DC Servo Controller circuit board, designed to control two DC motors with quadrature encoders via UART communication.
 
+{{< model-viewer src="pcb.glb" poster="pcb.png" alt="A 3D scan of a ST-Link/V2 clone" ar="false" auto-rotate="true" camera-controls="true" disable-zoom="true" rotation-per-second="300%" interaction-prompt="none">}}
+
 ## Specifications
 
 - Microcontroller: Raspberry Pi Pico
@@ -31,6 +33,12 @@ Power Supply: The system operates with a regulated 5V supply using a 7805 voltag
 Motor Driver: TB67H451FNG motor drivers control the two motors. There are two drivers for two motors.
 
 Quadrature Encoders: The design goal was to control specific MAXXON motors with encoders, and so the resistor network had to be swapped for a diode based circuit. PIO in the Pi Pico makes keeping track easy.
+
+![](dc-servoman-schematic.svg)
+
+There where two errors in design revision 1: The encoders I used couldn't even drive the miniscule currents needed for the voltage divider, and the barrel jack polarity was opposite of conventions (VCC out, GND in).
+
+For revision 2, these errors should be rectified.
 
 ## Software
 
