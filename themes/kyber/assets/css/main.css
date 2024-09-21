@@ -37,6 +37,10 @@ body {
     background-color: var(--color-background-body);
 }
 
+code {
+    text-wrap: wrap;
+}
+
 a {
     color: var(--color-text);
 }
@@ -118,10 +122,6 @@ p {
         text-align: center;
     }
 
-    .tagelement {
-      display: none !important;
-    }
-
     .bloglisttitle {
       font-size: 0.8em;
       color: red;
@@ -145,6 +145,14 @@ p {
 
     .blogpostdate {
       display: none;
+    }
+
+    .blogheader {
+      padding: 6em 2em 4em !important;
+    }
+
+    .blogheader h1 {
+      font-size: 2em !important;
     }
 }
 
@@ -523,6 +531,8 @@ p {
 
     border-radius: 2px;
     box-shadow: 0 0 4px rgba(0, 0, 0, 1);
+
+    overflow: hidden;
 }
 
 .blogheader {
@@ -595,6 +605,15 @@ p {
   margin: 1em auto;
   border: 1px solid;
   border-collapse: collapse;
+}
+
+.postcontent table {
+  display: block;
+  max-width: -moz-fit-content;
+  max-width: fit-content;
+  margin: 0 auto;
+  overflow-x: auto;
+  white-space: nowrap;
 }
 
 .postcontent th {
