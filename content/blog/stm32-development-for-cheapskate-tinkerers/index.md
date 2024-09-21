@@ -44,9 +44,9 @@ Some boards with `STM32F103C8T6` chips (or clones) have a incorrect USB D+ resis
 
 # Flashing Black Magic Probe
 
-My preferred tool for flashing and debugging STM32 systems is a chinese ST-Link debugger running the [Black Magic Probe](https://black-magic.org/) firmware. To create this tool, you need to buy two chinese ST-Link V2 clones, compile Black Magic Firmware, and use one ST-Link to flash the other.
+{{< model-viewer src="stlink-clone.glb" poster="stlink-clone.png" alt="A 3D scan of a ST-Link/V2 clone" ar="false" auto-rotate="true" camera-controls="true" disable-zoom="true" rotation-per-second="300%" interaction-prompt="none">}}
 
-![](stlinkv2.png)
+My preferred tool for flashing and debugging STM32 systems is a chinese ST-Link debugger running the [Black Magic Probe](https://black-magic.org/) firmware. To create this tool, you need to buy two chinese ST-Link V2 clones, compile Black Magic Firmware, and use one ST-Link to flash the other.
 
 [This tutorial](https://ciesie.com/post/black_magic_probe_stlink/) by Michał Ciesielski describes the process for hooking everything up better than I ever could. The software/flashing part are out of date though, so take note of the following addendum:
 
@@ -74,6 +74,6 @@ You can flash the compiled bin file via the ST-Link using OpenOCD:
 ```bash
 openocd -f interface/stlink.cfg -f target/stm32f1x.cfg -c 'program blackmagic.bin verify reset exit 0x08002000'
 ```
-
+![](stlinkv2.png)
 
 *Ressources that helped me figure this out:*  [Black Magic](https://github.com/blackmagic-debug/blackmagic/tree/main/src/platforms/stlink#reverting-to-original-st-firmware-with-running-bmp-firmware), [Phil Pemberton](https://philpem.me.uk/elec/stlink-blackmagic), [stm32-base](https://stm32-base.org/boards/#debuggers), [Michał Ciesielski](https://ciesie.com/post/black_magic_probe_stlink/) 

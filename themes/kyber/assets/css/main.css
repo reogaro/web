@@ -1,5 +1,5 @@
 :root {
-    --color-accent: #008080;
+    --color-accent: #00AAAA;
     --color-text: #F5F5F5;
     --color-neutral: #242424;
     --color-background-body: #0A0A0A;
@@ -380,8 +380,7 @@ p {
 
 .youtube-player {
     position: relative;
-    padding-bottom: 56.25%;
-    height: 0;
+    aspect-ratio: 16 / 10;
     overflow: hidden;
     max-width: 100%;
     background: #000;
