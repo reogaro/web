@@ -18,15 +18,50 @@
 
 <div class="contentpreview">
   <h2>Build cool shit...</h2>
-  <p>Making stuff has never been easier. The <a href="https://en.wikipedia.org/wiki/Maker_culture">Maker movement</a>,
-    <a href="https://en.wikipedia.org/wiki/Free_and_open-source_software">FOSS</a> and
-    <a href="https://en.wikipedia.org/wiki/Hacker_culture">hacker culture</a> have created freely availabe
-    ressources that allow individuals today to build things that would have taken teams of people just ten years ago.
-  </p>
-  <p>This page documents my projects, you can learn from my mistakes and get inspired by my successes.
-    Armed with a screwdriver, soldering iron and vintage ThinkPad running arch linux, you too could
-    build things such as:</p>
+  <p>When life gives you lemons, make lemonade. So what do you do if life gives you computers? <br>
+    What if life gives you Motors with encoders, or Tools and gadgets, a knack for tinkering, endless curiosity for the 
+    underlying process, a passion for making things be as they wheren't meant to be? Such is
+    the fate of the tinkerer. This blog documents problems I encountered while making stuff,
+    and if I found a solution I'll post them as well.<br>
+  <div class="previewcontainerblog">
+    {{ range first 4 (where .Site.RegularPages "Section" "blog") }}
+    <a href="{{ .RelPermalink }}">
+      <div class="blogpostpreview">
+        <p class="blogposttitle">{{ .LinkTitle }}</p>
+        <p class="blogpostdate">{{ .Date.Format "02.01.2006" }}</p>
+      </div>
+    </a>
+    {{ end }}
+    <a href="{{ .Site.BaseURL }}blog/">
+      <div class="blogpostpreview">
+        <p class="blogposttitle">More Articles</p>
+      </div>
+    </a>
+  </div>
+</div>
 
+<div class="youtubepreview contentpreview">
+  <div class="videotext">
+    <h2>Video Content</h2>
+    <br>
+    <p>I also sometimes film videos and post them on YouTube. I don't enjoy editing as much, so they're pretty rare so
+      far.</p>
+    <br />
+    <br />
+    <a href="{{ .Site.Params.youtube }}" class="splashlink" target="_blank" rel="noopener noreferrer">YouTube</a>
+    <br />
+  </div>
+  <div class="youtubecontainer">
+    <div class="youtube-player" data-id="Ngi_fyumi4A"></div>
+  </div>
+</div>
+
+<div class="contentpreview">
+  <h2>...put it on the net.</h2>
+    And sometimes, if I forget to hop on to the next project, I might even finish a project. And perhaps, after some time,
+    I stumble upon the documentation and compile it into a dedicated project page on here. <br>
+    Armed with a screwdriver, soldering iron and vintage ThinkPad running Arch Linux, you too can 
+    build stuff as cool as:</p>
   <div class="previewcontainer">
   {{ range first 3 (where .Site.RegularPages "Section" "project") }}
     <a href="{{ .RelPermalink }}">
@@ -49,44 +84,6 @@
   </div>
 </div>
 
-<div class="youtubepreview contentpreviewtr">
-  <div class="videotext">
-    <h2>Video Content</h2>
-    <br>
-    <p>I also sometimes film videos and post them on YouTube. I don't enjoy editing as much, so they're pretty rare so
-      far.</p>
-    <br />
-    <br />
-    <a href="{{ .Site.Params.youtube }}" class="splashlink" target="_blank" rel="noopener noreferrer">YouTube</a>
-    <br />
-  </div>
-  <div class="youtubecontainer">
-    <div class="youtube-player" data-id="Ngi_fyumi4A"></div>
-  </div>
-</div>
-
-<div class="contentpreview">
-  <h2>...put it on the net.</h2>
-  <p>And if you want to read more, for example how current projects are coming along, or lessons I learned while
-    building, or about failed projects and why they failed - take a look at the blog. It has all that and more. </p>
-
-  <div class="previewcontainerblog">
-    {{ range first 4 (where .Site.RegularPages "Section" "blog") }}
-    <a href="{{ .RelPermalink }}">
-      <div class="blogpostpreview">
-        <p class="blogposttitle">{{ .LinkTitle }}</p>
-        <p class="blogpostdate">{{ .Date.Format "02.01.2006" }}</p>
-      </div>
-    </a>
-    {{ end }}
-    <a href="{{ .Site.BaseURL }}blog/">
-      <div class="blogpostpreview">
-        <p class="blogposttitle">More Articles</p>
-      </div>
-    </a>
-  </div>
-</div>
-
 <div class="contentpreviewtr">
   <h2 style="text-align:center;">Send me an e-mail</h2>
   <!-- <p>If you'd like to contact me for some reason - Maybe you're a nigerian prince in need of help,
@@ -95,7 +92,5 @@
 
   <a href="mailto:{{ .Site.Params.mail }}" class="contactme">Contact ⇒ </a>
 </div>
-
-
-<div class="gradientbg"></div>
 {{ end }}
+
