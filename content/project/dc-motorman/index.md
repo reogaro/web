@@ -15,6 +15,18 @@ The "DC Servoman" is my nickname for a Pico DC Servo Controller circuit board, d
 
 {{< model-viewer src="pcb.glb" poster="pcb.png" alt="A 3D scan of a ST-Link/V2 clone" ar="false" auto-rotate="true" camera-controls="true" disable-zoom="true" rotation-per-second="300%" interaction-prompt="none">}}
 
+## Backstory
+
+A while ago, some friends and I disassembled a big laboratory machine for parts. It contained a handful of motors from [Maxon](https://www.maxongroup.com/en), high quality swiss made brushed DC motors with optical encoders on the back.
+
+The motors have variations of the `44.022.0XX` part no., such as `44.022.000-00.19-335`. They contain Agilent-branded optical quadrature encoders (`09880 0036`).
+
+They all have the same Berg (Now Amphenol) [65239-004LF](https://www.digikey.com/en/products/detail/amphenol-cs-fci/65239-004LF/1001561) 8-pin blue plug.
+
+![](connector.png)
+
+As these high quality components where just begging to be put to use, I designed a circuit board to easily drive them.
+
 ## Specifications
 
 - Microcontroller: Raspberry Pi Pico
@@ -32,13 +44,26 @@ Power Supply: The system operates with a regulated 5V supply using a 7805 voltag
 
 Motor Driver: TB67H451FNG motor drivers control the two motors. There are two drivers for two motors.
 
-Quadrature Encoders: The design goal was to control specific MAXXON motors with encoders, and so the resistor network had to be swapped for a diode based circuit. PIO in the Pi Pico makes keeping track easy.
-
 ![](dc-servoman-schematic.svg)
 
-There where two errors in design revision 1: The encoders I used couldn't even drive the miniscule currents needed for the voltage divider, and the barrel jack polarity was opposite of conventions (VCC out, GND in).
+## Batch 1 PCBs
+
+Batch 1 of the boards are designed and ordered.
+
+![](pcb-only.jpg)
+
+There where errors in design revision 1: 
+
+- The encoders I used couldn't even drive the miniscule currents needed for the voltage divider
+- The barrel jack polarity was opposite of conventions (VCC out, GND in).
+- The motor connector was the wrong way around
+- The trim pots wheren't labeled
 
 For revision 2, these errors should be rectified.
+
+## Batch 2 PCBs
+
+These are currently being designed on [EasyEDA](https://easyeda.com/editor#id=20fa881ac148443ea179047cb91ba48c|e99d97a880694a499c315b93f96a5592). They should fix the above mentioned issues.
 
 ## Software
 
