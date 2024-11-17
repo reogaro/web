@@ -1,11 +1,10 @@
-baseURL = 'https://kyberwerk.net/'
+baseURL = 'https://servopunk.net/'
 languageCode = 'en-us'
-title = 'KYBERWERK'
+title = 'SERVOPUNK'
 theme = 'kyber'
 
 [params]
 tagline = "Build cool shit. Put it on the net."
-phonetic = "(kai-ba-work)"
-youtube = "https://www.youtube.com/channel/UCtDCHoi4QGNj2gG4obC8fVg"
+youtube = "https://www.youtube.com/@SERVOPUNK"
 mail = "kyberwerk@protonmail.com"
 
