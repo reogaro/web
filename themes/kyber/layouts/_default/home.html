@@ -8,7 +8,8 @@
       <br>
       <h3 class="tagline">{{ .Site.Params.tagline}}</h3>
       <h1 class="logotext">{{ .Site.Title }}</h1>
-      <h2 class="phonetic">{{ .Site.Params.phonetic }}</h2> <br />
+      <br>
+      <br>
       <a href="{{ .Site.BaseURL }}blog/" class="splashlink">Blog</a>
       <a href="{{ .Site.BaseURL }}project/" class="splashlink">Projects</a>
       <a href="{{ .Site.Params.youtube }}" class="splashlink" target="_blank" rel="noopener noreferrer">YouTube</a>
@@ -21,7 +22,7 @@
   <p>When life gives you lemons, make lemonade. So what do you do if life gives you computers? <br>
     What if life gives you Motors with encoders, or Tools and gadgets, a knack for tinkering, endless curiosity for the 
     underlying process, a passion for making things be as they wheren't meant to be? Such is
-    the fate of the tinkerer. This blog documents problems I encountered while making stuff,
+    the life of a tinkerer. This blog documents problems I encountered while making stuff,
     and if I found a solution I'll post them as well.<br>
   <div class="previewcontainerblog">
     {{ range first 4 (where .Site.RegularPages "Section" "blog") }}
