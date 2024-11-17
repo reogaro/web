@@ -1,11 +1,11 @@
-# [KYBERWERK Website](https://kyberwerk.net/)
+# [SERVOPUNK Website](https://servopunk.net/)
 
-The KYBERWERK website @ https://kyberwerk.net/
+The SERVOPUNK website @ servopunk.net
 
 Branches:
 
 - `master` for general development
-- `prod` for [current deployment](https://kyberwerk.net/)
+- `prod` for [current deployment](https://servopunk.net/)
 - `html` for legacy
 - `hugo` for legacy
 
