@@ -819,6 +819,11 @@ p {
     margin: 0 0.2em;
 }
 
+.copyleft {
+  display: inline-block;
+  text-decoration: none;
+  transform: rotate(180deg);
+}
 
 /* 404 error page */
 
