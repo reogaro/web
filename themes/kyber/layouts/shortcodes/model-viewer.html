@@ -1,10 +1,32 @@
 {{/*
-Parameters: https://modelviewer.dev/docs/ (add ="true" to bare arguments)
-Posters: Generate using https://modelviewer.dev/editor/
+Embeds a 3D Model in the page.
+
+@param {string} [src] the .glb file to load.
+@param {string} [poster] image poster to show if 3D fails
+@param {string} [alt] text for accessibility
+
+@returns {template.HTML}
+
+@reference https://modelviewer.dev/docs/
+
+@example {{< model-viewer src="model.glb" poster="model.png" alt="A 3D Model" >}}
 */}}
 
-<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js" async></script>
+{{/* Check for parameters */}}
+{{ $src := .Get "src" }}
+{{ $alt := .Get "alt" }}
+{{ $poster := .Get "poster" }}
 
-<model-viewer style="display: block; margin: 1em auto; width: auto; max-width: 100%; height: 20em; border-radius: 2px;" {{ range $key, $value := .Params }}
-{{ $key | safeHTMLAttr }}="{{ $value | safeURL }}"{{ end }}>
+{{/* Validation block */}}
+{{ if not $src }}
+    {{ warnf "model-viewer shortcode on page %s is missing required 'src' parameter." .Page.File.Path }}
+{{ end }}
+{{ if not $alt }}
+    {{ warnf "model-viewer shortcode (src: %s) on page %s is missing 'alt' parameter." $src .Page.File.Path }}
+{{ end }}
+{{ if not $poster }}
+    {{ warnf "model-viewer shortcode (src: %s) on page %s is missing 'poster' parameter." $src .Page.File.Path }}
+{{ end }}
+
+<model-viewer style="display: block; margin: 1em auto; width: auto; max-width: 100%; height: 20em; border-radius: 2px;" src='{{ .Get "src" }}' poster='{{ .Get "poster"}}' alt='{{ .Get "alt" }}' ar="false" auto-rotate="true" camera-controls="true" disable-zoom="true" rotation-per-second="300%" interaction-prompt="none">
 </model-viewer>

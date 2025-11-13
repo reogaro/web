@@ -44,7 +44,7 @@ Some boards with `STM32F103C8T6` chips (or clones) have a incorrect USB D+ resis
 
 # Flashing Black Magic Probe
 
-{{< model-viewer src="stlink-clone.glb" poster="stlink-clone.png" alt="A 3D scan of a ST-Link/V2 clone" ar="false" auto-rotate="true" camera-controls="true" disable-zoom="true" rotation-per-second="300%" interaction-prompt="none">}}
+{{< model-viewer src="stlink-clone.glb" poster="stlink-clone.png" alt="A 3D scan of a ST-Link/V2 clone" >}}
 
 My preferred tool for flashing and debugging STM32 systems is a chinese ST-Link debugger running the [Black Magic Probe](https://black-magic.org/) firmware. To create this tool, you need to buy two chinese ST-Link V2 clones, compile Black Magic Firmware, and use one ST-Link to flash the other.
 
