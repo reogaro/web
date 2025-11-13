@@ -36,5 +36,5 @@ Also: there was a recent overhaul of the shortcode system, many older tutorials 
 
 # Flexibly adding scripts to the header
 
-https://mcshelby.github.io/hugo-theme-relearn/configuration/customization/extending/index.html
+https://gohugo.io/templates/shortcode/#detection
 

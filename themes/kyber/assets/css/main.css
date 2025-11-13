@@ -55,6 +55,11 @@ p {
     margin: 0;
 }
 
+iframe {
+  border: none;
+  border-radius: 2px;
+}
+
 /* Header and Navigation */
 
 .header {
