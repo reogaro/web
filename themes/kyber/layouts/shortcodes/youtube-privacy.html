@@ -1,11 +1,12 @@
-{{- with $id := or (.Get "id") (.Get 0) -}}
-<a href="https://www.youtube.com/watch?v={{ $id }}" target="_blank" class="youtube-container" id="youtube-container-{{ $id }}" style="max-width: 640px; aspect-ratio: 16 / 9; background: center / cover url('https://i.ytimg.com/vi/{{ $id }}/hqdefault.jpg'); display: flex; justify-content: center; align-items: center; border-radius: 2px; margin: 1em auto;">
-  <!--<iframe width="640" height="360" src="https://www.youtube.com/embed/{{ $id }}"></iframe> -->
-<svg width="100" height="70" viewBox="0 0 28.5701 20" xmlns="http://www.w3.org/2000/svg">
-  <path d="M 27.9727,3.12324 C 27.6435,1.89323 26.6768,0.926623 25.4468,0.597366 23.2197,0 14.285,0 14.285,0 14.285,0 5.35042,0 3.12323,0.597366 1.89323,0.926623 0.926623,1.89323 0.597366,3.12324 0,5.35042 0,10 0,10 c 0,0 0,4.6496 0.597366,6.8768 0.329257,1.23 1.295864,2.1966 2.525864,2.5258 C 5.35042,20 14.285,20 14.285,20 c 0,0 8.9347,0 11.1618,-0.5974 1.23,-0.3292 2.1967,-1.2958 2.5259,-2.5258 C 28.5701,14.6496 28.5701,10 28.5701,10 c 0,0 -0.0024,-4.64958 -0.5974,-6.87676 z" fill="#ff0000"/>
-  <path d="m 11.4253,14.2854 7.4224,-4.285 -7.4224,-4.28507 z" fill="#ffffff"/>
-</svg>
-</a>
+{{- with $raw := or (.Get "id") (.Get 0) -}}
+  {{- $id := replaceRE "[^A-Za-z0-9_-]" "" $raw -}}
+  <a href="https://www.youtube.com/watch?v={{ $id }}" target="_blank" rel="noopener noreferrer" class="youtube-preview-privacy" id="{{ $id }}" data-youtube-id="{{ $id }}" style="max-width: 640px; aspect-ratio: 16 / 9; background: center / cover url('https://i.ytimg.com/vi/{{ $id }}/hqdefault.jpg'); display: flex; justify-content: center; align-items: center; border-radius: 2px; margin: 1em auto;">
+    <!--<iframe width="640" height="360" src="https://www.youtube.com/embed/{{ $id }}"></iframe> -->
+  <svg width="100" height="70" viewBox="0 0 28.5701 20" xmlns="http://www.w3.org/2000/svg">
+    <path d="M 27.9727,3.12324 C 27.6435,1.89323 26.6768,0.926623 25.4468,0.597366 23.2197,0 14.285,0 14.285,0 14.285,0 5.35042,0 3.12323,0.597366 1.89323,0.926623 0.926623,1.89323 0.597366,3.12324 0,5.35042 0,10 0,10 c 0,0 0,4.6496 0.597366,6.8768 0.329257,1.23 1.295864,2.1966 2.525864,2.5258 C 5.35042,20 14.285,20 14.285,20 c 0,0 8.9347,0 11.1618,-0.5974 1.23,-0.3292 2.1967,-1.2958 2.5259,-2.5258 C 28.5701,14.6496 28.5701,10 28.5701,10 c 0,0 -0.0024,-4.64958 -0.5974,-6.87676 z" fill="#ff0000"/>
+    <path d="m 11.4253,14.2854 7.4224,-4.285 -7.4224,-4.28507 z" fill="#ffffff"/>
+  </svg>
+  </a>
 {{- else -}}
   {{- errorf "The %q shortcode requires a single positional parameter, the ID of the YouTube video. See %s" .Name .Position -}}
 {{- end -}}
