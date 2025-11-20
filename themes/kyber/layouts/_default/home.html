@@ -21,9 +21,7 @@
   <h2>Build cool shit...</h2>
   <p>When life gives you lemons, make lemonade. So what do you do if life gives you computers? <br>
     What if life gives you Motors with encoders, or Tools and gadgets, a knack for tinkering, endless curiosity for the 
-    underlying process, a passion for making things be as they wheren't meant to be? Such is
-    the life of a tinkerer. This blog documents problems I encountered while making stuff,
-    and if I found a solution I'll post them as well.<br>
+    underlying process, a passion for making things be as they wheren't meant to be? This blog documents problems I encountered while making stuff, and if I found a solution I'll post them as well.<br>
   <div class="previewcontainerblog">
     {{ range first 4 (where .Site.RegularPages "Section" "blog") }}
     <a href="{{ .RelPermalink }}">
@@ -41,26 +39,9 @@
   </div>
 </div>
 
-<div class="youtubepreview contentpreview">
-  <div class="videotext">
-    <h2>Video Content</h2>
-    <br>
-    <p>I also sometimes film videos and post them on YouTube. I don't enjoy editing as much, so they're pretty rare so
-      far.</p>
-    <br />
-    <br />
-    <a href="{{ .Site.Params.youtube }}" class="splashlink" target="_blank" rel="noopener noreferrer">YouTube</a>
-    <br />
-  </div>
-  <div class="youtubecontainer">
-    <div class="youtube-player" data-id="Ngi_fyumi4A"></div>
-  </div>
-</div>
-
 <div class="contentpreview">
   <h2>...put it on the net.</h2>
-    And sometimes, if I forget to hop on to the next project, I might even finish a project. And perhaps, after some time,
-    I stumble upon the documentation and compile it into a dedicated project page on here. <br>
+    And sometimes, if I forget to hop on to the next one, I might even finish a project. And perhaps, after some time, the documentation resurfaces and gets a dedicated project page on here. <br>
     Armed with a screwdriver, soldering iron and vintage ThinkPad running Arch Linux, you too can 
     build stuff as cool as:</p>
   <div class="previewcontainer">
@@ -82,6 +63,58 @@
         </div>
       </div>
     </a>
+  </div>
+</div>
+
+<div class="youtubepreview contentpreview">
+  <div class="videotext">
+    <h2>Video Content</h2>
+    <br>
+    <p>I also sometimes film videos and post them on YouTube. Video editing is very tedious, so they're not as common.</p>
+    <br />
+    <br />
+    <script>
+      /*
+       * Light YouTube Embeds by @labnol
+       * https://www.labnol.org/internet/light-youtube-embeds/27941/
+       * Credit: https://www.labnol.org/
+       */
+      
+      function labnolIframe(div) {
+          var iframe = document.createElement('iframe');
+          iframe.setAttribute('src', 'https://www.youtube-nocookie.com/embed/' + div.dataset.id + '?autoplay=1');
+          iframe.setAttribute('frameborder', '0');
+          iframe.setAttribute('allowfullscreen', '1');
+          iframe.setAttribute('allow', 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture');
+          div.parentNode.replaceChild(iframe, div);
+      }
+      
+      function initYouTubeVideos() {
+          var playerElements = document.querySelectorAll('.youtube-player');
+          for (var n = 0; n < playerElements.length; n++) {
+              var videoId = playerElements[n].dataset.id;
+              var div = document.createElement('div');
+              div.setAttribute('data-id', videoId);
+              var thumbNode = document.createElement('img');
+              thumbNode.src = '//i.ytimg.com/vi/ID/hqdefault.jpg'.replace('ID', videoId);
+              div.appendChild(thumbNode);
+              var playButton = document.createElement('div');
+              playButton.setAttribute('class', 'play');
+              div.appendChild(playButton);
+              div.onclick = function () {
+                  labnolIframe(this);
+              };
+              playerElements[n].appendChild(div);
+          }
+      }
+
+      document.addEventListener("DOMContentLoaded", initYouTubeVideos);
+    </script>
+    <a href="{{ .Site.Params.youtube }}" class="splashlink" target="_blank" rel="noopener noreferrer">YouTube</a>
+    <br />
+  </div>
+  <div class="youtubecontainer">
+    <div class="youtube-player" data-id="Ngi_fyumi4A"></div>
   </div>
 </div>
 
