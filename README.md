@@ -10,5 +10,5 @@ Branches:
 - `hugo` for legacy
 
 > [!CAUTION]
-> The website is not finished. I will remove warnings once I consider it finished enough.
+> The website is not finished. I will remove warnings once it is finished enough.
 
