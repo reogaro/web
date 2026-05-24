@@ -5,7 +5,7 @@ draft = false
 tags = ['web', 'linux', 'hugo']
 categories = ['blog']
 image = "privacy-jail.jpg"
-transparentimg = "hugo.png"
+transparentimg = "gopher-police.svg"
 summary = "Replacing YouTube embeds with just a image, and only loading the iframe embed after clicking."
 +++
 
