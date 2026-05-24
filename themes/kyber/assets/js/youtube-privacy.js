@@ -9,7 +9,7 @@
       @keyframes ytp-spin { from { transform: translate(-50%,-50%) rotate(0deg); } to { transform: translate(-50%,-50%) rotate(360deg); } }
       .youtube-privacy-loader{ position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:48px; height:48px; border-radius:50%; border:4px solid rgba(255,255,255,0.6); border-top-color:#fff; z-index:2; animation:ytp-spin 1s linear infinite; }
       .youtube-privacy-error{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)); z-index:3; padding:1rem; box-sizing:border-box; text-align:center; }
-      .youtube-privacy-error a{ background:#FFFFFF); color:#0A0A0A; padding:0.5rem 0.75rem; border-radius:2px; text-decoration:none }
+      .youtube-privacy-error a{ background:#FFFFFF; color:#0A0A0A; padding:0.5rem 0.75rem; border-radius:2px; text-decoration:none }
     `;
     document.head.appendChild(s);
   };

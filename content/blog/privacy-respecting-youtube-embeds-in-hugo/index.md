@@ -1,15 +1,13 @@
 +++
-title = "Privacy Respecting YouTube Embeds in HUGO using partials"
-date = 2025-09-13T00:00:00-07:00
-draft = true
+title = "Privacy Respecting YouTube Embeds in HUGO using Shortcodes"
+date = 2025-09-27T00:00:00-07:00
+draft = false
 tags = ['web', 'linux', 'hugo']
 categories = ['blog']
-image = "image.jpg"
+image = "privacy-jail.jpg"
 transparentimg = "hugo.png"
 summary = "Replacing YouTube embeds with just a image, and only loading the iframe embed after clicking."
 +++
-
-# !!! TODO: UPDATE PAGE AND DIRECTORY STRUCTURE TO v0.146.0  !!!
 
 # The Problem
 
@@ -17,19 +15,19 @@ This Site is made using the static site generator [HUGO](https://gohugo.io/). Th
 
 ![](network-analysis-no-embed.png)
 
-Many articles would benefit from embedding Video content from YouTube - but look what it takes to load *just the video embed* on the same connection: 
+Many articles would benefit from embedding Video content from YouTube - but look at the disaster that unfolds when loading *just the video embed* on the same connection: 
 
 ![](network-analysis-embed.png)
 
-Holy shit - *just* the embed takes 3.5x as long to load as the page around it. Google places cookies, runs its analytics to track this sites' users, it even sends a request to some google play store URL (???) and runs more JavaScript than I have HTML.
+What the `fsck` - the *embed alone* loads 3.5x slower as the rest of the *entire page*. Google places cookies, runs its analytics to track this sites' users, it even sends a request to some Google Play Store URL (I also don't get it) and runs more JavaScript than I have HTML.
 
-This post will describe a clean way to add custom privacy-respecting YouTube embeds using hugo's [shortcodes](https://gohugo.io/content-management/shortcodes/) system to improve loading times, user privacy, and page responsiveness.
+This post will describe a clean way to add custom privacy-respecting YouTube embeds using hugo's [shortcodes](https://gohugo.io/content-management/shortcodes/) system to improve loading times, user privacy, and page responsiveness. And you won't have half of Googles marketing department knocking on your door for opening a blog post.
 
 If you're just interested in the finished product, skip ahead to [the finished product](#the-finished-product).
 
 # Shortcodes
 
-The cleanest way of adding embeds to your page is using HUGO's [shortcodes](https://gohugo.io/content-management/shortcodes/) system. For example, to create a (super simplified) custom YouTube embed, create the file `layouts/shortcodes/youtube.html`:
+The cleanest way of adding embeds to your page is using HUGO's [shortcodes](https://gohugo.io/content-management/shortcodes/) system. For example, to create a (super simplified) custom YouTube embed, create the file `layouts/_shortcodes/youtube.html`:
 
 ```html
 {{- with $id := or (.Get "id") (.Get 0) -}}
@@ -56,7 +54,7 @@ We will use a `<a>` link element to act as a fallback and open the video in a ne
 <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="youtube-preview-privacy" data-youtube-id="dQw4w9WgXcQ" style="display: block; width: 640px; aspect-ratio: 16 / 9; background: center / cover url('https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg');"> </a>
 ```
 
-Notice the `data-youtube-id` property: It contains the Video ID for us to load. Our JS can search for all DOM elements with the `youtube-preview-privacy` class and through JavaScripts `dataset` functionality extract the ID from it, and then replace the `<a>`'s "open link in new tab" functionality with our "create new iframe" functionality:
+Notice the `data-youtube-id` property: It contains the Video ID for us to load. Our JS can search for all DOM elements with the `youtube-preview-privacy` class and through JavaScript's `dataset` functionality extract the ID from it, and then replace the `<a>`'s "open link in new tab" functionality with our "create new iframe" functionality:
 
 ```js
 const replaceWithYouTubeIframe = el => {
@@ -80,11 +78,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
 ```
 
-That would be the proof-of-concept done - Now we only need the red YouTube logo in the center, a loading spinner, error handling, sanitization, HUGO shortcode files for embedding, the JS file in our header.
+And that’s the basic proof-of-concept. Now we just need the usual trimmings: the red YouTube play button, a loading spinner, error handling, some sanitization, the shortcode glue, and a place to stash the JavaScript so the whole thing behaves.
 
-Also, by fetching the thumbnail from the `i.ytimg.com` servers, we still leak the users' IP and user-agent to Google, so we use HUGO's `resources.GetRemote` to fetch and cache the thumbnail on our server, locally.
+Also, by fetching the thumbnail from the `i.ytimg.com` servers, we still leak the users' IP and user-agent to Google, so we use HUGO's `resources.GetRemote` to fetch and cache the thumbnail on our server, and serve that.
 
-I'll save you the specifics, feel free to inspect my implementation on [GitHub](github.com/reogaro/web), and present the finished product:
+⚠ **Info: Leaking the IP of your build server**
+
+Using `resources.GetRemote` will result in your dev environment and build server contacting YouTube servers. In case you're severely paranoid, consider using a proxy, fetching on your dev machine, or living off-grid. I wouldn't blame you with this amount of data collection for showing a thumbnail.
+
+I'll save you the specifics, feel free to inspect my implementation on [GitHub](https://github.com/reogaro/web/), and present the finished product:
 
 # The finished product
 
@@ -94,10 +96,10 @@ The following embed was created by calling `{{</* youtube-privacy VjGSMUep6_4 */
 
 To use the finished product on your page, you need to add the following to your project:
 
-- [HUGO Shortcode](https://github.com/reogaro/web/blob/master/themes/kyber/layouts/shortcodes/youtube-privacy.html) to `themes/{your theme here}/layouts/shortcodes/youtube-privacy.html`
+- [HUGO Shortcode](https://github.com/reogaro/web/blob/master/themes/kyber/layouts/_shortcodes/youtube-privacy.html) to `themes/{your theme here}/layouts/_shortcodes/youtube-privacy.html`
 - [JavaScript](https://github.com/reogaro/web/blob/master/themes/kyber/assets/js/youtube-privacy.js) to `themes/{your theme here}/assets/js/youtube-privacy.js`
 
-And the JavaScript to your `<header>`. You could just add it indiscriminately to all pages by adding `{{ partialCached "head/js.html" . }}` to your HTML (most likely `themes/{your theme here}/layouts/partials/head.html`), or be selective and add it only on the pages [where the Shortcode is used](https://gohugo.io/templates/shortcode/#detection), ([see example](https://github.com/reogaro/web/blob/master/themes/kyber/layouts/partials/head.html)):
+And the JavaScript to your `<header>`. You could just add it indiscriminately to all pages by adding `{{ partialCached "head/js.html" . }}` to your HTML (most likely `themes/{your theme here}/layouts/_partials/head.html`), or be selective and add it only on the pages [where the Shortcode is used](https://gohugo.io/templates/shortcode/#detection), ([see example](https://github.com/reogaro/web/blob/master/themes/kyber/layouts/_partials/head.html)):
 
 ```
 {{ if .HasShortcode "youtube-privacy" }}
@@ -117,5 +119,5 @@ And the JavaScript to your `<header>`. You could just add it indiscriminately to
 
 ```
 
-And vollià - You have improved loading times and your users' privacy at the cost of - well, nothing really. Ten minutes of work at most. Happy Hacking!
+Voilà. Your YouTube embed, minus the surveillance apparatus, with a side of faster loading times. Happy Hacking!
 
