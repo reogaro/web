@@ -48,6 +48,8 @@ And with that, the electronics where working again. It was time to take care of 
 
 ## Mechanical Repair
 
+I tried fixing it up a bit, but found little success. Can't win 'em all.
+
 ### Corners
 
 One of the corner protectors was cracked. The [Marshall corners](https://www.marshall.com/de/de/product/front-corners) shipping is hilariously overpriced, so I tried ordering [AliExpress](https://de.aliexpress.com/item/1005002467000614.html) replacements. They where of terrible quality and didn't fit. So instead of searching around for cosmetic parts for a multi-decade old piece of equipment, I just reinstalled the old one again.
@@ -56,7 +58,9 @@ One of the corner protectors was cracked. The [Marshall corners](https://www.mar
 
 ### Screws
 
-Many of the Screws where rusty and not black anymore. I wanted to take a crack at replacing them, but finding black screws in the right sizes proved to be impossible. Maybe this table of screws will help someone, they're almost certainly all imperial, but I noted down the closest metric screw size. The imperial measurements are pretty much guesses.
+Many of the Screws where rusty and not black anymore. I wanted to take a crack at replacing them, but finding black screws in the right sizes proved to be impossible. Maybe this table of screws will help someone, they're almost certainly all imperial, but I noted down the closest metric screw size I intended to replace them with before cutting my losses. The imperial measurements are pretty much guesses.
+
+I just took the old screws, scrubbed off the rust, and added some black permanent marker over the shiny spots. Works almost as well at 5% of the effort.
 
 | Pcs | Screw     | Metric Approx. | Head Type   | Used for attaching  |
 | --- | --------- | -------------- | ----------- | ------------------- |
@@ -68,5 +72,7 @@ Many of the Screws where rusty and not black anymore. I wanted to take a crack a
 
 ## Conclusion
 
-And thus, the amplifier was whole again. At least as whole as I'd make it. A happy day for me, a very sad day for my next-door neighbours.
+And thus, the amplifier was whole again. At least as whole as I'd make it. A happy day for me, a very sad day for my next-door neighbours, and one more piece of junk saved from the scrap.
+
+Fix more stuff. It's fun!
 
