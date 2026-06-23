@@ -8,3 +8,6 @@ tagline = "Build cool shit. Put it on the net."
 youtube = "https://www.youtube.com/@SERVOPUNK"
 mail = "info@servopunk.net"
 
+[markup.highlight]
+style = "modus-vivendi"
+noClasses = false
