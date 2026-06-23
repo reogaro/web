@@ -165,7 +165,7 @@ iframe {
 
 .herobackground {
     background-color: teal;
-    background: rgba(0, 0, 0, 0.5) url("/img/background.png");
+    background: rgba(0, 0, 0, 0.5) url("/img/background.jpg");
     background-blend-mode: darken;
     background-repeat: no-repeat;
     background-size: cover;
