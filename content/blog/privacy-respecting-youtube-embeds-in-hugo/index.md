@@ -9,7 +9,7 @@ transparentimg = "gopher-police.svg"
 summary = "Replacing YouTube embeds with just a image, and only loading the iframe embed after clicking."
 +++
 
-# TL;DR
+## TL;DR
 
 The following embed was created by calling `{{</* youtube-privacy VjGSMUep6_4 */>}}`:
 
@@ -43,7 +43,7 @@ Voilà. Your YouTube embed, minus the surveillance apparatus, with a side of fas
 
 ---
 
-# But why?
+## But why?
 
 This Site is made using the static site generator [HUGO](https://gohugo.io/). This means it serves HTML, CSS, images and little to no JS to its users. This results in good loading times on even the slowest of connections, and the weakest of hardware:
 
@@ -57,7 +57,7 @@ What the `fsck` - the *embed alone* loads 3.5x slower as the rest of the *entire
 
 This post will describe a clean way to add custom privacy-respecting YouTube embeds using hugo's [shortcodes](https://gohugo.io/content-management/shortcodes/) system to improve loading times, user privacy, and page responsiveness. And you won't have half of Googles marketing department knocking on your door for opening a blog post.
 
-# But how?
+## But how?
 
 The cleanest way of adding embeds to your page is using HUGO's [shortcodes](https://gohugo.io/content-management/shortcodes/) system. For example, to create a (super simplified) custom YouTube embed, create the file `layouts/_shortcodes/youtube.html`:
 
@@ -72,7 +72,7 @@ The cleanest way of adding embeds to your page is using HUGO's [shortcodes](http
 
 And Voilà - you can now call `{{</* youtube VjGSMUep6_4 */>}}` in your HTML and markdown files to embed a YouTube video. If you want more features, take a look at the [official HUGO YouTube Shortcode](https://gohugo.io/shortcodes/youtube/) - though it still only embeds the bloated `<iframe>` with all the disadvantages listed above.
 
-# Developing the Solution
+## Developing the Solution
 
 Here's how we will attack the problem: Only embed the video thumbnail into the page, add JavaScript that runs if we click it, and add the iframe only if the user clicks on the thumbnail.
 
@@ -117,7 +117,7 @@ Using `resources.GetRemote` will result in your dev environment and build server
 I'll save you the specifics, feel free to inspect my implementation on [GitHub](https://github.com/reogaro/web/), which is documented in the solution above!
 
 ---
-## Update: Refactoring into a Partial
+### Update: Refactoring into a Partial
 
 Since originally writing this post, I ran into an issue: what happens if you want to use this privacy-respecting embed in a standard HTML layout template instead of a Markdown file? Hugo shortcodes **only work inside Markdown content**. If you try to use `{{</* youtube-privacy */>}}` in your homepage layout, it simply won't render.
 

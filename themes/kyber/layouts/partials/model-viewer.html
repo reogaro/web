@@ -1,0 +1,23 @@
+{{/*
+Embeds a 3D Model in the page.
+
+@param {string} [src] the .glb file to load.
+@param {string} [poster] image poster to show if 3D fails
+@param {string} [alt] text for accessibility
+
+@returns {template.HTML}
+*/}}
+
+{{/* Validation block */}}
+{{ if not .src }}
+    {{ warnf "model-viewer partial is missing required 'src' parameter." }}
+{{ end }}
+{{ if not .alt }}
+    {{ warnf "model-viewer partial (src: %s) is missing 'alt' parameter." .src }}
+{{ end }}
+{{ if not .poster }}
+    {{ warnf "model-viewer partial (src: %s) is missing 'poster' parameter." .src }}
+{{ end }}
+
+<model-viewer class="modelviewer" src='{{ .src }}' poster='{{ .poster }}' alt='{{ .alt }}' loading="lazy" ar="false" auto-rotate="true" camera-controls="true" disable-zoom="true" rotation-per-second="60%" interaction-prompt="none">
+</model-viewer>

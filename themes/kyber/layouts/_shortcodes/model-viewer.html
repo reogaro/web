@@ -1,32 +1,11 @@
 {{/*
-Embeds a 3D Model in the page.
-
-@param {string} [src] the .glb file to load.
-@param {string} [poster] image poster to show if 3D fails
-@param {string} [alt] text for accessibility
-
-@returns {template.HTML}
-
+Wrapper shortcode for the model-viewer partial.
 @reference https://modelviewer.dev/docs/
-
 @example {{< model-viewer src="model.glb" poster="model.png" alt="A 3D Model" >}}
 */}}
 
-{{/* Check for parameters */}}
-{{ $src := .Get "src" }}
-{{ $alt := .Get "alt" }}
-{{ $poster := .Get "poster" }}
+{{- $src := .Get "src" -}}
+{{- $poster := .Get "poster" -}}
+{{- $alt := .Get "alt" -}}
 
-{{/* Validation block */}}
-{{ if not $src }}
-    {{ warnf "model-viewer shortcode on page %s is missing required 'src' parameter." .Page.File.Path }}
-{{ end }}
-{{ if not $alt }}
-    {{ warnf "model-viewer shortcode (src: %s) on page %s is missing 'alt' parameter." $src .Page.File.Path }}
-{{ end }}
-{{ if not $poster }}
-    {{ warnf "model-viewer shortcode (src: %s) on page %s is missing 'poster' parameter." $src .Page.File.Path }}
-{{ end }}
-
-<model-viewer style="display: block; margin: 1em auto; width: auto; max-width: 100%; height: 20em; border-radius: 2px;" src='{{ .Get "src" }}' poster='{{ .Get "poster"}}' alt='{{ .Get "alt" }}' ar="false" auto-rotate="true" camera-controls="true" disable-zoom="true" rotation-per-second="300%" interaction-prompt="none">
-</model-viewer>
+{{- partial "model-viewer.html" (dict "src" $src "poster" $poster "alt" $alt) -}}
