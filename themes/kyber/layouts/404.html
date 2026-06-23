@@ -1,16 +1,360 @@
 {{ define "main" }}
+<style>
+    html, body { overflow-x: hidden; max-width: 100vw; position: relative; } 
+    main { overflow-x: hidden; width: 100%; max-width: 100vw; } /* Bulletproof mobile horizontal overflow fix */
+    
+    .errorno {
+        padding: 2em;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .animcontainer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: min(52vh, 456px);
+        margin: 2em 0; /* Add margin above and below */
+        perspective: 1500px;
+    }
+
+    .motor {
+        /* 1em conceptually equals 1 millimeter. We dynamically scale it based on viewport width AND height! */
+        font-size: min(1.75vw, 0.7vh, 7px);
+
+        position: relative;
+        transform-style: preserve-3d;
+        width: 0;
+        height: 0;
+        animation: spin-motor 6s infinite linear;
+    }
+
+    .m-face {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--color-accent);
+        border: 0.5em solid #111;
+        box-sizing: border-box;
+    }
+
+    /* Sticker styling */
+    .sticker {
+        background-color: #e8e8e4;
+        width: 30em;
+        height: 24em;
+        border-radius: 1.5em;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        box-shadow: 0.2em 0.2em 0.5em rgba(0,0,0,0.5);
+        color: #111;
+        font-family: monospace;
+        padding: 1em;
+        box-sizing: border-box;
+    }
+    .s-head { font-family: var(--font-family-logo); font-size: 2.5em; font-weight: bold; border-bottom: 0.1em solid #111; padding-bottom: 0.2em; width: 100%; margin-bottom: 0.5em;}
+    .s-404 { font-size: 9em; font-weight: bold; line-height: 1; color: #cc0000; }
+    .s-sub { font-size: 2.5em; margin-top: 0.5em;}
+
+    /* Rear Bearing */
+    .bearing {
+        width: 14em;
+        height: 14em;
+        border-radius: 50%;
+        background: radial-gradient(circle, #e0e4e8 15%, #2a2c2e 25%, #c0c4c8 80%);
+        border: 0.5em solid #888;
+        box-shadow: inset 0 0 1em rgba(0,0,0,0.8), 0 0 0.5em rgba(0,0,0,0.5);
+    }
+
+    .m-front, .m-back { 
+        width: 42em; height: 42em; margin: -21em 0 0 -21em; background-color: #c0c4c8; 
+        clip-path: polygon(5em 0, 37em 0, 42em 5em, 42em 37em, 37em 42em, 5em 42em, 0 37em, 0 5em);
+        background-image: 
+            radial-gradient(circle at 5.5em 5.5em, #222 1.2em, transparent 1.3em),
+            radial-gradient(circle at 36.5em 5.5em, #222 1.2em, transparent 1.3em),
+            radial-gradient(circle at 5.5em 36.5em, #222 1.2em, transparent 1.3em),
+            radial-gradient(circle at 36.5em 36.5em, #222 1.2em, transparent 1.3em);
+    }
+    .m-left, .m-right { width: 48em; height: 32em; margin: -16em 0 0 -24em; background: linear-gradient(to right, #c0c4c8 12.5%, #2a2c2e 12.5%, #2a2c2e 87.5%, #c0c4c8 87.5%); }
+    .m-top, .m-bottom { width: 32em; height: 48em; margin: -24em 0 0 -16em; background: linear-gradient(to bottom, #c0c4c8 12.5%, #2a2c2e 12.5%, #2a2c2e 87.5%, #c0c4c8 87.5%); }
+
+    .m-front  { transform: translateZ(24em); }
+    .m-back   { transform: rotateY(180deg) translateZ(24em); }
+    .m-left   { transform: rotateY(-90deg) translateZ(21em); }
+    .m-right  { transform: rotateY(90deg) translateZ(21em); }
+    .m-top    { transform: rotateX(90deg) translateZ(21em); }
+    .m-bottom { transform: rotateX(-90deg) translateZ(21em); }
+
+    /* 5mm Corner Chamfers */
+    .c-face {
+        position: absolute;
+        width: 48em; height: 7.07em; margin: -3.535em 0 0 -24em;
+        background: linear-gradient(to right, #c0c4c8 12.5%, #2a2c2e 12.5%, #2a2c2e 87.5%, #c0c4c8 87.5%);
+        border: 0.5em solid #111;
+        box-sizing: border-box;
+    }
+    .c-br { transform: rotateY(90deg) rotateX(45deg) translateZ(26.163em); }
+    .c-tr { transform: rotateY(90deg) rotateX(-45deg) translateZ(26.163em); }
+    .c-bl { transform: rotateY(90deg) rotateX(135deg) translateZ(26.163em); }
+    .c-tl { transform: rotateY(90deg) rotateX(-135deg) translateZ(26.163em); }
+
+    /* 22x2mm Faceplate Extrude */
+    .fp {
+        position: absolute;
+        width: 22em; height: 22em; margin: -11em 0 0 -11em;
+        background-color: #c0c4c8;
+        border: 0.25em solid #999;
+        border-radius: 50%;
+        box-sizing: border-box;
+    }
+    .fp-1 { transform: translateZ(24.5em); }
+    .fp-2 { transform: translateZ(25.0em); }
+    .fp-3 { transform: translateZ(25.5em); }
+    .fp-4 { transform: translateZ(26.0em); }
+
+    .shaft-face {
+        position: absolute;
+        background-color: #e0e4e8;
+        border: 0.25em solid #999;
+        box-sizing: border-box;
+    }
+
+    .s-front {
+        width: 5em; height: 5em; margin: -2.5em 0 0 -2.5em;
+        transform: translateZ(48em);
+    }
+    .s-left, .s-right { width: 24em; height: 5em; margin: -2.5em 0 0 -12em; }
+    .s-left  { transform: translateZ(36em) rotateY(-90deg) translateZ(2.5em); }
+    .s-right { transform: translateZ(36em) rotateY(90deg) translateZ(2.5em); }
+    
+    .s-top, .s-bottom { width: 5em; height: 24em; margin: -12em 0 0 -2.5em; }
+    .s-top    { transform: translateZ(36em) rotateX(90deg) translateZ(2.5em); }
+    .s-bottom { transform: translateZ(36em) rotateX(-90deg) translateZ(2.5em); }
+
+    /* JST Connector */
+    .jst-face {
+        position: absolute;
+        background-color: #f0f4f8; /* slightly off-white plastic */
+        border: 0.25em solid #a0a0a0;
+        box-sizing: border-box;
+    }
+    .j-top { width: 15em; height: 6em; margin: -3em 0 0 -7.5em; transform: translateZ(-18em) rotateX(90deg) translateZ(26em); }
+    .j-front { width: 15em; height: 5em; margin: -2.5em 0 0 -7.5em; transform: translateY(-23.5em) translateZ(-15em); }
+    .j-back { width: 15em; height: 5em; margin: -2.5em 0 0 -7.5em; transform: translateY(-23.5em) rotateY(180deg) translateZ(21em); }
+    .j-left { width: 6em; height: 5em; margin: -2.5em 0 0 -3em; transform: translateY(-23.5em) translateZ(-18em) rotateY(-90deg) translateZ(7.5em); }
+    .j-right { width: 6em; height: 5em; margin: -2.5em 0 0 -3em; transform: translateY(-23.5em) translateZ(-18em) rotateY(90deg) translateZ(7.5em); }
+
+    @keyframes spin-motor {
+        from { transform: rotateX(-20deg) rotateY(0deg); }
+        to   { transform: rotateX(-20deg) rotateY(360deg); }
+    }
+
+    /* 3D Caution Tape */
+    .tape-3d {
+        width: 150vw; /* Massive overhang to prevent edge detachment on ultra-narrow screens */
+        display: flex;
+        justify-content: center;
+        margin-top: 0; /* Pulled further up */
+        margin-bottom: 1.5em;
+        
+        /* Scale by 1.2 so the 3D perspective foreshortening doesn't expose the left/right screen edges! */
+        transform: perspective(1000px) scale(1.2) rotateY(-5deg) rotateX(5deg) rotateZ(-2deg);
+        box-shadow: 0 10px 15px rgba(0,0,0,0.4);
+        
+        /* Caution Tape Styling */
+        background-color: #ffcc00; /* vibrant hazard yellow */
+        background-image: repeating-linear-gradient(-45deg, transparent, transparent 40px, rgba(0,0,0,0.08) 40px, rgba(0,0,0,0.08) 80px);
+        border-top: clamp(3px, 1vw, 5px) solid #111;
+        border-bottom: clamp(3px, 1vw, 5px) solid #111;
+        
+        /* Sit behind the header */
+        z-index: 0;
+    }
+    .tape-3d span {
+        white-space: nowrap;
+        font-family: var(--font-family-logo), monospace;
+        font-weight: 900;
+        font-size: clamp(1.2rem, 4vw, 2.5rem); /* Responsive text scaling */
+        color: #111;
+        padding: 0.1em 0;
+        letter-spacing: 0.1em;
+        text-shadow: 2px 2px 0px rgba(255,255,255,0.4);
+    }
+    
+    /* Custom Home Button */
+    .home-btn {
+        font-family: var(--font-family-content);
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #ffcc00;
+        text-decoration: none;
+        padding: 0.6em 1.5em;
+        border: 2px solid #ffcc00;
+        border-radius: 0.3em;
+        background-color: #111; /* Solid dark body color */
+        transition: all 0.2s ease-in-out;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6); /* Robust drop shadow */
+        margin-top: 1em;
+        z-index: 60;
+    }
+    .home-btn:hover {
+        background-color: #ffcc00;
+        color: #111;
+    }
+    
+    /* Dangling Physics Tape */
+    .dangle-container {
+        position: absolute;
+        top: 0;
+        right: 15vw;
+        z-index: -1; /* Sit behind the nav bar */
+        perspective: 1000px;
+    }
+    
+    /* Hide on smaller screens to prevent cluttering the composition */
+    @media (max-width: 900px) {
+        .dangle-container {
+            display: none;
+        }
+    }
+
+    .d-segment {
+        box-sizing: border-box;
+        position: absolute;
+        width: 4rem;
+        height: 12rem;
+        background-color: #ffcc00;
+        background-image: repeating-linear-gradient(-45deg, transparent, transparent 15px, rgba(0,0,0,0.08) 15px, rgba(0,0,0,0.08) 30px);
+        border-left: 5px solid #111;
+        border-right: 5px solid #111;
+        transform-origin: top center;
+        transform-style: preserve-3d;
+        box-shadow: 5px 5px 15px rgba(0,0,0,0.3);
+    }
+    .d-text {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+    }
+    .d-text span {
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
+        font-family: var(--font-family-logo), monospace;
+        font-weight: 900;
+        font-size: 2rem;
+        color: #111;
+        padding-top: 1em;
+        letter-spacing: 0.1em;
+        white-space: nowrap;
+    }
+    
+    .d-1 {
+        top: 0; left: 0;
+        animation: swing1 3s ease-in-out infinite alternate;
+    }
+    .d-2 {
+        top: 100%; left: -5px; /* match exactly the 5px border offset */
+        animation: swing2 3.5s ease-in-out infinite alternate;
+    }
+    .d-3 {
+        top: 100%; left: -5px;
+        clip-path: polygon(0 0, 100% 0, 100% 80%, 0 100%); /* simple diagonal cut */
+        animation: swing3 4s ease-in-out infinite alternate;
+    }
+    
+    @keyframes swing1 {
+        0% { transform: rotateX(5deg) rotateZ(2deg); }
+        100% { transform: rotateX(15deg) rotateZ(8deg); }
+    }
+    @keyframes swing2 {
+        0% { transform: rotateX(-5deg) rotateZ(2deg); }
+        100% { transform: rotateX(10deg) rotateZ(12deg); }
+    }
+    @keyframes swing3 {
+        0% { transform: rotateX(-10deg) rotateZ(0deg); }
+        100% { transform: rotateX(15deg) rotateZ(18deg); }
+    }
+</style>
+
+<div class="gradientbg"></div>
+
 <div class="errorno">
-    <p>Page not found</p>
-    <br>
-    <br>
-    <a href="/" class="splashlink">Home</a>
-    <div class="animcontainer">
-        <div class="cube">
-            <div class="face north">404</div>
-            <div class="face south">404</div>
-            <div class="face west">404</div>
-            <div class="face east">404</div>
+    <!-- Dangling Tape -->
+    <div class="dangle-container">
+        <div class="d-segment d-1">
+            <div class="d-text"><span>OUT OF</span></div>
+            <div class="d-segment d-2">
+                <div class="d-text"><span>BOUNDS</span></div>
+                <div class="d-segment d-3">
+                    <div class="d-text"><span>// OUT</span></div>
+                </div>
+            </div>
         </div>
     </div>
+
+    <!-- Main Spanning Tape -->
+    <div class="tape-3d">
+        <span>OUT OF BOUNDS // OUT OF BOUNDS // OUT OF BOUNDS // OUT OF BOUNDS // OUT OF BOUNDS // OUT OF BOUNDS // OUT OF BOUNDS // OUT OF BOUNDS // </span>
+    </div>
+    <div class="animcontainer">
+        <div class="motor">
+            <!-- Stator Body -->
+            <div class="m-face m-front"></div>
+            <div class="m-face m-back"><div class="bearing"></div></div>
+            <div class="m-face m-left">
+                <div class="sticker">
+                    <div class="s-head">SERVOPUNK Motor</div>
+                    <div class="s-404">404</div>
+                    <div class="s-sub">Page not found</div>
+                </div>
+            </div>
+            <div class="m-face m-right">
+                <div class="sticker">
+                    <div class="s-head">SERVOPUNK Motor</div>
+                    <div class="s-404">404</div>
+                    <div class="s-sub">Page not found</div>
+                </div>
+            </div>
+            <div class="m-face m-top"></div>
+            <div class="m-face m-bottom"></div>
+
+            <!-- Chamfers -->
+            <div class="c-face c-tr"></div>
+            <div class="c-face c-br"></div>
+            <div class="c-face c-bl"></div>
+            <div class="c-face c-tl"></div>
+
+            <!-- Faceplate Extrude -->
+            <div class="fp fp-1"></div>
+            <div class="fp fp-2"></div>
+            <div class="fp fp-3"></div>
+            <div class="fp fp-4"></div>
+
+            <!-- JST Connector -->
+            <div class="jst-face j-top"></div>
+            <div class="jst-face j-front"></div>
+            <div class="jst-face j-back"></div>
+            <div class="jst-face j-left"></div>
+            <div class="jst-face j-right"></div>
+
+            <!-- Shaft -->
+            <div class="shaft-face s-front"></div>
+            <div class="shaft-face s-left"></div>
+            <div class="shaft-face s-right"></div>
+            <div class="shaft-face s-top"></div>
+            <div class="shaft-face s-bottom"></div>
+        </div>
+    </div>
+    
+    <a href="{{ "/" | relURL }}" class="home-btn">Return to Home</a>
 </div>
 {{ end }}

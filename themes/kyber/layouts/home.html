@@ -8,8 +8,8 @@
       <h1 class="logotext">{{ .Site.Title }}</h1>
       <br>
       <br>
-      <a href="{{ .Site.BaseURL }}blog/" class="splashlink">Blog</a>
-      <a href="{{ .Site.BaseURL }}project/" class="splashlink">Projects</a>
+      <a href="{{ "blog/" | relURL }}" class="splashlink">Blog</a>
+      <a href="{{ "project/" | relURL }}" class="splashlink">Projects</a>
       <a href="{{ .Site.Params.youtube }}" class="splashlink" target="_blank" rel="noopener noreferrer">YouTube</a>
     </div>
   </div>
@@ -18,8 +18,8 @@
 <div class="contentpreview">
   <h2>Build cool shit...</h2>
   <p>When life gives you lemons, make lemonade. So what do you do if life gives you computers? <br>
-    What if life gives you Motors with encoders, or Tools and gadgets, a knack for tinkering, endless curiosity for the 
-    underlying process, a passion for making things be as they wheren't meant to be? This blog documents problems I encountered while making stuff, and if I found a solution I'll post them as well.<br>
+    What if life gives you motors with encoders, or tools and gadgets, a knack for tinkering, endless curiosity for the 
+    underlying process, a passion for making things be as they weren't meant to be? This blog documents problems I encountered while making stuff, and if I found a solution I'll post them as well.</p>
   <div class="previewcontainerblog">
     {{ range first 4 (where .Site.RegularPages "Section" "blog") }}
     <a href="{{ .RelPermalink }}">
@@ -29,7 +29,7 @@
       </div>
     </a>
     {{ end }}
-    <a href="{{ .Site.BaseURL }}blog/">
+    <a href="{{ "blog/" | relURL }}">
       <div class="blogpostpreview">
         <p class="blogposttitle">More Articles</p>
       </div>
@@ -39,7 +39,7 @@
 
 <div class="contentpreview">
   <h2>...put it on the net.</h2>
-    And sometimes, if I forget to hop on to the next one, I might even finish a project. And perhaps, after some time, the documentation resurfaces and gets a dedicated project page on here. <br>
+    <p>And sometimes, if I forget to hop on to the next one, I might even finish a project. And perhaps, after some time, the documentation resurfaces and gets a dedicated project page on here. <br>
     Armed with a screwdriver, soldering iron and vintage ThinkPad running Arch Linux, you too can 
     build stuff as cool as:</p>
   <div class="previewcontainer">
@@ -53,7 +53,7 @@
       </div>
     </a>
   {{ end }}
-    <a href="{{ .Site.BaseURL }}project/">
+    <a href="{{ "project/" | relURL }}">
       <div class="projectpreview" style="background-image: url('img/projects.jpg')">
         <div class="previewtext">
           <b>More Projects</b>

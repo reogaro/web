@@ -6,11 +6,11 @@
             <span class="navseperator">[</span>
             <a href="/">HOME</a>
             <span class="navseperator">/</span>
-            <a href="{{ .Site.BaseURL }}blog">BLOG</a>
+            <a href="{{ "blog/" | relURL }}">BLOG</a>
             <span class="navseperator">/</span>
-            <a href="{{ .Site.BaseURL }}project">PROJECTS</a>
+            <a href="{{ "project/" | relURL }}">PROJECTS</a>
             <span class="navseperator">/</span>
-            <a href="index.html">INFO</a>
+            <a href="{{ "info/" | relURL }}">INFO</a>
             <span class="navseperator">/</span>
             <a href="{{ .Site.Params.youtube }}" target="_blank" rel="noopener noreferrer">YOUTUBE</a>
             <span class="navseperator">]</span>
