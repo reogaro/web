@@ -18,7 +18,7 @@ This theme offers a way to present your blog and projects on a minimal webpage. 
 
 ```toml
 baseURL = 'https://example.org/'
-languageCode = 'en-us'
+locale = 'en-us'
 title = 'KYBERWERK'
 theme = 'hugo-theme-kyber'
 
