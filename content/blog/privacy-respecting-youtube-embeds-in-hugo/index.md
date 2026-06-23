@@ -9,7 +9,41 @@ transparentimg = "gopher-police.svg"
 summary = "Replacing YouTube embeds with just a image, and only loading the iframe embed after clicking."
 +++
 
-# The Problem
+# TL;DR
+
+The following embed was created by calling `{{</* youtube-privacy VjGSMUep6_4 */>}}`:
+
+{{< youtube-privacy VjGSMUep6_4 >}}
+
+To use the finished product on your page, you need to add the following to your project:
+
+- [HUGO Shortcode](https://github.com/reogaro/web/blob/ce132cc201c4c55a72dd309d5982feb607d8d6cf/themes/kyber/layouts/_shortcodes/youtube-privacy.html) to `themes/{your theme here}/layouts/_shortcodes/youtube-privacy.html`
+- [JavaScript](https://github.com/reogaro/web/blob/ce132cc201c4c55a72dd309d5982feb607d8d6cf/themes/kyber/assets/js/youtube-privacy.js) to `themes/{your theme here}/assets/js/youtube-privacy.js`
+
+And the JavaScript to your `<header>`. You could just add it indiscriminately to all pages by adding `{{ partialCached "head/js.html" . }}` to your HTML (most likely `themes/{your theme here}/layouts/_partials/head.html`), or be selective and add it only on the pages [where the Shortcode is used](https://gohugo.io/templates/shortcode/#detection), ([see example](https://github.com/reogaro/web/blob/ce132cc201c4c55a72dd309d5982feb607d8d6cf/themes/kyber/layouts/_partials/head.html)):
+
+```go
+{{ if .HasShortcode "youtube-privacy" }}
+  {{- with resources.Get "js/youtube-privacy.js" }}
+    {{- if eq hugo.Environment "development" }}
+      {{- with . | js.Build }}
+        <script src="{{ .RelPermalink }}" defer></script>
+      {{- end }}
+    {{- else }}
+      {{- $opts := dict "minify" true }}
+      {{- with . | js.Build $opts | fingerprint }}
+        <script src="{{ .RelPermalink }}" integrity="{{- .Data.Integrity }}" crossorigin="anonymous" defer ></script>
+      {{- end }}
+    {{- end }}
+  {{- end }}
+{{ end }}
+```
+
+Voilà. Your YouTube embed, minus the surveillance apparatus, with a side of faster loading times.
+
+---
+
+# But why?
 
 This Site is made using the static site generator [HUGO](https://gohugo.io/). This means it serves HTML, CSS, images and little to no JS to its users. This results in good loading times on even the slowest of connections, and the weakest of hardware:
 
@@ -23,9 +57,7 @@ What the `fsck` - the *embed alone* loads 3.5x slower as the rest of the *entire
 
 This post will describe a clean way to add custom privacy-respecting YouTube embeds using hugo's [shortcodes](https://gohugo.io/content-management/shortcodes/) system to improve loading times, user privacy, and page responsiveness. And you won't have half of Googles marketing department knocking on your door for opening a blog post.
 
-If you're just interested in the finished product, skip ahead to [the finished product](#the-finished-product).
-
-# Shortcodes
+# But how?
 
 The cleanest way of adding embeds to your page is using HUGO's [shortcodes](https://gohugo.io/content-management/shortcodes/) system. For example, to create a (super simplified) custom YouTube embed, create the file `layouts/_shortcodes/youtube.html`:
 
@@ -38,11 +70,7 @@ The cleanest way of adding embeds to your page is using HUGO's [shortcodes](http
 
 ```
 
-And vollià - you can now call `{{ youtube yTeTJzWYRWM }}` in your HTML and markdown files to embed a YouTube video. If you want more features, take a look at the [official HUGO YouTube Shortcode](https://gohugo.io/shortcodes/youtube/) - though it still only embeds the bloated `<iframe>` with all the disadvantages listed above.
-
-⚠ **Important: Breaking Changes in v0.146.0**
-
-Hugo v0.146.0 introduced a major overhaul of the template and shortcode systems. Many third-party tutorials are now outdated. To avoid errors, refer strictly to the official [New Template System Overview](https://gohugo.io/templates/new-templatesystem-overview/).
+And Voilà - you can now call `{{</* youtube VjGSMUep6_4 */>}}` in your HTML and markdown files to embed a YouTube video. If you want more features, take a look at the [official HUGO YouTube Shortcode](https://gohugo.io/shortcodes/youtube/) - though it still only embeds the bloated `<iframe>` with all the disadvantages listed above.
 
 # Developing the Solution
 
@@ -82,42 +110,26 @@ And that’s the basic proof-of-concept. Now we just need the usual trimmings: t
 
 Also, by fetching the thumbnail from the `i.ytimg.com` servers, we still leak the users' IP and user-agent to Google, so we use HUGO's `resources.GetRemote` to fetch and cache the thumbnail on our server, and serve that.
 
-⚠ **Info: Leaking the IP of your build server**
+**On Leaking the IP of your build server**
 
 Using `resources.GetRemote` will result in your dev environment and build server contacting YouTube servers. In case you're severely paranoid, consider using a proxy, fetching on your dev machine, or living off-grid. I wouldn't blame you with this amount of data collection for showing a thumbnail.
 
-I'll save you the specifics, feel free to inspect my implementation on [GitHub](https://github.com/reogaro/web/), and present the finished product:
+I'll save you the specifics, feel free to inspect my implementation on [GitHub](https://github.com/reogaro/web/), which is documented in the solution above!
 
-# The finished product
+---
+## Update: Refactoring into a Partial
 
-The following embed was created by calling `{{</* youtube-privacy VjGSMUep6_4 */>}}`:
+Since originally writing this post, I ran into an issue: what happens if you want to use this privacy-respecting embed in a standard HTML layout template instead of a Markdown file? Hugo shortcodes **only work inside Markdown content**. If you try to use `{{</* youtube-privacy */>}}` in your homepage layout, it simply won't render.
 
-{{< youtube-privacy VjGSMUep6_4 >}}
+To fix this, the core logic was extracted from the shortcode and moved into a standard partial at `layouts/partials/youtube-privacy.html`.
 
-To use the finished product on your page, you need to add the following to your project:
-
-- [HUGO Shortcode](https://github.com/reogaro/web/blob/master/themes/kyber/layouts/_shortcodes/youtube-privacy.html) to `themes/{your theme here}/layouts/_shortcodes/youtube-privacy.html`
-- [JavaScript](https://github.com/reogaro/web/blob/master/themes/kyber/assets/js/youtube-privacy.js) to `themes/{your theme here}/assets/js/youtube-privacy.js`
-
-And the JavaScript to your `<header>`. You could just add it indiscriminately to all pages by adding `{{ partialCached "head/js.html" . }}` to your HTML (most likely `themes/{your theme here}/layouts/_partials/head.html`), or be selective and add it only on the pages [where the Shortcode is used](https://gohugo.io/templates/shortcode/#detection), ([see example](https://github.com/reogaro/web/blob/master/themes/kyber/layouts/_partials/head.html)):
-
-```
-{{ if .HasShortcode "youtube-privacy" }}
-  {{- with resources.Get "js/youtube-privacy.js" }}
-    {{- if eq hugo.Environment "development" }}
-      {{- with . | js.Build }}
-        <script src="{{ .RelPermalink }}" defer></script>
-      {{- end }}
-    {{- else }}
-      {{- $opts := dict "minify" true }}
-      {{- with . | js.Build $opts | fingerprint }}
-        <script src="{{ .RelPermalink }}" integrity="{{- .Data.Integrity }}" crossorigin="anonymous" defer ></script>
-      {{- end }}
-    {{- end }}
-  {{- end }}
-{{ end }}
-
+The shortcode was then updated to act as a lightweight wrapper that passes the video ID to the partial:
+```go
+{{- $id := or (.Get "id") (.Get 0) -}}
+{{- partial "youtube-privacy.html" (dict "id" $id) -}}
 ```
 
-Voilà. Your YouTube embed, minus the surveillance apparatus, with a side of faster loading times. Happy Hacking!
+This simple change keeps the `{{</* youtube-privacy ID */>}}` syntax working flawlessly in your Markdown files, while allowing you to call the exact same logic directly from any layout file using `{{ partial "youtube-privacy.html" (dict "id" "ID") }}`!
+
+*(Note: The links in the tutorial above have been pinned to an older GitHub commit that shows the original, simpler shortcode implementation).*
 

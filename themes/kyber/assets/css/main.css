@@ -10,7 +10,8 @@
     --font-family-content: "Roboto Slab", "Roboto", sans-serif;
     --font-family-code: "Hack", "Source Code Variable", "JetBrains Mono", monospace;
 
-    --content-width: 900px;
+    --text-outline: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+    --content-width: 80ch;
 }
 
 body {
@@ -39,6 +40,25 @@ body {
 
 code {
     text-wrap: wrap;
+    padding: 0.2em 0.4em;
+    background-color: var(--color-neutral);
+    border-radius: 4px;
+}
+
+pre {
+    padding: 1em;
+    border-radius: 4px;
+    overflow-x: auto;
+    margin: 1em 0;
+    /* !important is required to override Chroma's inline styles for supported languages */
+    background-color: var(--color-neutral) !important;
+}
+
+pre code {
+    padding: 0;
+    background-color: transparent;
+    text-wrap: nowrap;
+    white-space: pre;
 }
 
 a {
@@ -111,60 +131,10 @@ iframe {
     font-weight: bold;
 }
 
-@media (max-width: 900px) {
-    .bloglisticon {
-      display: none !important;
-    }
-}
-
-@media (max-width: 650px) {
-    .navlogo {
-        display: none;
-    }
-
-    .navbar {
-        float: none;
-        text-align: center;
-    }
-
-    .bloglisttitle {
-      font-size: 0.8em;
-      color: red;
-    }
-}
-
-@media (max-width: 500px) {
-    .navseperator {
-        display: none;
-    }
-
-    .navbar a {
-        font-size: 0.85em;
-        font-weight: bold;
-        margin: 0 0.3em;
-    }
-
-    .logotext {
-      font-size: 2.5em !important;
-    }
-
-    .blogpostdate {
-      display: none;
-    }
-
-    .blogheader {
-      padding: 6em 2em 4em !important;
-    }
-
-    .blogheader h1 {
-      font-size: 2em !important;
-    }
-}
 
 /* Hero section */
 
 .herobackground {
-    background-color: teal;
     background: rgba(0, 0, 0, 0.5) url("/img/background.jpg");
     background-blend-mode: darken;
     background-repeat: no-repeat;
@@ -389,82 +359,7 @@ iframe {
     }
 }
 
-/* Based on: https://www.labnol.org/internet/light-youtube-embeds/27941/ with tweaks*/
 
-.youtube-player {
-    position: relative;
-    aspect-ratio: 16 / 10;
-    overflow: hidden;
-    max-width: 100%;
-    background: #000;
-    margin: 5px;
-    border-radius: 2px;
-}
-
-.youtube-player iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 100;
-    background: transparent;
-}
-
-.youtube-player img {
-    object-fit: cover;
-    display: block;
-    left: 0;
-    bottom: 0;
-    margin: auto;
-    max-width: 100%;
-    width: 100%;
-    position: absolute;
-    right: 0;
-    top: 0;
-    border: none;
-    height: auto;
-    cursor: pointer;
-}
-
-.youtube-player .play {
-    cursor: pointer;
-    position: absolute;
-    height: 48px;
-    width: 68px;
-    left: 50%;
-    top: 50%;
-    
-    margin: 100px auto;
-    margin-left: -34px;
-    margin-top: -24px;
-
-    background: #FF0000;
-    border-radius: 50% / 10%;
-}
-
-.youtube-player .play::before {
-    content: "";
-    position: absolute;
-    top: 10%;
-    bottom: 10%;
-    left: -5%;
-    right: -5%;
-    background: #FF0000;
-    border-radius: 5% / 50%;
-}
-
-.youtube-player .play::after{
-    content: "";
-    position: absolute;
-    height: 2px;
-    width: 2px;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-left: 15px solid #FFFFFF;
-    top: 28%;
-    right: 34%;
-}
 
 /* Contact Section */
 
@@ -556,15 +451,10 @@ iframe {
 }
 
 .taxonomyLink {
-    margin: 0.6em 0.1em;
-    padding: 0.2em 0.4em;
-    text-decoration: none;
-
-    border-radius: 2px;
-    text-decoration: none;
-
     margin: 0 0.2em;
     padding: 0.2em 0.5em;
+    text-decoration: none;
+    border-radius: 2px;
 }
 
 .taxonomyLink:hover {
@@ -574,15 +464,21 @@ iframe {
 
 .postcontent {
     padding: 2em;
+    line-height: 1.6;
 }
 
 .postcontent p {
     margin: 1em 0;
-    width: 100%;
 }
 
 .postcontent h1 {
     text-align: center;
+}
+
+.postcontent h2,
+.postcontent h3 {
+    margin-top: 2.5em;
+    margin-bottom: 0.75em;
 }
 
 .postcontent img {
@@ -591,7 +487,7 @@ iframe {
 
     height: auto;
     max-width: 100%;
-    max-height: 18em;
+    max-height: 70vh;
 
     border-radius: 2px;
 }
@@ -603,7 +499,7 @@ iframe {
 /* Code */
 
 .postcontent .highlight {
-  margin: 0.5em;
+  margin: 0;
 }
 
 .postcontent table, th, td {
@@ -668,7 +564,7 @@ iframe {
     padding: 0 0.5em;
     
     font-family: var(--font-family-logo);
-    text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+    text-shadow: var(--text-outline);
 }
 
 .bloglisttext {
@@ -677,7 +573,7 @@ iframe {
 
     padding: 0 0.5em;
 
-    text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+    text-shadow: var(--text-outline);
 }
 
 .tagelement {
@@ -723,9 +619,7 @@ iframe {
     background-repeat: no-repeat;
     background-size: contain;
 
-    filter: brightness(80%);
-
-    filter: drop-shadow(0 0 2px rgba(0, 0, 0, 1));
+    filter: brightness(80%) drop-shadow(0 0 2px rgba(0, 0, 0, 1));
 
     z-index: 0;
     pointer-events: none;
@@ -768,7 +662,7 @@ iframe {
 
 .projectlistlink {
     text-decoration: none;
-    color: #00BBBB;
+    color: var(--color-accent);
 }
 
 .projectlistimg {
@@ -807,7 +701,7 @@ iframe {
     font-family: var(--font-family-logo);
     font-size: 2em;
     font-weight: 900;
-    text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+    text-shadow: var(--text-outline);
 }
 
 /* Footer */
@@ -897,5 +791,55 @@ iframe {
 
     to {
         transform: rotateX(-20deg) rotateY(360deg);
+    }
+}
+
+@media (max-width: 900px) {
+    .bloglisticon {
+      display: none;
+    }
+}
+
+@media (max-width: 650px) {
+    .navlogo {
+        display: none;
+    }
+
+    .navbar {
+        float: none;
+        text-align: center;
+    }
+
+    .bloglisttitle {
+      font-size: 0.8em;
+      color: red;
+    }
+}
+
+@media (max-width: 500px) {
+    .navseperator {
+        display: none;
+    }
+
+    .navbar a {
+        font-size: 0.85em;
+        font-weight: bold;
+        margin: 0 0.3em;
+    }
+
+    .logotext {
+      font-size: 2.5em;
+    }
+
+    .blogpostdate {
+      display: none;
+    }
+
+    .blogheader {
+      padding: 6em 2em 4em;
+    }
+
+    .blogheader h1 {
+      font-size: 2em;
     }
 }

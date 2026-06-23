@@ -12,7 +12,7 @@
 <!-- Shortcode: Model Viewer -->
 <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js" async></script>
 {{ end }}
-{{ if .HasShortcode "youtube-privacy" }}
+{{ if or (.HasShortcode "youtube-privacy") .IsHome }}
 <!-- Shortcode: Privacy-aware YouTube embeds -->
   {{- with resources.Get "js/youtube-privacy.js" }}
     {{- if eq hugo.Environment "development" }}
