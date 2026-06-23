@@ -1,3 +1,4 @@
+{{- $page := .Page -}}
 {{- with $raw := .id -}}
   {{- $id := replaceRE "[^A-Za-z0-9_-]" "" $raw -}}
   {{- $remoteURL := printf "https://i.ytimg.com/vi/%s/hqdefault.jpg" $id -}}
@@ -32,6 +33,22 @@
        <path d="m 11.4253,14.2854 7.4224,-4.285 -7.4224,-4.28507 z" fill="#ffffff"/>
      </svg>
   </a>
+
+  {{- if and $page (not ($page.Store.Get "hasYouTubeJS")) -}}
+    {{- $page.Store.Set "hasYouTubeJS" true -}}
+    {{- with resources.Get "js/youtube-privacy.js" -}}
+      {{- if eq hugo.Environment "development" -}}
+        {{- with . | js.Build -}}
+          <script src="{{ .RelPermalink }}" defer></script>
+        {{- end -}}
+      {{- else -}}
+        {{- $opts := dict "minify" true -}}
+        {{- with . | js.Build $opts | fingerprint -}}
+          <script src="{{ .RelPermalink }}" integrity="{{- .Data.Integrity }}" crossorigin="anonymous" defer></script>
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
 
 {{- else -}}
   {{- errorf "The youtube-privacy partial requires an 'id' parameter." -}}

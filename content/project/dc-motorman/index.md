@@ -13,7 +13,7 @@ transparentimg  = 'motor.png'
 
 The "DC Servoman" is my nickname for a Pico DC Servo Controller circuit board, designed to control two DC motors with quadrature encoders via UART communication.
 
-{{< model-viewer src="pcb.glb" poster="pcb.png" alt="The PCB" >}}
+![The PCB](pcb.glb "pcb.png")
 
 ## Backstory
 

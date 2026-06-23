@@ -1,0 +1,13 @@
+{{- /* Render Hook for Images: Intercepts specific formats and routes them to partials */ -}}
+
+{{- if strings.HasSuffix .Destination ".glb" -}}
+  {{- partial "model-viewer.html" (dict "src" .Destination "alt" .Text "poster" .Title "Page" .Page) -}}
+
+{{- else if findRE `^(https?://)?(www\.)?(youtube\.com|youtu\.be)/` .Destination -}}
+  {{- $id := replaceRE `^.*(?:youtu\.be/|v=)([^&?]+).*` `$1` .Destination -}}
+  {{- partial "youtube-privacy.html" (dict "id" $id "Page" .Page) -}}
+
+{{- else -}}
+  {{- $img := .Page.Resources.GetMatch .Destination -}}
+  <img src="{{ if $img }}{{ $img.RelPermalink }}{{ else }}{{ .Destination | safeURL }}{{ end }}" {{ with .Text }}alt="{{ . }}"{{ end }} {{ with .Title }}title="{{ . }}"{{ end }} />
+{{- end -}}

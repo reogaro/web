@@ -1,88 +1,87 @@
 +++
-title = "Privacy Respecting YouTube Embeds in HUGO using Shortcodes"
+title = "Privacy Respecting YouTube Embeds in HUGO"
 date = 2025-09-27T00:00:00-07:00
 draft = false
 tags = ['web', 'linux', 'hugo']
 categories = ['blog']
 image = "privacy-jail.jpg"
 transparentimg = "gopher-police.svg"
-summary = "Replacing YouTube embeds with just a image, and only loading the iframe embed after clicking."
+summary = "How to embed YouTube videos without inviting Alphabet Inc."
 +++
 
-## TL;DR
+This embed system quarantines the YouTube `<iframe>` embed (and its megabytes of telemetry) with a lightweight image placeholder. Google's tracking scripts are only loaded if the user clicks it.
 
-The following embed was created by calling `{{</* youtube-privacy VjGSMUep6_4 */>}}`:
+![](https://www.youtube.com/watch?v=VjGSMUep6_4)
 
-{{< youtube-privacy VjGSMUep6_4 >}}
+It uses standard [Obsidian.md-inspired](https://obsidian.md/help/embed-web-pages#Embed+a+YouTube+video) Markdown, protects user privacy, and dramatically reduces page load times:
 
-To use the finished product on your page, you need to add the following to your project:
-
-- [HUGO Shortcode](https://github.com/reogaro/web/blob/ce132cc201c4c55a72dd309d5982feb607d8d6cf/themes/kyber/layouts/_shortcodes/youtube-privacy.html) to `themes/{your theme here}/layouts/_shortcodes/youtube-privacy.html`
-- [JavaScript](https://github.com/reogaro/web/blob/ce132cc201c4c55a72dd309d5982feb607d8d6cf/themes/kyber/assets/js/youtube-privacy.js) to `themes/{your theme here}/assets/js/youtube-privacy.js`
-
-And the JavaScript to your `<header>`. You could just add it indiscriminately to all pages by adding `{{ partialCached "head/js.html" . }}` to your HTML (most likely `themes/{your theme here}/layouts/_partials/head.html`), or be selective and add it only on the pages [where the Shortcode is used](https://gohugo.io/templates/shortcode/#detection), ([see example](https://github.com/reogaro/web/blob/ce132cc201c4c55a72dd309d5982feb607d8d6cf/themes/kyber/layouts/_partials/head.html)):
-
-```go
-{{ if .HasShortcode "youtube-privacy" }}
-  {{- with resources.Get "js/youtube-privacy.js" }}
-    {{- if eq hugo.Environment "development" }}
-      {{- with . | js.Build }}
-        <script src="{{ .RelPermalink }}" defer></script>
-      {{- end }}
-    {{- else }}
-      {{- $opts := dict "minify" true }}
-      {{- with . | js.Build $opts | fingerprint }}
-        <script src="{{ .RelPermalink }}" integrity="{{- .Data.Integrity }}" crossorigin="anonymous" defer ></script>
-      {{- end }}
-    {{- end }}
-  {{- end }}
-{{ end }}
+```md
+![](https://www.youtube.com/watch?v=VjGSMUep6_4)
 ```
 
-Voilà. Your YouTube embed, minus the surveillance apparatus, with a side of faster loading times.
+To integrate this into your own project, copy the following components:
+
+1. **Hugo Render Hook**: Routes Markdown image tags containing YouTube URLs. Save to `themes/{your theme}/layouts/_default/_markup/render-image.html`. [View Code](https://github.com/reogaro/web/blob/main/themes/kyber/layouts/_default/_markup/render-image.html)
+2. **Hugo Partial**: Handles HTML generation and thumbnail fetching. Save to `themes/{your theme}/layouts/partials/youtube-privacy.html`. [View Code](https://github.com/reogaro/web/blob/main/themes/kyber/layouts/partials/youtube-privacy.html)
+3. **JavaScript**: Handles the click event to swap the placeholder with the iframe. Save to `themes/{your theme}/assets/js/youtube-privacy.js`. [View Code](https://github.com/reogaro/web/blob/main/themes/kyber/assets/js/youtube-privacy.js)
+
+The JavaScript is injected dynamically by the partial via Hugo's `.Page.Store` exactly once per page.
 
 ---
 
-## But why?
+## The Problem: Performance and Privacy
 
-This Site is made using the static site generator [HUGO](https://gohugo.io/). This means it serves HTML, CSS, images and little to no JS to its users. This results in good loading times on even the slowest of connections, and the weakest of hardware:
+Static site generators like [Hugo](https://gohugo.io/) excel at delivering pure hand-optimized HTML and CSS, ensuring ultrafast load times. Injecting a standard YouTube embed negates this advantage entirely, slowing load times to their "web 3.0" speeds:
 
 ![](network-analysis-no-embed.png)
 
-Many articles would benefit from embedding Video content from YouTube - but look at the disaster that unfolds when loading *just the video embed* on the same connection: 
+A native YouTube `<iframe>` silently loads megabytes of JavaScript. In testing, the embed alone took significantly longer to load than the entire surrounding blog post including images.
+
+Like bolting a jet engine to a bicycle, this page's cargo rack just broke off.
 
 ![](network-analysis-embed.png)
 
-What the `fsck` - the *embed alone* loads 3.5x slower as the rest of the *entire page*. Google places cookies, runs its analytics to track this sites' users, it even sends a request to some Google Play Store URL (I also don't get it) and runs more JavaScript than I have HTML.
+Worse, Google uses these iframes like a trojan horse to deposit tracking cookies before the user even considers clicking play. They have no legitimate reason to know you are reading this post, and now, they won't.
 
-This post will describe a clean way to add custom privacy-respecting YouTube embeds using hugo's [shortcodes](https://gohugo.io/content-management/shortcodes/) system to improve loading times, user privacy, and page responsiveness. And you won't have half of Googles marketing department knocking on your door for opening a blog post.
+## The fix
 
-## But how?
+The solution involves three stages: 
+1. **Routing**: Intercepting the Markdown.
+2. **Templating**: Fetching the thumbnail and generating the DOM.
+3. **Hydration**: Swapping the DOM element upon interaction via minimal JavaScript.
 
-The cleanest way of adding embeds to your page is using HUGO's [shortcodes](https://gohugo.io/content-management/shortcodes/) system. For example, to create a (super simplified) custom YouTube embed, create the file `layouts/_shortcodes/youtube.html`:
+### 1. The Render Hook
+
+We avoid Hugo-specific shortcodes (`{\{< ... >}\}`) and use Hugo's [Markdown Render Hooks](https://gohugo.io/templates/render-hooks/). This allows standard `![](URL)` syntax for when you get excited by new shiny thing. The hook `render-image.html` uses Regex to intercept YouTube URLs and passes the ID to a HUGO partial:
 
 ```html
-{{- with $id := or (.Get "id") (.Get 0) -}}
-  <iframe width="640" height="360" src="https://www.youtube.com/embed/{{ $id }}"></iframe> 
+{{- /* Intercept YouTube URLs */ -}}
+{{- if findRE `^(https?://)?(www\.)?(youtube\.com|youtu\.be)/` .Destination -}}
+  {{- /* Extract the ID using regex and pass to our partial */ -}}
+  {{- $id := replaceRE `^.*(?:youtu\.be/|v=)([^&?]+).*` `$1` .Destination -}}
+  {{- partial "youtube-privacy.html" (dict "id" $id "Page" .Page) -}}
+
 {{- else -}}
-  {{- errorf "The %q shortcode requires a single positional parameter, the ID of the YouTube video. See %s" .Name .Position -}}
+  {{- /* Standard image output */ -}}
+  <img src="{{ .Destination | safeURL }}" alt="{{ .Text }}" />
 {{- end -}}
-
 ```
 
-And Voilà - you can now call `{{</* youtube VjGSMUep6_4 */>}}` in your HTML and markdown files to embed a YouTube video. If you want more features, take a look at the [official HUGO YouTube Shortcode](https://gohugo.io/shortcodes/youtube/) - though it still only embeds the bloated `<iframe>` with all the disadvantages listed above.
+### 2. The Partial
 
-## Developing the Solution
+The `youtube-privacy.html` partial is responsible for generating the initial static placeholder. To prevent leaking the user's IP to Google's thumbnail servers (`i.ytimg.com`), the partial uses Hugo's `resources.GetRemote` to fetch, cache, and serve the thumbnail directly from your build server. This successfully severs the last remaining telemetry thread Google had.
 
-Here's how we will attack the problem: Only embed the video thumbnail into the page, add JavaScript that runs if we click it, and add the iframe only if the user clicks on the thumbnail.
+*Note: This means your build server will contact YouTube servers. If this is a concern, consider proxying the build requests, or moving into the woods.*
 
-We will use a `<a>` link element to act as a fallback and open the video in a new tab in case the JavaScript doesn't run:
+The partial outputs an `<a>` link element configured with the fetched thumbnail as a background image. It uses `data-youtube-id` to pass state to the JavaScript:
 
 ```html
-<a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="youtube-preview-privacy" data-youtube-id="dQw4w9WgXcQ" style="display: block; width: 640px; aspect-ratio: 16 / 9; background: center / cover url('https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg');"> </a>
+<a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="youtube-preview-privacy" data-youtube-id="dQw4w9WgXcQ" style="background: center / cover url('/images/yt/dQw4w9WgXcQ.jpg');"> </a>
 ```
 
-Notice the `data-youtube-id` property: It contains the Video ID for us to load. Our JS can search for all DOM elements with the `youtube-preview-privacy` class and through JavaScript's `dataset` functionality extract the ID from it, and then replace the `<a>`'s "open link in new tab" functionality with our "create new iframe" functionality:
+### 3. The JavaScript
+
+The JavaScript executes when the DOM is ready. It targets the `.youtube-preview-privacy` class, intercepts the click event, and dynamically injects the `<iframe>` using the `youtube-nocookie.com` domain with `autoplay=1`. Only when the user explicitly consents by clicking the thumbnail do we finally permit Google's player to load. 
 
 ```js
 const replaceWithYouTubeIframe = el => {
@@ -103,33 +102,19 @@ document.addEventListener('DOMContentLoaded', () => {
     el.addEventListener('click', e => { e.preventDefault(); replaceWithYouTubeIframe(el); }, { once: true });
   });
 });
-
 ```
 
-And that’s the basic proof-of-concept. Now we just need the usual trimmings: the red YouTube play button, a loading spinner, error handling, some sanitization, the shortcode glue, and a place to stash the JavaScript so the whole thing behaves.
-
-Also, by fetching the thumbnail from the `i.ytimg.com` servers, we still leak the users' IP and user-agent to Google, so we use HUGO's `resources.GetRemote` to fetch and cache the thumbnail on our server, and serve that.
-
-**On Leaking the IP of your build server**
-
-Using `resources.GetRemote` will result in your dev environment and build server contacting YouTube servers. In case you're severely paranoid, consider using a proxy, fetching on your dev machine, or living off-grid. I wouldn't blame you with this amount of data collection for showing a thumbnail.
-
-I'll save you the specifics, feel free to inspect my implementation on [GitHub](https://github.com/reogaro/web/), which is documented in the solution above!
+Because the partial leverages Hugo's `.Page.Store`, the full production JavaScript (which includes error handling and a loading spinner) is fingerprinted and injected automatically.
 
 ---
-### Update: Refactoring into a Partial
 
-Since originally writing this post, I ran into an issue: what happens if you want to use this privacy-respecting embed in a standard HTML layout template instead of a Markdown file? Hugo shortcodes **only work inside Markdown content**. If you try to use `{{</* youtube-privacy */>}}` in your homepage layout, it simply won't render.
+### Update: Mid-2026 Architectural Changes
 
-To fix this, the core logic was extracted from the shortcode and moved into a standard partial at `layouts/partials/youtube-privacy.html`.
+If you read an earlier version of this post, it instructed you to use Hugo Shortcodes (`{\{< youtube-privacy ID >}\}`). That architecture contained two flaws:
 
-The shortcode was then updated to act as a lightweight wrapper that passes the video ID to the partial:
-```go
-{{- $id := or (.Get "id") (.Get 0) -}}
-{{- partial "youtube-privacy.html" (dict "id" $id) -}}
-```
+1. **Markdown Vendor Lock-in**: Shortcodes tightly couple content to Hugo. Migrating to another SSG (like Astro or Next.js) would break all video embeds.
+2. **Template Limitations**: Hugo shortcodes only evaluate inside Markdown content. The embed could not be used natively in layout files like `home.html`.
 
-This simple change keeps the `{{</* youtube-privacy ID */>}}` syntax working flawlessly in your Markdown files, while allowing you to call the exact same logic directly from any layout file using `{{ partial "youtube-privacy.html" (dict "id" "ID") }}`!
+The current architecture resolves both issues. The logic was extracted into `layouts/partials/youtube-privacy.html` for global layout support, and the Markdown interface was replaced entirely with `render-image.html`, restoring standard, portable Markdown syntax.
 
-*(Note: The links in the tutorial above have been pinned to an older GitHub commit that shows the original, simpler shortcode implementation).*
-
+*(Note: The GitHub links above point to the main branch. If you need the legacy shortcode implementation, review [older commits](https://github.com/reogaro/web/tree/ce132cc201c4c55a72dd309d5982feb607d8d6cf)).*

@@ -23,7 +23,7 @@ It is running [FluidNC](https://github.com/bdring/FluidNC), a fork of the popula
 
 I am looking for the original project documentation and will add more information to this post once I find it. For now, you can admire it writing a poem:
 
-{{< youtube-privacy yTeTJzWYRWM >}}
+![](https://www.youtube.com/watch?v=yTeTJzWYRWM)
 
 ```
 roses are red

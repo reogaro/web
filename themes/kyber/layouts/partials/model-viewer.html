@@ -1,23 +1,46 @@
-{{/*
-Embeds a 3D Model in the page.
+{{- $page := .Page -}}
+{{- $src := .src -}}
+{{- $poster := .poster -}}
+{{- $alt := .alt -}}
 
-@param {string} [src] the .glb file to load.
-@param {string} [poster] image poster to show if 3D fails
-@param {string} [alt] text for accessibility
+{{- /* Verify the GLB file exists in Page Resources */ -}}
+{{- $glb := "" -}}
+{{- if $page -}}
+  {{- $glb = $page.Resources.GetMatch $src -}}
+  {{- if not $glb -}}
+    {{- warnf "Model Viewer: 3D model file '%s' not found in page resources of %s!" $src $page.File.Path -}}
+  {{- end -}}
+{{- end -}}
 
-@returns {template.HTML}
-*/}}
+{{- /* Retrieve the poster if provided */ -}}
+{{- $posterURL := "" -}}
+{{- if $poster -}}
+  {{- if $page -}}
+    {{- with $page.Resources.GetMatch $poster -}}
+      {{- $posterURL = .RelPermalink -}}
+    {{- else -}}
+      {{- $posterURL = $poster -}}
+    {{- end -}}
+  {{- else -}}
+    {{- $posterURL = $poster -}}
+  {{- end -}}
+{{- end -}}
 
-{{/* Validation block */}}
-{{ if not .src }}
-    {{ warnf "model-viewer partial is missing required 'src' parameter." }}
-{{ end }}
-{{ if not .alt }}
-    {{ warnf "model-viewer partial (src: %s) is missing 'alt' parameter." .src }}
-{{ end }}
-{{ if not .poster }}
-    {{ warnf "model-viewer partial (src: %s) is missing 'poster' parameter." .src }}
-{{ end }}
+<model-viewer class="modelviewer" src='{{ if $glb }}{{ $glb.RelPermalink }}{{ else }}{{ $src | safeURL }}{{ end }}' {{ with $posterURL }}poster='{{ . | safeURL }}'{{ end }} {{ with $alt }}alt='{{ . }}'{{ end }} loading="lazy" ar="false" auto-rotate="true" camera-controls="true" disable-zoom="true" rotation-per-second="30%" interaction-prompt="none"></model-viewer>
 
-<model-viewer class="modelviewer" src='{{ .src }}' poster='{{ .poster }}' alt='{{ .alt }}' loading="lazy" ar="false" auto-rotate="true" camera-controls="true" disable-zoom="true" rotation-per-second="60%" interaction-prompt="none">
-</model-viewer>
+{{- /* Inject the JS */ -}}
+{{- if and $page (not ($page.Store.Get "hasModelViewerJS")) -}}
+  {{- $page.Store.Set "hasModelViewerJS" true -}}
+  {{- with resources.Get "js/model-viewer.js" -}}
+    {{- if eq hugo.Environment "development" -}}
+      {{- with . | js.Build -}}
+        <script type="module" src="{{ .RelPermalink }}" async></script>
+      {{- end -}}
+    {{- else -}}
+      {{- $opts := dict "minify" true -}}
+      {{- with . | js.Build $opts | fingerprint -}}
+        <script type="module" src="{{ .RelPermalink }}" integrity="{{- .Data.Integrity }}" crossorigin="anonymous" async></script>
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
