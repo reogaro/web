@@ -66,6 +66,17 @@ pre code {
     white-space: pre;
 }
 
+::selection {
+    background-color: var(--color-accent);
+    color: var(--color-background-body);
+    text-shadow: none;
+}
+::-moz-selection {
+    background-color: var(--color-accent);
+    color: var(--color-background-body);
+    text-shadow: none;
+}
+
 a {
     color: var(--color-text);
 }
@@ -700,6 +711,25 @@ iframe {
     padding: 1em;
 }
 
+.projectlistcontainer h1 {
+    margin-bottom: 0.5em;
+}
+
+.projectlist-intro {
+    margin-bottom: 3em;
+}
+
+@keyframes projectBootUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .projectgrid {
     display: flex;
     gap: 3em;
@@ -714,6 +744,45 @@ iframe {
     flex-grow: 0;
     flex-shrink: 1;
     flex-basis: 16em;
+    
+    /* 3D Monitor Depth */
+    border: 3px solid var(--color-neutral);
+    border-radius: var(--radius-large);
+    background-color: var(--color-background-content);
+    box-shadow: var(--shadow-offset);
+    overflow: hidden;
+    
+    opacity: 0; /* Hidden initially for boot-up animation */
+    animation: projectBootUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    
+    transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.15s ease-in-out, border-color 0.15s ease-in-out;
+}
+
+.projectcard::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(180deg, rgba(0, 170, 170, 0) 0%, rgba(0, 170, 170, 0.3) 100%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s ease-in-out;
+    mix-blend-mode: color; /* Maps the teal color naturally onto the image */
+}
+
+.projectcard:hover {
+    transform: translateY(-4px) scale(1.015);
+    border-color: var(--color-accent);
+    box-shadow: 0 10px 20px rgba(0, 170, 170, 0.2);
+}
+
+.projectcard:hover::after {
+    opacity: 1;
+}
+
+.projectcard:active {
+    transform: translateY(2px) scale(0.98);
+    box-shadow: 0 4px 8px rgba(0, 170, 170, 0.5);
+    transition: transform 0.05s ease-out, box-shadow 0.05s ease-out, border-color 0.05s ease-out;
 }
 
 .projectlistlink {
@@ -736,9 +805,14 @@ iframe {
     object-fit: cover;
     object-position: 0% 25%;
 
-    border-radius: var(--radius-default);
+    /* Power Off state */
+    filter: grayscale(100%) brightness(50%) contrast(120%);
+    transition: filter 0.2s ease-in-out;
+}
 
-    filter: brightness(90%);
+.projectcard:hover .projectlistimgel {
+    /* Power On state */
+    filter: grayscale(0%) brightness(100%) contrast(100%);
 }
 
 .projectlisttext {
@@ -757,7 +831,14 @@ iframe {
     font-family: var(--font-family-logo);
     font-size: 2em;
     font-weight: 900;
+    color: var(--color-text);
     text-shadow: var(--text-outline);
+    transition: color 0.15s ease-in-out, text-shadow 0.15s ease-in-out;
+}
+
+.projectcard:hover .projectlisttext {
+    color: var(--color-accent);
+    text-shadow: var(--text-outline), 0 0 3px var(--color-accent);
 }
 
 /* Footer */

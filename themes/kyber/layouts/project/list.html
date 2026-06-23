@@ -1,13 +1,12 @@
 {{ define "main" }}
 <div class="projectlistcontainer">
   <h1>{{ .Title }}</h1>
-  <br>
-  {{ .Content }}
-  <br>
-  <br>
+  <div class="projectlist-intro">
+    {{ .Content }}
+  </div>
   <div class="projectgrid">
-    {{ range .Pages }}
-    <div class="projectcard">
+    {{ range $index, $element := .Pages }}
+    <div class="projectcard" style="animation-delay: {{ mul $index 0.2 }}s">
       <a href="{{ .RelPermalink }}" class="projectlistlink">
         <img class="projectlistimgel" src="{{ .Permalink }}{{ .Params.image }}">
         <h2 class="projectlisttext">{{ .LinkTitle }}</h2>

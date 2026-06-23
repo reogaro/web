@@ -19,7 +19,7 @@
       </div>
       <div class="bloglisttext">
         {{ range .Params.tags }}
-        <a href="{{ $.Site.BaseURL }}tags/{{ . | urlize }}" class="tagelement">{{ . }}</a>
+        <a href="{{ printf "tags/%s" (. | urlize) | relURL }}" class="tagelement">{{ . }}</a>
         {{ end }}
         <br>
         <a href="{{ .RelPermalink }}" class="bloglistlink">

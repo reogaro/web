@@ -1,10 +1,10 @@
 <div id="header" class="header">
     <div class="navelement">
-        <a href="/" class="navlogo">{{ site.Title }}</a>
+        <a href="{{ site.Home.RelPermalink }}" class="navlogo">{{ site.Title }}</a>
 
         <div class="navbar">
             <span class="navseperator">[</span>
-            <a href="/">HOME</a>
+            <a href="{{ site.Home.RelPermalink }}">HOME</a>
             <span class="navseperator">/</span>
             <a href="{{ "blog/" | relURL }}">BLOG</a>
             <span class="navseperator">/</span>
