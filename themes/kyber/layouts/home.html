@@ -58,7 +58,7 @@
     {{- $pImg := .Resources.GetMatch .Params.image -}}
     {{- $pImgUrl := printf "%s%s" .Permalink .Params.image -}}
     {{- if $pImg -}}
-      {{- if reflect.IsImageResourceProcessable $pImg -}}
+      {{- if and (eq $pImg.ResourceType "image") (ne $pImg.MediaType.SubType "svg") -}}
         {{- $resT := site.Params.imaging.thumbnailres | default 1000 -}}
         {{- $qualT := site.Params.imaging.thumbnailquality | default 85 -}}
         {{- if gt $pImg.Width $resT -}}

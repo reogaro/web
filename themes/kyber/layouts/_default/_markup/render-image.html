@@ -10,7 +10,7 @@
 {{- else -}}
   {{- $img := .Page.Resources.GetMatch .Destination -}}
   {{- if $img -}}
-    {{- if reflect.IsImageResourceProcessable $img -}}
+    {{- if and (eq $img.ResourceType "image") (ne $img.MediaType.SubType "svg") -}}
       {{- $ext := path.Ext .Destination -}}
       {{- $baseName := strings.TrimSuffix $ext .Destination -}}
       {{- $targetName := printf "%s-web.webp" $baseName -}}

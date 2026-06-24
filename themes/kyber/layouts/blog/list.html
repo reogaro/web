@@ -12,7 +12,7 @@
           {{- $img := .Resources.GetMatch .Params.image -}}
           {{- $imgUrl := printf "%s%s" .Permalink .Params.image -}}
           {{- if $img -}}
-            {{- if reflect.IsImageResourceProcessable $img -}}
+            {{- if and (eq $img.ResourceType "image") (ne $img.MediaType.SubType "svg") -}}
               {{- $res := site.Params.imaging.thumbnailres | default 1000 -}}
               {{- $qual := site.Params.imaging.thumbnailquality | default 85 -}}
               {{- $processed := "" -}}
@@ -44,7 +44,7 @@
       {{- $tImg := .Resources.GetMatch .Params.transparentimg -}}
       {{- $tImgUrl := printf "%s%s" .Permalink .Params.transparentimg -}}
       {{- if $tImg -}}
-        {{- if reflect.IsImageResourceProcessable $tImg -}}
+        {{- if and (eq $tImg.ResourceType "image") (ne $tImg.MediaType.SubType "svg") -}}
           {{- $resT := site.Params.imaging.thumbnailres | default 1000 -}}
           {{- $qualT := site.Params.imaging.thumbnailquality | default 85 -}}
           {{- $processedT := "" -}}

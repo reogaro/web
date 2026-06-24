@@ -3,7 +3,7 @@
     {{- $bgImage := .Params.image -}}
     {{- $imgResource := .Resources.GetMatch .Params.image -}}
     {{- if $imgResource -}}
-      {{- if reflect.IsImageResourceProcessable $imgResource -}}
+      {{- if and (eq $imgResource.ResourceType "image") (ne $imgResource.MediaType.SubType "svg") -}}
         {{- $res := site.Params.imaging.headerres | default 1600 -}}
         {{- $qual := site.Params.imaging.headerquality | default 85 -}}
         {{- $processed := "" -}}
