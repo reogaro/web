@@ -9,5 +9,5 @@
 
 {{- else -}}
   {{- $img := .Page.Resources.GetMatch .Destination -}}
-  <img src="{{ if $img }}{{ $img.RelPermalink }}{{ else }}{{ .Destination | safeURL }}{{ end }}" {{ with .Text }}alt="{{ . }}"{{ end }} {{ with .Title }}title="{{ . }}"{{ end }} />
+  <img src="{{ if $img }}{{ $img.RelPermalink }}{{ else }}{{ .Destination | safeURL }}{{ end }}" {{ with .Text }}alt="{{ . }}"{{ end }} {{ with .Title }}title="{{ . }}"{{ end }} loading="lazy" />
 {{- end -}}

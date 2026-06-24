@@ -32,4 +32,217 @@ document.addEventListener('DOMContentLoaded', () => {
 
         container.appendChild(btn);
     });
+
+    // --- Lightbox for Articles ---
+    const overlay = document.createElement('div');
+    overlay.className = 'lightbox-overlay';
+    overlay.style.display = 'none';
+    overlay.setAttribute('role', 'dialog');
+    overlay.setAttribute('aria-modal', 'true');
+    overlay.setAttribute('aria-label', 'Image Viewer');
+    
+    const imgEl = document.createElement('img');
+    imgEl.className = 'lightbox-img';
+    imgEl.title = 'Click to zoom in/out';
+    
+    const infoEl = document.createElement('div');
+    infoEl.className = 'lightbox-info';
+    
+    const controls = document.createElement('div');
+    controls.className = 'lightbox-controls';
+    
+    const dlLink = document.createElement('a');
+    dlLink.className = 'lightbox-btn';
+    dlLink.innerText = 'Download Original';
+    dlLink.setAttribute('download', '');
+    
+    const closeBtn = document.createElement('button');
+    closeBtn.className = 'lightbox-btn';
+    closeBtn.innerText = 'Close';
+    
+    controls.appendChild(dlLink);
+    controls.appendChild(closeBtn);
+    overlay.appendChild(infoEl);
+    overlay.appendChild(imgEl);
+    overlay.appendChild(controls);
+    document.body.appendChild(overlay);
+
+    imgEl.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') imgEl.click();
+    });
+
+    overlay.addEventListener('keydown', (e) => {
+        if (e.key !== 'Tab') return;
+        
+        const focusable = [imgEl, dlLink, closeBtn].filter(el => el.hasAttribute('tabindex') || el.tagName === 'A' || el.tagName === 'BUTTON');
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+
+        if (e.shiftKey) {
+            if (document.activeElement === first) {
+                last.focus();
+                e.preventDefault();
+            }
+        } else {
+            if (document.activeElement === last) {
+                first.focus();
+                e.preventDefault();
+            }
+        }
+    });
+
+    let isZoomed = false;
+    let maxX = 0;
+    let maxY = 0;
+
+    let canZoom = false;
+
+    const resetZoom = () => {
+        isZoomed = false;
+        imgEl.style.position = 'relative';
+        imgEl.style.maxHeight = '';
+        imgEl.style.maxWidth = '';
+        imgEl.style.transform = 'translate(0px, 0px)';
+        infoEl.style.display = 'block';
+        controls.style.position = 'static';
+
+        const availW = window.innerWidth * 0.95;
+        const availH = window.innerHeight * 0.85;
+        const scale = Math.min(1, availW / imgEl.naturalWidth, availH / imgEl.naturalHeight);
+        canZoom = (1 / scale) > 1.1;
+        
+        if (canZoom) {
+            imgEl.style.cursor = 'zoom-in';
+            imgEl.setAttribute('tabindex', '0');
+        } else {
+            imgEl.style.cursor = 'default';
+            imgEl.removeAttribute('tabindex');
+        }
+    };
+
+    window.addEventListener('resize', () => {
+        if (overlay.style.display === 'flex') {
+            resetZoom();
+        }
+    });
+
+    let lastFocusedEl = null;
+
+    const closeLightbox = () => {
+        overlay.style.display = 'none';
+        document.body.style.overflow = 'auto';
+        resetZoom();
+        if (lastFocusedEl) lastFocusedEl.focus();
+    };
+
+    closeBtn.addEventListener('click', closeLightbox);
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) closeLightbox();
+    });
+    
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && overlay.style.display === 'flex') {
+            closeLightbox();
+        }
+    });
+
+    let ticking = false;
+    const panImage = (e) => {
+        if (!isZoomed || ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+            const xRatio = e.clientX / window.innerWidth;
+            const yRatio = e.clientY / window.innerHeight;
+            const translateX = (maxX / 2) - (xRatio * maxX);
+            const translateY = (maxY / 2) - (yRatio * maxY);
+            imgEl.style.transform = `translate(${translateX}px, ${translateY}px)`;
+            ticking = false;
+        });
+    };
+
+    overlay.addEventListener('mousemove', panImage);
+
+    // Mobile Touch Panning
+    let touchX = 0, touchY = 0, curTransX = 0, curTransY = 0;
+    
+    overlay.addEventListener('touchstart', (e) => {
+        if (!isZoomed || e.touches.length > 1) return;
+        touchX = e.touches[0].clientX;
+        touchY = e.touches[0].clientY;
+        const match = imgEl.style.transform.match(/translate\((-?[\d.]+)px,\s*(-?[\d.]+)px\)/);
+        if (match) {
+            curTransX = parseFloat(match[1]);
+            curTransY = parseFloat(match[2]);
+        }
+    }, { passive: true });
+
+    overlay.addEventListener('touchmove', (e) => {
+        if (!isZoomed || e.touches.length > 1) return;
+        e.preventDefault(); // Prevent native scroll/bounce
+        if (ticking) return;
+        
+        ticking = true;
+        const dx = e.touches[0].clientX - touchX;
+        const dy = e.touches[0].clientY - touchY;
+        
+        requestAnimationFrame(() => {
+            let newX = curTransX + dx;
+            let newY = curTransY + dy;
+            newX = Math.max(-maxX/2, Math.min(maxX/2, newX));
+            newY = Math.max(-maxY/2, Math.min(maxY/2, newY));
+            imgEl.style.transform = `translate(${newX}px, ${newY}px)`;
+            ticking = false;
+        });
+    }, { passive: false });
+
+    imgEl.addEventListener('click', (e) => {
+        if (!canZoom) return;
+        isZoomed = !isZoomed;
+        if (isZoomed) {
+            infoEl.style.display = 'none';
+            controls.style.position = 'absolute';
+            controls.style.bottom = '25px';
+            imgEl.style.position = 'absolute';
+            imgEl.style.maxHeight = 'none';
+            imgEl.style.maxWidth = 'none';
+            imgEl.style.cursor = 'zoom-out';
+            
+            // Allow DOM to update dimensions before calculating bounds
+            requestAnimationFrame(() => {
+                maxX = Math.max(0, imgEl.offsetWidth - window.innerWidth);
+                maxY = Math.max(0, imgEl.offsetHeight - window.innerHeight);
+                panImage(e);
+            });
+        } else {
+            resetZoom();
+        }
+    });
+
+    document.querySelectorAll('.postcontent img').forEach(img => {
+        img.style.cursor = 'zoom-in';
+        img.setAttribute('tabindex', '0'); // make images focusable for keyboard users
+        
+        img.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') img.click();
+        });
+
+        img.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            lastFocusedEl = document.activeElement;
+            imgEl.src = img.src;
+            imgEl.alt = img.alt || 'Fullscreen Image';
+            dlLink.href = img.src;
+            
+            const urlObj = new URL(img.src);
+            const pathname = urlObj.pathname;
+            const filename = pathname.substring(pathname.lastIndexOf('/') + 1) || 'image';
+            infoEl.innerText = `${filename} (${img.naturalWidth} \u00d7 ${img.naturalHeight}px)`;
+
+            resetZoom();
+            overlay.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            closeBtn.focus();
+        });
+    });
 });
