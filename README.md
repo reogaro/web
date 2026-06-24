@@ -9,6 +9,28 @@ Branches:
 - `html` for legacy
 - `hugo` for legacy
 
+## Development
+
+To spin up the local server without any aggressive caching getting in the way of your CSS/JS updates, run:
+
+```bash
+hugo server -D --noHTTPCache --disableFastRender
+```
+
+## Content Creation
+
+The site uses custom archetypes to automatically scaffold the required TOML frontmatter (SEO tags, categories, images). Because the site uses "Leaf Bundles" (where you drop your images in the same folder as the post), always target an `index.md` file:
+
+**Create a new Blog Post:**
+```bash
+hugo new content/blog/your-post-title/index.md
+```
+
+**Create a new Project:**
+```bash
+hugo new content/project/your-project-title/index.md
+```
+
 ## Custom Markdown Embeds
 
 This project uses custom Hugo Render Hooks to convert standard Markdown image tags into rich components.
