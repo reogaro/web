@@ -1,5 +1,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#0A0A0A">
+<link rel="canonical" href="{{ .Permalink }}">
 <title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ printf "%s | %s" .Title site.Title }}{{ end }}</title>
 
 <!-- SEO Meta Tags -->
@@ -13,6 +15,10 @@
 
 <link rel="icon" type="image/png" href="{{ "favicon.png" | relURL }}">
 
+<!-- Eagerly preload critical local fonts to eliminate FOIT (Flash of Invisible Text) -->
+<link rel="preload" href="{{ "fonts/orbitron-variable.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{{ "fonts/hack-regular.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{{ "fonts/roboto-slab-variable.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
 {{ if .IsHome }}
 <!-- Eagerly preload the massive splash background to eliminate CSS waterfall delay -->
 <link rel="preload" href="{{ "img/background.jpg" | relURL }}" as="image" fetchpriority="high">
