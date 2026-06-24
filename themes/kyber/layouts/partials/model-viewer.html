@@ -32,15 +32,7 @@
 {{- if and $page (not ($page.Store.Get "hasModelViewerJS")) -}}
   {{- $page.Store.Set "hasModelViewerJS" true -}}
   {{- with resources.Get "js/model-viewer.js" -}}
-    {{- if eq hugo.Environment "development" -}}
-      {{- with . | js.Build -}}
-        <script type="module" src="{{ .RelPermalink }}" async></script>
-      {{- end -}}
-    {{- else -}}
-      {{- $opts := dict "minify" true -}}
-      {{- with . | js.Build $opts | fingerprint -}}
-        <script type="module" src="{{ .RelPermalink }}" integrity="{{- .Data.Integrity }}" crossorigin="anonymous" async></script>
-      {{- end -}}
-    {{- end -}}
+    {{- $js := . | fingerprint -}}
+    <script type="module" src="{{ $js.RelPermalink }}" integrity="{{- $js.Data.Integrity }}" crossorigin="anonymous" async></script>
   {{- end -}}
 {{- end -}}
