@@ -2,6 +2,7 @@ baseURL = 'https://servopunk.net/'
 locale = 'en-us'
 title = 'SERVOPUNK'
 theme = 'kyber'
+enableRobotsTXT = true
 
 [params]
 tagline = "Build cool shit. Put it on the net."
