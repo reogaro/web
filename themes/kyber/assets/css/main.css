@@ -608,27 +608,59 @@ iframe {
     color: var(--color-background-body);
 }
 
-.postcontent table, th, td {
-  margin: 1em auto;
-  border: 1px solid;
-  border-collapse: collapse;
+.postcontent table {
+    width: max-content;
+    max-width: 100%;
+    margin: 2em auto;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: var(--radius-large); /* or --radius-default */
+    display: block;
+    overflow-x: auto;
+    font-size: 0.95em;
+    background-color: var(--color-background-body);
+    box-shadow: var(--shadow-default);
+    border: 1px solid var(--color-neutral);
 }
 
-.postcontent table {
-  display: block;
-  max-width: -moz-fit-content;
-  max-width: fit-content;
-  margin: 0 auto;
-  overflow-x: auto;
-  white-space: nowrap;
+.postcontent th,
+.postcontent td {
+    padding: 0.6em 1em;
+    border-right: 1px solid var(--color-neutral);
+    border-bottom: 1px solid var(--color-neutral);
+    text-align: left;
+    white-space: nowrap;
+}
+
+/* Eliminate double borders on the right edge */
+.postcontent th:last-child,
+.postcontent td:last-child {
+    border-right: none;
+}
+
+/* Eliminate double borders on the bottom edge */
+.postcontent tbody tr:last-child td {
+    border-bottom: none;
 }
 
 .postcontent th {
-  background-color: #FFFFFF20;
+    background-color: var(--color-neutral);
+    color: var(--color-text);
+    font-weight: bold;
+    /* We override the bottom border for the header row */
+    border-bottom: 2px solid var(--color-accent);
 }
 
-.postcontent th, td {
-  padding: 0.2em 0.4em;
+.postcontent tbody tr {
+    transition: background-color 0.15s ease;
+}
+
+.postcontent tbody tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.015);
+}
+
+.postcontent tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.04);
 }
 
 /* Blog Post List Page */
