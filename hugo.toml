@@ -18,12 +18,12 @@ quality = 80
 resampleFilter = "Lanczos"
 
 [params.imaging]
-inlineRes = 1600
-inlineQuality = 80
-thumbnailRes = 1000
-thumbnailQuality = 80
-headerRes = 1600
-headerQuality = 85
-heroRes = 1920
-heroQuality = 90
+inlineRes = 1200
+inlineQuality = 75
+thumbnailRes = 800
+thumbnailQuality = 75
+headerRes = 1200
+headerQuality = 80
+heroRes = 1600
+heroQuality = 80
 

@@ -13,7 +13,9 @@
     {{- else with .Value -}}
       {{- /* Success: Create local resource and update bgURL */ -}}
       {{- $localImage := .Content | resources.FromString (printf "images/yt/%s.jpg" $id) -}}
-      {{- $bgURL = $localImage.RelPermalink -}}
+      {{- $resT := site.Params.imaging.thumbnailres | default 800 -}}
+      {{- $qualT := site.Params.imaging.thumbnailquality | default 75 -}}
+      {{- $bgURL = ($localImage.Process (printf "resize %dx webp q%d" $resT $qualT)).RelPermalink -}}
     {{- else -}}
       {{- warnf "YouTube Thumbnail not found/404 for ID: %s (falling back to remote URL)" $id -}}
     {{- end -}}
