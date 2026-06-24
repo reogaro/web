@@ -7,7 +7,20 @@
     {{ range .Pages }}
       <a href="{{ .RelPermalink }}">
         <div class="postlisting">
-          <div class="pageimg" style="background-image: url('{{ .Permalink }}{{ .Params.image }}')"></div>
+          {{- $lImg := .Resources.GetMatch .Params.image -}}
+          {{- $lImgUrl := printf "%s%s" .Permalink .Params.image -}}
+          {{- if $lImg -}}
+            {{- if reflect.IsImageResourceProcessable $lImg -}}
+              {{- $resT := site.Params.imaging.thumbnailres | default 1000 -}}
+              {{- $qualT := site.Params.imaging.thumbnailquality | default 85 -}}
+              {{- if gt $lImg.Width $resT -}}
+                {{- $lImgUrl = ($lImg.Process (printf "resize %dx webp q%d" $resT $qualT)).RelPermalink -}}
+              {{- else -}}
+                {{- $lImgUrl = ($lImg.Process (printf "webp q%d" $qualT)).RelPermalink -}}
+              {{- end -}}
+            {{- end -}}
+          {{- end -}}
+          <div class="pageimg" style="background-image: url('{{ $lImgUrl }}')"></div>
           <div>
             <h2>{{ .LinkTitle }}</h2>
             <p>{{ .Summary }}</p>

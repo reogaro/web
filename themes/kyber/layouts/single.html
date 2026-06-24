@@ -1,6 +1,21 @@
 {{ define "main" }}
   <div class="blogpost">
-    <div class="blogheader" style="background-image: url('{{ .Params.image }}')">
+    {{- $bgImage := .Params.image -}}
+    {{- $imgResource := .Resources.GetMatch .Params.image -}}
+    {{- if $imgResource -}}
+      {{- if reflect.IsImageResourceProcessable $imgResource -}}
+        {{- $res := site.Params.imaging.headerres | default 1600 -}}
+        {{- $qual := site.Params.imaging.headerquality | default 85 -}}
+        {{- $processed := "" -}}
+        {{- if gt $imgResource.Width $res -}}
+          {{- $processed = $imgResource.Process (printf "resize %dx webp q%d" $res $qual) -}}
+        {{- else -}}
+          {{- $processed = $imgResource.Process (printf "webp q%d" $qual) -}}
+        {{- end -}}
+        {{- $bgImage = $processed.RelPermalink -}}
+      {{- end -}}
+    {{- end -}}
+    <div class="blogheader" style="background-image: url('{{ $bgImage }}')">
 
       {{ $dateMachine := .Date | time.Format "2006-01-02T15:04:05-07:00" }}
       {{ $dateHuman := .Date | time.Format "02.01.2006" }}

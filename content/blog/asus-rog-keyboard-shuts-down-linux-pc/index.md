@@ -4,7 +4,7 @@ date = 2026-06-23T13:18:40+02:00
 draft = false
 tags = ['hardware', 'linux']
 categories = ['blog']
-image = 'keeb-big-1280.jpg'
+image = 'keeb-big.jpg'
 transparentimg = 'keeb-small.png'
 summary = 'Hateposting from a now-fixed 150€+ "deluxe" keyboard'
 +++

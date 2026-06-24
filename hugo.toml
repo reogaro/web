@@ -12,3 +12,18 @@ mail = "info@servopunk.net"
 [markup.highlight]
 style = "modus-vivendi"
 noClasses = false
+
+[imaging]
+quality = 80
+resampleFilter = "Lanczos"
+
+[params.imaging]
+inlineRes = 1600
+inlineQuality = 80
+thumbnailRes = 1000
+thumbnailQuality = 80
+headerRes = 1600
+headerQuality = 85
+heroRes = 1920
+heroQuality = 90
+

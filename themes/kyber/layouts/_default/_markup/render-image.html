@@ -9,5 +9,29 @@
 
 {{- else -}}
   {{- $img := .Page.Resources.GetMatch .Destination -}}
-  <img src="{{ if $img }}{{ $img.RelPermalink }}{{ else }}{{ .Destination | safeURL }}{{ end }}" {{ with .Text }}alt="{{ . }}"{{ end }} {{ with .Title }}title="{{ . }}"{{ end }} loading="lazy" />
+  {{- if $img -}}
+    {{- if reflect.IsImageResourceProcessable $img -}}
+      {{- $ext := path.Ext .Destination -}}
+      {{- $baseName := strings.TrimSuffix $ext .Destination -}}
+      {{- $targetName := printf "%s-web.webp" $baseName -}}
+      {{- $res := site.Params.imaging.inlineres | default 1600 -}}
+      {{- $qual := site.Params.imaging.inlinequality | default 85 -}}
+      {{- $processed := "" -}}
+      {{- if gt $img.Width $res -}}
+        {{- $processed = $img.Process (printf "resize %dx webp q%d" $res $qual) | resources.Copy $targetName -}}
+      {{- else -}}
+        {{- $processed = $img.Process (printf "webp q%d" $qual) | resources.Copy $targetName -}}
+      {{- end -}}
+      <a href="{{ $img.RelPermalink }}" target="_blank">
+        <picture>
+          <source srcset="{{ $processed.RelPermalink }}" type="image/webp">
+          <img src="{{ $img.RelPermalink }}" {{ with .Text }}alt="{{ . }}"{{ end }} {{ with .Title }}title="{{ . }}"{{ end }} loading="lazy" />
+        </picture>
+      </a>
+    {{- else -}}
+      <img src="{{ $img.RelPermalink }}" {{ with .Text }}alt="{{ . }}"{{ end }} {{ with .Title }}title="{{ . }}"{{ end }} loading="lazy" />
+    {{- end -}}
+  {{- else -}}
+    <img src="{{ .Destination | safeURL }}" {{ with .Text }}alt="{{ . }}"{{ end }} {{ with .Title }}title="{{ . }}"{{ end }} loading="lazy" />
+  {{- end -}}
 {{- end -}}

@@ -69,7 +69,18 @@
 <link rel="preload" href="{{ "fonts/roboto-slab-variable.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
 {{ if .IsHome }}
 <!-- Eagerly preload the massive splash background to eliminate CSS waterfall delay -->
-<link rel="preload" href="{{ "img/background.jpg" | relURL }}" as="image" fetchpriority="high">
+{{- $heroImgH := resources.Get "img/background.jpg" -}}
+{{- $heroUrlH := "img/background.jpg" | relURL -}}
+{{- if $heroImgH -}}
+  {{- $resH := site.Params.imaging.herores | default 1920 -}}
+  {{- $qualH := site.Params.imaging.heroquality | default 85 -}}
+  {{- if gt $heroImgH.Width $resH -}}
+    {{- $heroUrlH = ($heroImgH.Process (printf "resize %dx webp q%d" $resH $qualH)).RelPermalink -}}
+  {{- else -}}
+    {{- $heroUrlH = ($heroImgH.Process (printf "webp q%d" $qualH)).RelPermalink -}}
+  {{- end -}}
+{{- end -}}
+<link rel="preload" href="{{ $heroUrlH }}" as="image" fetchpriority="high">
 {{ end }}
 
 {{ with .OutputFormats.Get "rss" -}}

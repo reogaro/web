@@ -4,8 +4,8 @@ date = 2026-06-24T10:33:00+02:00
 draft = false
 tags = ['privacy', 'web', 'security']
 categories = ['blog']
-image = "codescreen-web.jpg"
-transparentimg = "computer-web.png"
+image = "codescreen.jpg"
+transparentimg = "computer.png"
 summary = "The modern web is a surveillance machine. Here is how and why this site explicitly rejects the entire modern telemetry stack."
 +++
 

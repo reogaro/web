@@ -1,7 +1,18 @@
 {{ define "main" }}
 {{ .Content }}
 
-<div class="herobackground">
+{{- $heroImg := resources.Get "img/background.jpg" -}}
+{{- $heroUrl := "/img/background.jpg" -}}
+{{- if $heroImg -}}
+  {{- $res := site.Params.imaging.herores | default 1920 -}}
+  {{- $qual := site.Params.imaging.heroquality | default 85 -}}
+  {{- if gt $heroImg.Width $res -}}
+    {{- $heroUrl = ($heroImg.Process (printf "resize %dx webp q%d" $res $qual)).RelPermalink -}}
+  {{- else -}}
+    {{- $heroUrl = ($heroImg.Process (printf "webp q%d" $qual)).RelPermalink -}}
+  {{- end -}}
+{{- end -}}
+<div class="herobackground" style="background-image: url('{{ $heroUrl }}');">
   <div class="herocontainer">
     <div class="herocontent">
       <p class="tagline">{{ .Site.Params.tagline}}</p>
@@ -44,8 +55,21 @@
     build stuff as cool as:</p>
   <div class="previewcontainer">
   {{ range first 3 (where .Site.RegularPages "Section" "project") }}
+    {{- $pImg := .Resources.GetMatch .Params.image -}}
+    {{- $pImgUrl := printf "%s%s" .Permalink .Params.image -}}
+    {{- if $pImg -}}
+      {{- if reflect.IsImageResourceProcessable $pImg -}}
+        {{- $resT := site.Params.imaging.thumbnailres | default 1000 -}}
+        {{- $qualT := site.Params.imaging.thumbnailquality | default 85 -}}
+        {{- if gt $pImg.Width $resT -}}
+          {{- $pImgUrl = ($pImg.Process (printf "resize %dx webp q%d" $resT $qualT)).RelPermalink -}}
+        {{- else -}}
+          {{- $pImgUrl = ($pImg.Process (printf "webp q%d" $qualT)).RelPermalink -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
     <a href="{{ .RelPermalink }}">
-      <div class="projectpreview" style="background-image: url('{{ .Permalink }}{{ .Params.image }}')">
+      <div class="projectpreview" style="background-image: url('{{ $pImgUrl }}')">
         <div class="previewtext">
           <b>{{ .LinkTitle }}</b>
           <p>{{ .Summary }}</p>
@@ -54,7 +78,18 @@
     </a>
   {{ end }}
     <a href="{{ "project/" | relURL }}">
-      <div class="projectpreview" style="background-image: url('{{ "img/projects.jpg" | relURL }}')">
+      {{- $moreProj := resources.Get "img/projects.jpg" -}}
+      {{- $moreUrl := "img/projects.jpg" | relURL -}}
+      {{- if $moreProj -}}
+        {{- $resT := site.Params.imaging.thumbnailres | default 1000 -}}
+        {{- $qualT := site.Params.imaging.thumbnailquality | default 85 -}}
+        {{- if gt $moreProj.Width $resT -}}
+          {{- $moreUrl = ($moreProj.Process (printf "resize %dx webp q%d" $resT $qualT)).RelPermalink -}}
+        {{- else -}}
+          {{- $moreUrl = ($moreProj.Process (printf "webp q%d" $qualT)).RelPermalink -}}
+        {{- end -}}
+      {{- end -}}
+      <div class="projectpreview" style="background-image: url('{{ $moreUrl }}')">
         <div class="previewtext">
           <b>More Projects</b>
           <p>Even more creations!</p>

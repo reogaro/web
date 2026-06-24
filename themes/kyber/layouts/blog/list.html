@@ -9,7 +9,22 @@
     <div class="bloglistlisting">
       <div class="bloglistimg">
         <a href="{{ .RelPermalink }}" class="bloglistlink">
-          <img class="bloglistimgel" src="{{ .Permalink }}{{ .Params.image }}">
+          {{- $img := .Resources.GetMatch .Params.image -}}
+          {{- $imgUrl := printf "%s%s" .Permalink .Params.image -}}
+          {{- if $img -}}
+            {{- if reflect.IsImageResourceProcessable $img -}}
+              {{- $res := site.Params.imaging.thumbnailres | default 1000 -}}
+              {{- $qual := site.Params.imaging.thumbnailquality | default 85 -}}
+              {{- $processed := "" -}}
+              {{- if gt $img.Width $res -}}
+                {{- $processed = $img.Process (printf "resize %dx webp q%d" $res $qual) -}}
+              {{- else -}}
+                {{- $processed = $img.Process (printf "webp q%d" $qual) -}}
+              {{- end -}}
+              {{- $imgUrl = $processed.RelPermalink -}}
+            {{- end -}}
+          {{- end -}}
+          <img class="bloglistimgel" src="{{ $imgUrl }}">
         </a>
       </div>
       <div class="bloglisttitle">
@@ -26,7 +41,22 @@
           <b>{{ .Summary }}</b>
         </a>
       </div>
-      <div class="bloglisticon" style="background-image: url('{{ .Permalink }}{{ .Params.transparentimg }}');"></div>
+      {{- $tImg := .Resources.GetMatch .Params.transparentimg -}}
+      {{- $tImgUrl := printf "%s%s" .Permalink .Params.transparentimg -}}
+      {{- if $tImg -}}
+        {{- if reflect.IsImageResourceProcessable $tImg -}}
+          {{- $resT := site.Params.imaging.thumbnailres | default 1000 -}}
+          {{- $qualT := site.Params.imaging.thumbnailquality | default 85 -}}
+          {{- $processedT := "" -}}
+          {{- if gt $tImg.Width $resT -}}
+            {{- $processedT = $tImg.Process (printf "resize %dx webp q%d" $resT $qualT) -}}
+          {{- else -}}
+            {{- $processedT = $tImg.Process (printf "webp q%d" $qualT) -}}
+          {{- end -}}
+          {{- $tImgUrl = $processedT.RelPermalink -}}
+        {{- end -}}
+      {{- end -}}
+      <div class="bloglisticon" style="background-image: url('{{ $tImgUrl }}');"></div>
     </div>
   {{ end }}
 </div>

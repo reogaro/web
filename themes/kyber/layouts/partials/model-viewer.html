@@ -17,7 +17,13 @@
 {{- if $poster -}}
   {{- if $page -}}
     {{- with $page.Resources.GetMatch $poster -}}
-      {{- $posterURL = .RelPermalink -}}
+      {{- $res := site.Params.imaging.inlineres | default 1600 -}}
+      {{- $qual := site.Params.imaging.inlinequality | default 85 -}}
+      {{- if gt .Width $res -}}
+        {{- $posterURL = (.Process (printf "resize %dx webp q%d" $res $qual)).RelPermalink -}}
+      {{- else -}}
+        {{- $posterURL = (.Process (printf "webp q%d" $qual)).RelPermalink -}}
+      {{- end -}}
     {{- else -}}
       {{- $posterURL = $poster -}}
     {{- end -}}

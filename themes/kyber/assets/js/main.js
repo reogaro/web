@@ -230,14 +230,24 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             e.stopPropagation();
             lastFocusedEl = document.activeElement;
-            imgEl.src = img.src;
-            imgEl.alt = img.alt || 'Fullscreen Image';
-            dlLink.href = img.src;
             
-            const urlObj = new URL(img.src);
+            const parentAnchor = img.closest('a');
+            const originalSrc = parentAnchor ? parentAnchor.href : (img.currentSrc || img.src);
+
+            imgEl.src = originalSrc;
+            imgEl.alt = img.alt || 'Fullscreen Image';
+            dlLink.href = originalSrc;
+            
+            const urlObj = new URL(originalSrc, window.location.href);
             const pathname = urlObj.pathname;
             const filename = pathname.substring(pathname.lastIndexOf('/') + 1) || 'image';
-            infoEl.innerText = `${filename} (${img.naturalWidth} \u00d7 ${img.naturalHeight}px)`;
+            
+            infoEl.innerText = `${filename} (Loading...)`;
+            
+            imgEl.onload = () => {
+                infoEl.innerText = `${filename} (${imgEl.naturalWidth} \u00d7 ${imgEl.naturalHeight}px)`;
+                resetZoom();
+            };
 
             resetZoom();
             overlay.style.display = 'flex';

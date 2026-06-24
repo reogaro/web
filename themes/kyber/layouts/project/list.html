@@ -8,7 +8,22 @@
     {{ range $index, $element := .Pages }}
     <div class="projectcard" style="animation-delay: {{ mul $index 0.2 }}s">
       <a href="{{ .RelPermalink }}" class="projectlistlink">
-        <img class="projectlistimgel" src="{{ .Permalink }}{{ .Params.image }}" loading="lazy" alt="{{ .LinkTitle }}">
+        {{- $pImg := .Resources.GetMatch .Params.image -}}
+        {{- $pImgUrl := printf "%s%s" .Permalink .Params.image -}}
+        {{- if $pImg -}}
+          {{- if reflect.IsImageResourceProcessable $pImg -}}
+            {{- $res := site.Params.imaging.thumbnailres | default 1000 -}}
+            {{- $qual := site.Params.imaging.thumbnailquality | default 85 -}}
+            {{- $processedP := "" -}}
+            {{- if gt $pImg.Width $res -}}
+              {{- $processedP = $pImg.Process (printf "resize %dx webp q%d" $res $qual) -}}
+            {{- else -}}
+              {{- $processedP = $pImg.Process (printf "webp q%d" $qual) -}}
+            {{- end -}}
+            {{- $pImgUrl = $processedP.RelPermalink -}}
+          {{- end -}}
+        {{- end -}}
+        <img class="projectlistimgel" src="{{ $pImgUrl }}" loading="lazy" alt="{{ .LinkTitle }}">
         <h2 class="projectlisttext">{{ .LinkTitle }}</h2>
       </a>
     </div>
