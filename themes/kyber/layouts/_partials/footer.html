@@ -1,9 +1,16 @@
 <div class="footer">
-  <p><a href="https://www.gnu.org/licenses/copyleft.html" class="copyleft" target="_blank">&copy;</a> Servopunk {{ .Site.Lastmod.Year }}</p>
-    <a rel="license" style="height: 1em" target="_blank" href="http://creativecommons.org/licenses/by-sa/4.0/">CC
-        BY-SA 4.0</a>
-    {{ with .OutputFormats.Get "rss" -}}
-      {{ printf `<a href=%q>RSS</a>` .Permalink | safeHTML }}
-    {{ end }}
-    <a href="mailto:{{ .Site.Params.mail }}">Contact</a>
+  <span class="footer-item"><a href="https://www.gnu.org/licenses/copyleft.html" class="copyleft" target="_blank" rel="noopener noreferrer">&copy;</a> Servopunk {{ .Site.Lastmod.Year }}</span>
+  <span class="footer-separator" aria-hidden="true">//</span>
+  <a rel="license noopener noreferrer" target="_blank" href="http://creativecommons.org/licenses/by-sa/4.0/" class="footer-item">CC BY-SA 4.0</a>
+  {{ with .OutputFormats.Get "rss" -}}
+    <span class="footer-separator" aria-hidden="true">//</span>
+    {{ printf `<a href=%q class="footer-item">RSS</a>` .Permalink | safeHTML }}
+  {{ end }}
+  <span class="footer-separator" aria-hidden="true">//</span>
+  <a href="{{ "privacy/" | relURL }}" class="footer-item">Privacy Policy</a>
+  <span class="footer-separator" aria-hidden="true">//</span>
+  <a href="https://github.com/reogaro/web" target="_blank" rel="noopener noreferrer" class="footer-item">Source Code</a>
+  <span class="footer-separator">//</span>
+  {{ $emailBase64 := .Site.Params.mail | base64Encode }}
+  <a href="#" class="footer-item" data-contact="{{ $emailBase64 }}" onclick="window.location.href='mailto:' + atob(this.getAttribute('data-contact')); return false;">Contact</a>
 </div>

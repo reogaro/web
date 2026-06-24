@@ -4,7 +4,7 @@
 <div class="herobackground">
   <div class="herocontainer">
     <div class="herocontent">
-      <h3 class="tagline">{{ .Site.Params.tagline}}</h3>
+      <p class="tagline">{{ .Site.Params.tagline}}</p>
       <h1 class="logotext">{{ .Site.Title }}</h1>
       <br>
       <br>
@@ -85,7 +85,8 @@
     or want someone to gift your old <i>Gabelstapler</i> to - use the E-Mail address below.
     Please be patient with your inquiries - Life can get in the way.</p> -->
 
-  <a href="mailto:{{ .Site.Params.mail }}" class="contactme">Contact ⇒ </a>
+  {{ $emailBase64 := .Site.Params.mail | base64Encode }}
+  <a href="#" class="contactme" data-contact="{{ $emailBase64 }}" onclick="window.location.href='mailto:' + atob(this.getAttribute('data-contact')); return false;">Contact ⇒ </a>
 </div>
 {{ end }}
 
