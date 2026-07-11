@@ -12,15 +12,15 @@ summary = 'Hateposting from a now-fixed 150€+ "deluxe" keyboard'
 
 # How To Stop an ASUS ROG Keyboard from Randomly Shutting Down Your Linux PC
 
-If you are also using an ASUS ROG wireless keyboard on Linux (Strix Scope NX Wireless, Falchion, etc...), you have likely experienced that the keyboard, when left idle, powers off your PC.
+If you are also on Linux, using an ASUS ROG wireless keyboard (Strix Scope NX Wireless, Falchion, etc...), you have likely experienced the keyboards most useful feature: when left idle, it powers off your PC.
 
-Here's how to fix it:
+In case you want to actually use your computer with this 150€+ "deluxe" peripheral, here's how to fix it:
 
 ---
 
 ## The Fix
 
-Create a new udev rule file. **The filename must start with a number smaller than `70`** so it runs before the default systemd rules tag the device. We'll use `69`.
+Create a new udev rule file. **The filename must start with a number smaller than `70`** so it runs before the default systemd rules tag the device. We'll use `69` for obvious reasons.
 
 ```bash
 sudo nano /etc/udev/rules.d/69-asus-rog-no-power-events.rules
@@ -85,9 +85,9 @@ The `ATTRS{name}=="*System Control*"` line should match any ASUS ROG keyboard, s
 
 ---
 
-## Why Does This Happen?
+## But why Does This Happen?
 
-To save battery, wireless ASUS ROG keyboards put their wireless radio to sleep after a period of inactivity. When they do this, the firmware sends a phantom `KEY_SLEEP` or `KEY_POWER` event to the operating system over USB.
+To save battery, ASUS wireless keyboards put their radio to sleep after a period of inactivity. When they do this, the firmware sends a phantom `KEY_SLEEP` or `KEY_POWER` event to the operating system over USB.
 
 If you run `cat /proc/bus/input/devices`, you'll notice the keyboard actually exposes multiple input interfaces. One of them is our special **"System Control"** device:
 
@@ -103,11 +103,11 @@ This `System Control` subdevice broadcasts a system-wide `SLEEP` event to the OS
 
 When `systemd-logind` sees a device with power and sleep capabilities, it tags it as a `power-switch`. When the keyboard goes idle, it fires the sleep keycode. `systemd-logind` receives it, assumes you pressed a physical sleep button, and suspends or powers off your machine.
 
-A 150€ ROG STRIX SCOPE NX WIRELESS DELUXE does this. A no-name 5€ AliExpress board manages without.
+A 150€ ROG STRIX SCOPE NX WIRELESS DELUXE does this. A no-name 5€ AliExpress board manages without. I am sure these two facts are unrelated.
 
 ## Why This Fix, and Not the Other One?
 
-You might have also seen [workarounds online](https://gist.github.com/jnettlet/afb20a048b8720f3b4eb8506d8b05643) suggesting you modify your `hwdb` (Hardware Database) to remap the specific raw hex scancodes to "reserved". This is brittle: if ASUS ever updates the firmware scancode, it breaks silently. That gist is from 2021, by the way.
+You might have also seen [workarounds online](https://gist.github.com/jnettlet/afb20a048b8720f3b4eb8506d8b05643) suggesting you modify your `hwdb` (Hardware Database) to remap the specific raw hex scancodes to "reserved". This is brittle: if ASUS where to update the firmware scancodes, it would break silently. I'm not holding my breath though, according to that gist the problem is unpatched since 2022.
 
 This `udev` rule is cleaner: instead of remapping individual scancodes, it strips the entire "System Control" interface of its power-switch privileges. It targets only the `*System Control*` sub-device, leaving normal typing and media keys completely unaffected.
 
