@@ -255,4 +255,11 @@ document.addEventListener('DOMContentLoaded', () => {
             closeBtn.focus();
         });
     });
+
+    document.querySelectorAll('[data-contact]').forEach(el => {
+        el.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.location.href = 'mailto:' + atob(this.getAttribute('data-contact'));
+        });
+    });
 });

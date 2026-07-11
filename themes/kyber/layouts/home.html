@@ -121,7 +121,7 @@
     Please be patient with your inquiries - Life can get in the way.</p> -->
 
   {{ $emailBase64 := .Site.Params.mail | base64Encode }}
-  <a href="#" class="contactme" data-contact="{{ $emailBase64 }}" onclick="window.location.href='mailto:' + atob(this.getAttribute('data-contact')); return false;">Contact ⇒ </a>
+  <a href="#" class="contactme" data-contact="{{ $emailBase64 }}">Contact ⇒ </a>
 </div>
 {{ end }}
 

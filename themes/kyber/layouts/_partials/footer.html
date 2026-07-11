@@ -12,5 +12,5 @@
   <a href="https://github.com/reogaro/web" target="_blank" rel="noopener noreferrer" class="footer-item">Source Code</a>
   <span class="footer-separator">//</span>
   {{ $emailBase64 := .Site.Params.mail | base64Encode }}
-  <a href="#" class="footer-item" data-contact="{{ $emailBase64 }}" onclick="window.location.href='mailto:' + atob(this.getAttribute('data-contact')); return false;">Contact</a>
+  <a href="#" class="footer-item" data-contact="{{ $emailBase64 }}">Contact</a>
 </div>
