@@ -25,7 +25,7 @@ Elon Musk dreams of self-driving cars, AI, and an interplanetary humanity. He cl
 
 But these projects are not based in reality. They are haunted by **Aesthetic Hyperstition**.
 
-[Hyperstition](https://en.wikipedia.org/wiki/Hyperstition) is a term for ideas or narratives that can shape reality to make themselves real, coined by the Cybernetic Cultural Research Unit. Fiction that engineers its own existence from the future. The aesthetic of Science Fiction and Cyberpunk is like crack to nerds, which is why they try to bring the coolest concepts into reality. William Gibson wrote fiction so compelling, they are trying to make it a reality, no matter the cost.
+[Hyperstition](https://en.wikipedia.org/wiki/Hyperstition) is a term for ideas or narratives that can shape reality to make themselves real, coined by the Cybernetic Cultural Research Unit. Fiction that engineers its own existence from the future. The aesthetic of Science Fiction and Cyberpunk is like crack to nerds, which is why they try to bring the coolest concepts into reality. William Gibsons works are so compelling, they are trying to make it a reality, no matter the cost.
 
 An Aesthetic Hyperstition is a fictional aesthetic so potent, it makes itself real through [memetic](https://en.wikipedia.org/wiki/Memetics) infection.
 
