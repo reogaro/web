@@ -1,7 +1,7 @@
 +++
 title = 'Cyberpunk was a warning, not a guide'
 date = 2026-07-12T16:06:08+02:00
-draft = true
+draft = false
 tags = ['privacy', 'philosophy', 'cyberpunk']
 categories = ['blog']
 image = "IMG_6282.jpg"
