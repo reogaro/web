@@ -1,7 +1,7 @@
 +++
 title = 'Hostile Internet Architecture: Building a Zero-Dependency Web'
 date = 2026-06-24T10:33:00+02:00
-draft = false
+draft = true
 tags = ['privacy', 'web', 'security']
 categories = ['blog']
 image = "codescreen.jpg"
